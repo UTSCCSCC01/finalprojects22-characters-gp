@@ -48,7 +48,7 @@ In total, our team has hosted 5 different meetings to discuss the sprint0 delive
     <li>Allocated the following deliverables amongst team members: summary, competition, UX/UI, process, done, README</li>
 </ul>
 
-#### Meeting 5
+#### Meeting 5:
 <ul>
     <li>Consolidated the individually-completed .md components into GitHub repository</li>
     <li>Finalized personas and product backlog</li>
