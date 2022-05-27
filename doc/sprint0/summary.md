@@ -6,6 +6,8 @@ Cheryl Garner is a 38 year old who works as a professional artist. She is a visu
 
 Richardo Mano is a 22 year old who is a design student, is interested in collecting and wearing designer clothes. He likes wearing unique clothings where each outfit expresses a story.
 
+Krystine Adena is a 25 year old employee who works for Characters and wants a website to track all character applicants, manage the status of the application and preview their application information when needed.
+
 # Key Cases
 **Use Case#1 - User views character story**
 
@@ -48,9 +50,11 @@ After clicking the register button, users are able to enter their personal infor
 After clicking the login button, users are able to enter their login information. If the correct login information is entered, users will be shown a successful login page. If invalid login info was entered, users will receive an accurate error message.
 
 # Key Usage Scenarios
-Cheryln wants to have her story heard, and represented in a creative way. She needs someone to help her expressed her story in a creative way.
+Cheryln wants to have her story heard, and represented in clothing. She needs someone to help her expressed her story in a creative way.
 
 Richard enjoys collecting these unique clothing as each one represents a story. He is in need of a ease of use website to purchase these unique clothings. He also wishes to support the creators of the clothing.
 
+Krystine has characters who have been assigned to her to manage interviews and design meetings with them. Krystine needs a website to manage these meetings and move characters onto the next phase when completed, or upload characters apparels onto the store when completed. 
+
 # Intended Audience
-The intended audience is for everyone. Anyone is able to browse through the web application to read stories of characters or purchase characters' apparels. Anyone is able to upload their story and if deemed interesting, they are able to interview with employees and move onto the design phase. 
+The intended audience is for everyone. Anyone is able to browse through the web application to read stories of characters or purchase characters' apparels. Anyone is able to upload their story and if deemed interesting, they are able to interview with employees and move onto the design phase where their story will be expressed in terms of clothing.
