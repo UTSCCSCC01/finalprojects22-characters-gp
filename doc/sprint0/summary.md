@@ -2,11 +2,11 @@
 The objective of this project is to build a web application to showcase people's unique story through apparels and NFTs. The web application is used for consumers whom want to purchase character's apparels and learn about the character's experiences. Anyone could upload their story onto the web application so that an employee could review and process potential character applications. The apparels have QR code features, where once scanned, it will bring the scanner to the character's story.
 
 # Key Users
-Cheryl Garner is a 38 year old who works as a professional artist. She is a visually impaired, middle-aged, mother of a family of 3. She has a passion for art, and has even gone to school for it, but lacks the funds, herself, to comfortably support her family as well as her dreams to kickstart a charity foundation geared towards helping visually-impaired artists
+Cheryl Garner is a 38 year old who works as a professional artist. She is a visually impaired, middle-aged, mother of a family of 3. She has a passion for art, and has even gone to school for it, and wishes to purchase apparel that is representative of stories and designs she connects with.
 
-Richardo Mano is a 22 year old who is a design student, is interested in collecting and wearing designer clothes. He likes wearing unique clothings where each outfit expresses a story.
+Richardo Mano is a 22 year old who works as a nurse. Mano struggles to provide finances to support his life in Canada and his family in the Philippines as an immigrant and wants to vocalize his struggles in Canada to generate revenue.
 
-Krystine Adena is a 25 year old employee who works for Characters and wants a website to track all character applicants, manage the status of the application and preview their application information when needed.
+Kairu Barati is a 25 year old employee who lacks experience with technologies and works for Characters. She wants a easy-to-use website to track all character applicants, manage the status of the application and preview their application information when needed.
 
 # Key Cases
 **Use Case#1 - User views character story**
@@ -50,11 +50,14 @@ After clicking the register button, users are able to enter their personal infor
 After clicking the login button, users are able to enter their login information. If the correct login information is entered, users will be shown a successful login page. If invalid login info was entered, users will receive an accurate error message.
 
 # Key Usage Scenarios
-Cheryln wants to have her story heard, and represented in clothing. She needs someone to help her expressed her story in a creative way.
+Cheryln are browsing stores and cannot seem to find clothings with a unique story which resonates with her. She wants to purchase apparels where she personally connects with her struggle and as an artist.
 
-Richard enjoys collecting these unique clothing as each one represents a story. He is in need of a ease of use website to purchase these unique clothings. He also wishes to support the creators of the clothing.
+Mano is struggling to meet payments since immigrating to Canada and also, wishes to provide finances back to his family in Philiphines for giving him the opportunity to work in Canada for a better life. After seeing an ad on Characters, Mano decides to apply as a character with his personal immigration story and wishes to use the revenue he generates for his family back in Philiphines.
 
-Krystine has characters who have been assigned to her to manage interviews and design meetings with them. Krystine needs a website to manage these meetings and move characters onto the next phase when completed, or upload characters apparels onto the store when completed. 
+Kairu has characters who have been assigned to her to manage interviews and design meetings with them. Kairu is new to technology and needs a easy-to-use website to manage these meetings and move characters onto the next phase when completed, or upload characters apparels onto the store when completed. 
 
 # Intended Audience
 The intended audience is for everyone. Anyone is able to browse through the web application to read stories of characters or purchase characters' apparels. Anyone is able to upload their story and if deemed interesting, they are able to interview with employees and move onto the design phase where their story will be expressed in terms of clothing.
+
+# Key Principles
+The web application should be easy to navigate with a clean user interface to ensure a good user experience for consumers and employees. The web application must be secured as users will be entering personal and financial information. Lastly, the web application must have a unique design to prioritize the brand's focus and personality to the public.
