@@ -1,3 +1,3 @@
 module.exports = {
-    backend: 'https://crud-backend.hwangso595.repl.co'
+    backend: 'http://localhost:4000'
 }

@@ -15,7 +15,5 @@ let itemSchema = new Schema({
     type: String,
     default: ''
   }
-}, {
-    collection: 'items'
-  })
+})
 module.exports = mongoose.model('Item', itemSchema)
