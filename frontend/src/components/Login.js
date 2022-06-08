@@ -14,6 +14,7 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
+            warnings: {},
         }
     }
     onChangeEmail(event){
@@ -23,32 +24,50 @@ export default class Login extends Component {
         this.setState({ password: event.target.value })
     }
     validateLogin(data){
-        if (this.state.email == "" && this.state.password == ""){
-            console.log("Email and password field cannot be empty!")
-            return
-        }
-        else if (this.state.email == ""){
-            console.log("Email field cannot be empty!")
-            return
-        }
-        else if (this.state.password == ""){
-            console.log("Password field cannot be empty!")
-            return
-        }
+        let newWarnings = {}
 
+        //If user entered email is found
         if (data.length > 0){
             if (data[0]['password'] != this.state.password){
-                console.log("Incorrect password")
+                newWarnings.password = "Incorrect password"
+                this.setState({warnings: newWarnings})
             }
             else {
                 //Redirect to homepage
                 console.log("Login Successful")
+                this.setState({warnings: {}})
             }
         }
         else {
-            console.log("The email entered is not registered!")
+            newWarnings.email = "The email entered is not registered!"
+            this.setState({warnings: newWarnings})
+        }
+
+        //Else case
+        if (this.state.email == "" && this.state.password == ""){
+            newWarnings.email = "Email field cannot be empty!"
+            newWarnings.password = "Password field cannot be empty!"
+        }
+        else if (this.state.email == ""){
+            newWarnings.email = "Email field cannot be empty!"
+        }
+        else if (this.state.password == ""){
+            newWarnings.password = "Password field cannot be empty!"
+        }
+        else if (!String(this.state.email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            )) {
+            newWarnings.email = "Invalid email"
+        }
+
+        //Set warnings
+        if (newWarnings != {}){
+            this.setState({warnings: newWarnings})
         }
     }
+
     onSubmit(event){
         event.preventDefault()
         axios.get(config.backend+'/users/?email=' + this.state.email, this.state)
@@ -57,14 +76,16 @@ export default class Login extends Component {
     
     render(){
         return (<div className="form-wrapper">
-            <Form onSubmit={this.onSubmit}>
+            <Form noValidate onSubmit={this.onSubmit}>
                 <Form.Group controlId="Email">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control required type="email" value={this.state.email} onChange={this.onChangeEmail}  placeholder="Enter email"/>
+                    <Form.Control required type="email" value={this.state.email} onChange={this.onChangeEmail} isInvalid={!!this.state.warnings.email} placeholder="Enter email"/>
+                    <Form.Control.Feedback type='invalid'> {this.state.warnings.email}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="Password">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control required type="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Enter password"/>
+                    <Form.Control required type="password" value={this.state.password} onChange={this.onChangePassword} isInvalid={!!this.state.warnings.password} placeholder="Enter password"/>
+                    <Form.Control.Feedback type='invalid'> {this.state.warnings.password}</Form.Control.Feedback>
                 </Form.Group>
                 <Button variant="primary" size="lg" type="submit" className="mt-4">Login</Button>
             </Form>
