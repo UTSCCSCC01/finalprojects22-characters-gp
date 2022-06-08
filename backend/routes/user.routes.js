@@ -16,7 +16,9 @@ router.route('/').post((req, res, next) => {
 });
 // Get all users
 router.route('/').get((req, res) => {
-  User.find({ deleted: false }, (error, data) => {
+  const query = req.query;
+  query.deleted = false;
+  User.find(query, (error, data) => {
     if (error) {
       return next(error)
     } else {

@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
+import Login from './components/Login'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -60,6 +62,11 @@ class App extends React.Component {
                   </Link>
                 </Nav>
               }
+              <Nav>
+                  <Link to={'/login'} className="nav-link">
+                    Login
+                  </Link>
+                </Nav>
             </Container>
           </Navbar>
           <Container>
@@ -71,6 +78,11 @@ class App extends React.Component {
                       exact
                       path="/signup"
                       render={(props) => <SignUp {...props} signIn={this.signIn} />} />
+                    <Route
+                      exact
+                      path="/Login"
+                      component={(props) => <Login {... props} />}
+                    />
                   </Switch>
                 </div>
               </Col>
