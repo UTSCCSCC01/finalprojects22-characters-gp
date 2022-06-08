@@ -11,6 +11,7 @@ import CreateItem from './components/create-item'
 import EditItem from './components/edit-item'
 import ItemList from './components/inventory'
 import DeletedItemList from './components/undelete-item'
+import Login from './components/Login'
 function App() {
   return (
     <div className="App">
@@ -36,6 +37,11 @@ function App() {
                 <Nav>
                   <Link to={'/deleted-item-list'} className="nav-link">
                     Deleted Items
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/login'} className="nav-link">
+                    Login
                   </Link>
                 </Nav>
               </Nav>
@@ -70,6 +76,11 @@ function App() {
                     exact
                     path="/deleted-item-list"
                     component={(props) => <DeletedItemList {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/Login"
+                    component={(props) => <Login {... props} />}
                   />
                 </Switch>
               </div>
