@@ -1,0 +1,12 @@
+GET http://localhost:4000/submissions/62a063e6d701f473a8e4b80b
+
+###
+
+POST http://localhost:4000/submissions
+Content-Type: application/json
+
+{
+    "storyText": "My story is done.",
+    "submissionType": "characterCandidate",
+    "submissionStatus": "pending"
+}
