@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
+import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
 
 class App extends React.Component {
@@ -51,34 +52,36 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
-              {this.state.user === null ?
-                <Nav className="justify-content-end">
-                  <Link to={'/signup'} className="nav-link">
-                    Sign Up
+              <Nav className="justify-content-end">
+                <Nav>
+                  <Link to={'/StoriesList'} className="nav-link">
+                    Story Statuses
                   </Link>
                 </Nav>
-                :
-                <Nav className="justify-content-end">
-                  <Link to={'/'} onClick={this.signOut} className="nav-link">
-                    Sign Out
+                {this.state.user === null ?
+                  <Nav>
+                    <Link to={'/signup'} className="nav-link">
+                      Sign Up
+                    </Link>
+                  </Nav>
+                  :
+                  <Nav>
+                    <Link to={'/'} onClick={this.signOut} className="nav-link">
+                      Sign Out
+                    </Link>
+
+                  </Nav>
+                }
+                <Nav>
+                  <Link to={'/login'} className="nav-link">
+                    Login
                   </Link>
                 </Nav>
-              }
-              <Nav> 
-                {/* Temporary link in the Nav Bar */}
-                <Link to={'/story-details'} className="nav-link">
-                  Story Details
-                </Link>
-              </Nav>
-              <Nav>
-                <Link to={'/login'} className="nav-link">
-                  Login
-                </Link>
-              </Nav>
-              <Nav>
-                <Link to={'/submitStory'} className="nav-link">
-                  Submit a story
-                </Link>
+                <Nav>
+                  <Link to={'/submitStory'} className="nav-link">
+                    Submit a story
+                  </Link>
+                </Nav>
               </Nav>
             </Container>
           </Navbar>
@@ -101,7 +104,12 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/Login"
-                      component={(props) => <Login {... props} />} />
+                      component={(props) => <Login {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/StoriesList"
+                      render={(props) => <StoriesList {...props} />} />
                     <Route
                       exact
                       path="/submitStory"
