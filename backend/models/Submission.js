@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const submissionSchema = new Schema({
+    storyTitle: {
+        type: String,
+        required: true
+    },
     storyText: {
         type: String,
         required: true

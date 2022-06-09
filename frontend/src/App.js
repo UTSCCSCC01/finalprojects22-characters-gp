@@ -9,6 +9,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import StoriesList from './components/StoriesList'
 
 class App extends React.Component {
   constructor(props) {
@@ -49,6 +50,11 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
+              <Nav>
+                <Link to={'/StoriesList'} className="nav-link">
+                      Stories
+                    </Link>
+                </Nav>
               {this.state.user === null ?
                 <Nav className="justify-content-end">
                   <Link to={'/signup'} className="nav-link">
@@ -60,6 +66,7 @@ class App extends React.Component {
                   <Link to={'/'} onClick={this.signOut} className="nav-link">
                     Sign Out
                   </Link>
+                  
                 </Nav>
               }
               <Nav>
@@ -83,6 +90,10 @@ class App extends React.Component {
                       path="/Login"
                       component={(props) => <Login {... props} />}
                     />
+                    <Route
+                      exact
+                      path="/StoriesList"
+                      render={(props) => <StoriesList {...props} />} />
                   </Switch>
                 </div>
               </Col>
