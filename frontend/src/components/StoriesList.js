@@ -28,7 +28,7 @@ export default class StoriesList extends Component {
 
       getStories(){
         return this.state.stories.map((res, i) => {
-            return <StoriesRow obj={res} key={i} />;
+            return <StoriesRow obj={res} key={i} {...this.props} />;
         });
       }
 

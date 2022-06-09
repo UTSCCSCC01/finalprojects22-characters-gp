@@ -50,30 +50,32 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
-              <Nav>
-                <Link to={'/StoriesList'} className="nav-link">
-                      Stories
+              <Nav className="justify-content-end">
+                <Nav>
+                  <Link to={'/StoriesList'} className="nav-link">
+                    Story Statuses
+                  </Link>
+                </Nav>
+                {this.state.user === null ?
+                  <Nav>
+                    <Link to={'/signup'} className="nav-link">
+                      Sign Up
                     </Link>
-                </Nav>
-              {this.state.user === null ?
-                <Nav className="justify-content-end">
-                  <Link to={'/signup'} className="nav-link">
-                    Sign Up
-                  </Link>
-                </Nav>
-                :
-                <Nav className="justify-content-end">
-                  <Link to={'/'} onClick={this.signOut} className="nav-link">
-                    Sign Out
-                  </Link>
-                  
-                </Nav>
-              }
-              <Nav>
+                  </Nav>
+                  :
+                  <Nav>
+                    <Link to={'/'} onClick={this.signOut} className="nav-link">
+                      Sign Out
+                    </Link>
+
+                  </Nav>
+                }
+                <Nav>
                   <Link to={'/login'} className="nav-link">
                     Login
                   </Link>
                 </Nav>
+              </Nav>
             </Container>
           </Navbar>
           <Container>
