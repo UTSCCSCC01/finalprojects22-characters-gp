@@ -14,19 +14,23 @@ export default class StoryDetails extends Component {
       this.state = {
         title: 'Story Title',
         text: 'Character went through this, buy the shirt if you want to support them',
-        status: 'New'
+        status: '',
+        type: '',  //storyType == "customApparel" OR "characterCandidate" 
+        date: null,
       }
     }
 
     //access the db to fetch the data to display    
 
     componentDidMount() {
-        axios.get(config.backend+'/items/story-details/' + this.props.match.params.id)
+        axios.get(config.backend+'/stories/' + this.props.match.params.id)
           .then(res => {
             this.setState({
-              title: res.data.title, 
-              text: res.data.text,
-              status: res.data.status
+              title: res.data.storyTitle, 
+              text: res.data.storyText,
+              status: res.data.storyStatus,
+              type: res.data.storyType,
+              date: res.data.storyDate
             });
           })
           .catch((error) => {
@@ -35,9 +39,11 @@ export default class StoryDetails extends Component {
     }
 
     updateStatus(s) {
-        // this.setState({status: {s}});
-
         // send to the backend using PUT request
+        this.setState({
+            status: s
+        });
+
     }
 
     // UI
@@ -47,11 +53,11 @@ export default class StoryDetails extends Component {
               <Card.Body>
                     <Card.Title>{this.state.title}</Card.Title>
                     <Card.Text>{this.state.text}</Card.Text>
-                    <Card.Body>
+                    {/* <Card.Body>
                         <video  controls>
                             <source src=""></source> 
                         </video>
-                    </Card.Body>
+                    </Card.Body> */}
                     <Card.Text>
                         Status: {this.state.status}
                     <Card.Text>
