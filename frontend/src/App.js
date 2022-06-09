@@ -9,6 +9,9 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import StoryDetails from './components/StoryDetails'
+import Login from './components/Login'
+import SubmitStory from './components/SubmitStory'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -67,6 +70,16 @@ class App extends React.Component {
                   Story Details
                 </Link>
               </Nav>
+              <Nav>
+                <Link to={'/login'} className="nav-link">
+                  Login
+                </Link>
+              </Nav>
+              <Nav>
+                <Link to={'/submitStory'} className="nav-link">
+                  Submit a story
+                </Link>
+              </Nav>
             </Container>
           </Navbar>
           <Container>
@@ -85,6 +98,14 @@ class App extends React.Component {
                       path="/story-details/:id"
                       component={(props) => <StoryDetails {...props} />}/>
                     
+                    <Route
+                      exact
+                      path="/Login"
+                      component={(props) => <Login {... props} />} />
+                    <Route
+                      exact
+                      path="/submitStory"
+                      component={(props) => <SubmitStory {... props} />} />
                   </Switch>
                 </div>
               </Col>
