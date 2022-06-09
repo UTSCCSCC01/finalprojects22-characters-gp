@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-// import Submission Model
-const Submission = require('../models/Submission');
+// import Story Model
+const Story = require('../models/Story');
 
-// Create submission
+// Create story
 router.post('/', (req, res, next) => {
-  Submission.create(req.body, (error, data) => {
+  Story.create(req.body, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -16,9 +16,9 @@ router.post('/', (req, res, next) => {
     }
   })
 });
-// Get all submissions
+// Get all stories
 router.get('/', (req, res) => {
-  Submission.find({ deleted: false }, (error, data) => {
+  Story.find({ deleted: false }, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -26,9 +26,9 @@ router.get('/', (req, res) => {
     }
   })
 });
-// Get single submission
+// Get single story
 router.get('/:id', (req, res, next) => {
-  Submission.findById(req.params.id, (error, data) => {
+  Story.findById(req.params.id, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -36,9 +36,9 @@ router.get('/:id', (req, res, next) => {
     }
   })
 });
-// Update submission
+// Update story
 router.put('/:id', (req, res, next) => {
-  Submission.findByIdAndUpdate(req.params.id, {
+  Story.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
     if (error) {
@@ -48,9 +48,9 @@ router.put('/:id', (req, res, next) => {
     }
   })
 });
-// Delete submission
+// Delete story
 router.delete('/:id', (req, res, next) => {
-  Submission.findByIdAndDelete(req.params.id, (error, data) => {
+  Story.findByIdAndDelete(req.params.id, (error, data) => {
     if (error) {
       return next(error);
     } else {

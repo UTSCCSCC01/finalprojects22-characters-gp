@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import StoriesList from './components/StoriesList'
+import SubmitStory from './components/SubmitStory'
 
 class App extends React.Component {
   constructor(props) {
@@ -75,6 +76,11 @@ class App extends React.Component {
                     Login
                   </Link>
                 </Nav>
+                <Nav>
+                  <Link to={'/submitStory'} className="nav-link">
+                    Submit a story
+                  </Link>
+                </Nav>
               </Nav>
             </Container>
           </Navbar>
@@ -90,12 +96,16 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/Login"
-                      component={(props) => <Login {... props} />}
+                      component={(props) => <Login {...props} />}
                     />
                     <Route
                       exact
                       path="/StoriesList"
                       render={(props) => <StoriesList {...props} />} />
+                    <Route
+                      exact
+                      path="/submitStory"
+                      component={(props) => <SubmitStory {... props} />} />
                   </Switch>
                 </div>
               </Col>

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const submissionSchema = new Schema({
+const storySchema = new Schema({
     storyTitle: {
         type: String,
         required: true
@@ -10,20 +10,20 @@ const submissionSchema = new Schema({
         type: String,
         required: true
     }, 
-    //submissionType == "customApparel" OR "characterCandidate" 
-    submissionType: {
+    //storyType == "customApparel" OR "characterCandidate" 
+    storyType: {
         type: String,
         required: true
     },
-    submissionDate: {
+    storyDate: {
         type: Date, 
     },
-    //submissionStatus only applies to characterCandidate submissions
+    //storyStatus only applies to characterCandidate submissions
     //ex. confirmed, pending, denied 
-    submissionStatus:{
+    storyStatus:{
         type: String,
         required: true
     }
 });
 
-module.exports = mongoose.model('submissions', submissionSchema);
+module.exports = mongoose.model('stories', storySchema);
