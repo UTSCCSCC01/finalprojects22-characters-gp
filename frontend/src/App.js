@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
+import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
@@ -94,6 +95,7 @@ class App extends React.Component {
                       exact
                       path="/signup"
                       render={(props) => <SignUp {...props} signIn={this.signIn} />} />
+                    
                     <Route
                       exact
                       path="/Login"
@@ -107,6 +109,11 @@ class App extends React.Component {
                       exact
                       path="/submitStory"
                       component={(props) => <SubmitStory {... props} />} />
+                    <Route
+                      exact
+                      path="/stories/:id"
+                      render={(props) => <StoryDetails {...props} />} 
+                      />
                   </Switch>
                 </div>
               </Col>

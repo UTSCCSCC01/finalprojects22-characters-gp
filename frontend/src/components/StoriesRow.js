@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import config from '../config'
+import StoryDetails from './StoryDetails'
   
 
 export default class StoriesRow extends Component {
@@ -21,30 +22,24 @@ export default class StoriesRow extends Component {
 
     render() {
         return (
-            <Router>
-                <Row xs={1} md={1} className="g-4">
-                    <Col>
-                    <Card width='100%'>
-                        <Card.Body>
-                        <Container>
-                        <Row>
-                            <Col><Card.Title>{this.props.obj.storyTitle}</Card.Title></Col>
-                            <Col><Card.Text>
-                                Status: {this.props.obj.submissionStatus}
-                            </Card.Text></Col>
-                            <Col><Button onClick={this.goToDetails} size="sm" variant="danger" style={{float: 'right'}} type="submit">Details</Button></Col>
-                        </Row>
-                        </Container>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row>
-            <Route
-                exact
-                path={"/stories/"+this.props.obj._id}
-                // render={(props) => <StoryDetails {...props} />} 
-                />
-        </Router>
+            <Row xs={1} md={1} className="g-4">
+                <Col>
+                <Card width='100%'>
+                    <Card.Body>
+                    <Container>
+                    <Row>
+                        <Col><Card.Title>{this.props.obj.storyTitle}</Card.Title></Col>
+                        <Col><Card.Text>
+                            Status: {this.props.obj.storyStatus}
+                        </Card.Text></Col>
+                        <Col><Button onClick={this.goToDetails} size="sm" variant="danger" style={{float: 'right'}} type="submit">Details</Button></Col>
+                    </Row>
+                    </Container>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
+            
     );
     }
 }

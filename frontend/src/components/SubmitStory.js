@@ -62,7 +62,7 @@ class SubmitForm extends Component {
         this.setState({ storyType: 'customApparel'});
     }
     onCheckNo(){
-        this.setState({ storyText: 'characterCandidate'});
+        this.setState({ storyType: 'characterCandidate'});
     }
     removeSuccessBox(e){
     }
