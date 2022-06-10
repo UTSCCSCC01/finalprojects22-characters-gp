@@ -35,6 +35,8 @@ export default class Login extends Component {
             else {
                 //Redirect to homepage
                 console.log("Login Successful")
+                this.props.signIn(data)
+                this.props.history.push('/')
                 this.setState({warnings: {}})
             }
         }

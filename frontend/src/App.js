@@ -62,11 +62,13 @@ class App extends React.Component {
                   </Link>
                 </Nav>
               }
+              {this.state.user === null &&
               <Nav>
-                  <Link to={'/login'} className="nav-link">
-                    Login
-                  </Link>
-                </Nav>
+                <Link to={'/login'} className="nav-link">
+                  Login
+                </Link>
+              </Nav>
+              }
             </Container>
           </Navbar>
           <Container>
@@ -81,7 +83,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/Login"
-                      component={(props) => <Login {... props} />}
+                      component={(props) => <Login {... props} signIn={this.signIn} />}
                     />
                   </Switch>
                 </div>
