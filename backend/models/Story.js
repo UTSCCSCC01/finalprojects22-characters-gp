@@ -16,13 +16,13 @@ const storySchema = new Schema({
         required: true
     },
     storyDate: {
-        type: Date, 
+        type: Date,
+        default: Date.now()
     },
-    //storyStatus only applies to characterCandidate submissions
-    //ex. confirmed, pending, denied 
     storyStatus:{
         type: String,
-        required: true
+        required: true,
+        default: 'new'
     }
 });
 
