@@ -13,7 +13,7 @@ export default class StoriesList extends Component {
     }
 
     componentDidMount() {
-        axios.get(config.backend+'/submissions')
+        axios.get(config.backend+'/stories')
           .then(res => {
             this.setState({
               stories: res.data

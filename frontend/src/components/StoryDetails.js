@@ -12,12 +12,14 @@ export default class StoryDetails extends Component {
 
       // State
       this.state = {
-        title: 'Story Title',
-        text: 'Character went through this, buy the shirt if you want to support them',
+        title: '',
+        text: '',
         status: '',
         type: '',  //storyType == "customApparel" OR "characterCandidate" 
         date: null,
       }
+      
+      this.updateStatus = this.updateStatus.bind(this);
     }
 
     //access the db to fetch the data to display    
@@ -38,13 +40,21 @@ export default class StoryDetails extends Component {
           })
     }
 
-    updateStatus(s) {
+    updateStatus(e) {
         // send to the backend using PUT request
-        this.setState({
-            status: s
-        });
+        const data ={
+            storyStatus: e
+        };
+        axios.put(config.backend + '/stories/' + this.props.match.params.id, data)
+            .catch((error) => {
+                console.log(error);
+            })
 
+        this.setState({
+            status: e
+        });
     }
+
 
     // UI
     render() {
@@ -58,20 +68,25 @@ export default class StoryDetails extends Component {
                             <source src=""></source> 
                         </video>
                     </Card.Body> */}
+                    
                     <Card.Text>
                         Status: {this.state.status}
                     <Card.Text>
                     </Card.Text>
                         <DropdownButton id="dropdown-basic-button" title='Change Status' style={{paddingLeft: 10}}>
-                          <Dropdown.Item onSelect={this.updateStatus('New')}>New</Dropdown.Item>
-                          <Dropdown.Item onSelect={this.updateStatus('Interviewing')}>Interviewing</Dropdown.Item>
-                          <Dropdown.Item onSelect={this.updateStatus('Validated')}>Validated</Dropdown.Item>
+                          <Dropdown.Item onClick={() => this.updateStatus("new")}>new</Dropdown.Item>
+                          <Dropdown.Item onClick={() => this.updateStatus("interviewing")}>interviewing</Dropdown.Item>
+                          <Dropdown.Item onClick={() => this.updateStatus("validated")}>validated</Dropdown.Item>
+                       
                         </DropdownButton>
                     </Card.Text>
                 </Card.Body>
-                <Card.Body className='d-flex align-items-end flex-column bd-highlight'>
-                    <Button variant='primary' className='p-2 bd-highlight'>Next Story</Button>
-                </Card.Body>
+                <Card.Footer className="text-muted">
+                        Submission Date: {this.state.date}
+                    </Card.Footer>
+                    <Card.Footer className="text-muted">
+                        Story Type: {this.state.type}
+                    </Card.Footer>
             </Card>
         </div>);
     }

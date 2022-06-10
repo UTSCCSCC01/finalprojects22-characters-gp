@@ -96,10 +96,10 @@ class App extends React.Component {
                       render={(props) => <SignUp {...props} signIn={this.signIn} />} />
                     
                     {/* Story Details */}
-                    <Route
+                    {/* <Route
                       exact
                       path="/story-details/:id"
-                      component={(props) => <StoryDetails {...props} />}/>
+                      component={(props) => <StoryDetails {...props} />}/> */}
                     
                     <Route
                       exact
@@ -114,6 +114,11 @@ class App extends React.Component {
                       exact
                       path="/submitStory"
                       component={(props) => <SubmitStory {... props} />} />
+                    <Route
+                      exact
+                      path="/stories/:id"
+                      render={(props) => <StoryDetails {...props} />} 
+                      />
                   </Switch>
                 </div>
               </Col>
