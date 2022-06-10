@@ -32,7 +32,7 @@ export default class StoryDetails extends Component {
               text: res.data.storyText,
               status: res.data.storyStatus,
               type: res.data.storyType,
-              date: res.data.storyDate
+              date: new Date(res.data.storyDate).toString()
             });
           })
           .catch((error) => {
