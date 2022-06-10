@@ -72,11 +72,12 @@ class App extends React.Component {
 
                   </Nav>
                 }
+                {this.state.user === null &&
                 <Nav>
                   <Link to={'/login'} className="nav-link">
                     Login
                   </Link>
-                </Nav>
+                </Nav>}
                 <Nav>
                   <Link to={'/submitStory'} className="nav-link">
                     Submit a story
@@ -95,16 +96,10 @@ class App extends React.Component {
                       path="/signup"
                       render={(props) => <SignUp {...props} signIn={this.signIn} />} />
                     
-                    {/* Story Details */}
-                    {/* <Route
-                      exact
-                      path="/story-details/:id"
-                      component={(props) => <StoryDetails {...props} />}/> */}
-                    
                     <Route
                       exact
                       path="/Login"
-                      component={(props) => <Login {...props} />}
+                      component={(props) => <Login {... props} signIn={this.signIn} />}
                     />
                     <Route
                       exact
