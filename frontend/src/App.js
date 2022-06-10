@@ -9,6 +9,8 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import StoriesList from './components/StoriesList'
+import SubmitStory from './components/SubmitStory'
 
 class App extends React.Component {
   constructor(props) {
@@ -49,26 +51,38 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
-              {this.state.user === null ?
-                <Nav className="justify-content-end">
-                  <Link to={'/signup'} className="nav-link">
-                    Sign Up
+              <Nav className="justify-content-end">
+                <Nav>
+                  <Link to={'/StoriesList'} className="nav-link">
+                    Story Statuses
                   </Link>
                 </Nav>
-                :
-                <Nav className="justify-content-end">
-                  <Link to={'/'} onClick={this.signOut} className="nav-link">
-                    Sign Out
+                {this.state.user === null ?
+                  <Nav>
+                    <Link to={'/signup'} className="nav-link">
+                      Sign Up
+                    </Link>
+                  </Nav>
+                  :
+                  <Nav>
+                    <Link to={'/'} onClick={this.signOut} className="nav-link">
+                      Sign Out
+                    </Link>
+
+                  </Nav>
+                }
+                {this.state.user === null &&
+                <Nav>
+                  <Link to={'/login'} className="nav-link">
+                    Login
+                  </Link>
+                </Nav>}
+                <Nav>
+                  <Link to={'/submitStory'} className="nav-link">
+                    Submit a story
                   </Link>
                 </Nav>
-              }
-              {this.state.user === null &&
-              <Nav>
-                <Link to={'/login'} className="nav-link">
-                  Login
-                </Link>
               </Nav>
-              }
             </Container>
           </Navbar>
           <Container>
@@ -85,6 +99,14 @@ class App extends React.Component {
                       path="/Login"
                       component={(props) => <Login {... props} signIn={this.signIn} />}
                     />
+                    <Route
+                      exact
+                      path="/StoriesList"
+                      render={(props) => <StoriesList {...props} />} />
+                    <Route
+                      exact
+                      path="/submitStory"
+                      component={(props) => <SubmitStory {... props} />} />
                   </Switch>
                 </div>
               </Col>
