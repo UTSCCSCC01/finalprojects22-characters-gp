@@ -18,7 +18,7 @@ Story CHAR-1: (do users have to be logged in?)
 
 Story CHAR-4:
 - Show the detail of the story
-- Ability to change the status indicator 
+- Ability to change the status indicator
 
 Story CHAR-8:
 - Show a list of stories with their status
@@ -45,6 +45,14 @@ Maria Gotcheva 2hr/day
 Eric Zhou 2hr/day
 
 Jacob Matias 2hr/day
+
+In sprint1, we plan to do 20 points of work.
+
+## Spikes
+- Figure out how to do api calls with React
+- Learn how to use React Bootstrap to make the views visually appealing
+- Learn Express to handle http requests in the backend
+- Learn how to create/read/update/delete items in MongoDB
 
 ## Participants
 Sung Ha Hwang

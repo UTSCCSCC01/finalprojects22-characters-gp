@@ -48,7 +48,7 @@ class App extends React.Component {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/create-item'} className="nav-link">
+                <Link to={'/'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
@@ -95,7 +95,7 @@ class App extends React.Component {
                       exact
                       path="/signup"
                       render={(props) => <SignUp {...props} signIn={this.signIn} />} />
-                    
+
                     <Route
                       exact
                       path="/Login"
@@ -112,7 +112,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/stories/:id"
-                      render={(props) => <StoryDetails {...props} />} 
+                      render={(props) => <StoryDetails {...props} />}
                       />
                   </Switch>
                 </div>
