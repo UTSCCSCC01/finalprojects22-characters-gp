@@ -4,7 +4,11 @@ let cors = require('cors');
 let bodyParser = require('body-parser');
 require('dotenv').config();
 
+//import Routers
 const itemRoute = require('./routes/item.routes');
+const userRoute = require('./routes/user.routes');
+const storyRoute = require('./routes/story.routes');
+
 mongoose
   .connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/mydatabase')
   .then((x) => {
@@ -13,14 +17,19 @@ mongoose
   .catch((err) => {
     console.error('Error connecting to mongo', err.reason)
   })
-  
+
 const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cors());
-app.use('/items', itemRoute)
+
+//Using app.use() means that this middleware will be called for every call to the application.
+app.use('/stories', storyRoute);
+app.use('/items', itemRoute);
+app.use('/users', userRoute);
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
