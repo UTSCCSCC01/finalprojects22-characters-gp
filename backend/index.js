@@ -5,7 +5,6 @@ let bodyParser = require('body-parser');
 require('dotenv').config();
 
 //import Routers
-const itemRoute = require('./routes/item.routes');
 const userRoute = require('./routes/user.routes');
 const storyRoute = require('./routes/story.routes');
 
@@ -28,7 +27,6 @@ app.use(cors());
 
 //Using app.use() means that this middleware will be called for every call to the application.
 app.use('/stories', storyRoute);
-app.use('/items', itemRoute);
 app.use('/users', userRoute);
 
 const port = process.env.PORT || 4000;
