@@ -11,11 +11,12 @@ Complete the following user stories:
 Story CHAR-5: As a consumer I want to be able to browse available products so that I can choose products that I may be interested in buying
 - Shop page that shows a grid view of all products availible to buy
 - Allow consumers to view the product details by clicking on a product
+- Create the product model schema
+- Add endpoints to read products in backend
+- Add endpoints to create/update/delete products in backend
 
 Story CHAR-12: As an employee I want to add/remove apparels by title and apparels on characters so that consumers can buy products
 - Show Product Add page
-- Create the product model schema
-- Add endpoints to add/delete items in backend
 - In the product details page, employees can delete the product
 
 Story CHAR-14: As a consumer I want to be able to view and manage items that I have added to my shopping cart so that I can review my order before processing my payment
