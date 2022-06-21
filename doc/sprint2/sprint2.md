@@ -34,7 +34,9 @@ Story CHAR-38: As a consumer I want to be able to view item details by clicking 
 - The product details page should provide details like price, clothing sizes, etc that correspond to the item that
   the user clicked-on
 - Allow users to add the item to their shopping cart 
+- Add shoppingList field to User schema model
 (in db for users, shopping cart lists key:value pair -> productID:quantity)
+
 
 
 ## Team capacity
