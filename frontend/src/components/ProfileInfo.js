@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert'
 import axios from 'axios';
 import config from '../config'
+import PasswordEdit from './PasswordEdit';
 import ProfileEdit from './ProfileEdit';
 
 class ProfileInfo extends Component {
@@ -24,7 +25,7 @@ class ProfileInfo extends Component {
             <Row>
                 {/* <Col md="2">
                     <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
-                        <a class="navbar-brand" href="">Navbar</a>
+                        <a class="navbar-brand" href="#">Navbar</a>
                         <nav class="nav nav-pills flex-column">
                             <a class="nav-link" href="#item-1">Item 1</a>
                             <nav class="nav nav-pills flex-column">
@@ -42,6 +43,7 @@ class ProfileInfo extends Component {
                 </Col> */}
                 <Col>
                     <ProfileEdit _id={this.props.match.params.id} setToast={this.props.setToast} />
+                    <PasswordEdit _id={this.props.match.params.id} setToast={this.props.setToast} />
 
                 </Col>
             </Row>
