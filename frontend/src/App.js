@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
+import ProductAdd from './components/ProductAdd'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
 
@@ -78,6 +79,12 @@ class App extends React.Component {
                     Login
                   </Link>
                 </Nav>}
+                {this.state.user !== null && this.state.user[0]['isEmployer'] &&
+                <Nav>
+                  <Link to={'/productAdd'} className="nav-link">
+                    Add Product
+                  </Link>
+                </Nav>}
                 <Nav>
                   <Link to={'/submitStory'} className="nav-link">
                     Submit a story
@@ -100,6 +107,11 @@ class App extends React.Component {
                       exact
                       path="/Login"
                       component={(props) => <Login {... props} signIn={this.signIn} />}
+                    />
+                    <Route
+                      exact
+                      path="/ProductAdd"
+                      component={(props) => <ProductAdd {... props} />}
                     />
                     <Route
                       exact
