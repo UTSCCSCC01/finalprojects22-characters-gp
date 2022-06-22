@@ -6,6 +6,10 @@ let userSchema = new Schema({
   },
   password: {
     type: String
+  },
+  isEmployer: {
+    type: Boolean,
+    default: false
   }
 })
 module.exports = mongoose.model('User', userSchema)
