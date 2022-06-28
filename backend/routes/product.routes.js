@@ -8,33 +8,45 @@ const fs = require('fs');
 // import Product Model
 const Product = require('../models/Product');
 
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, "/../../frontend/public/uploads");
-    },
-    filename: (req, file, callback) => {
-        callback(null, file.originalname)
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, "/../../frontend/public/uploads");
+//     },
+//     filename: (req, file, callback) => {
+//         callback(null, file.originalname)
+//     }
+// })
 
-const upload = multer({storage: storage});
+// const upload = multer({storage: storage});
 
-router.post('/', upload.single('productImage'), (req, res, next) => {
+// router.post('/', upload.single('productImage'), (req, res, next) => {
   
-    const prod = {
-        productPrice: req.body.productPrice,
-        productName: req.body.productName,
-        productDescription: req.body.productDescription,
-        productImage: req.file.originalname
+//     const prod = {
+//         productPrice: req.body.productPrice,
+//         productName: req.body.productName,
+//         productDescription: req.body.productDescription,
+//         //productImage: req.file.originalname
+//     }
+//     Product.create(newProduct, (err, item) => {
+//         if (err) {
+//             console.log(err);
+//         }
+//         else {
+//             res.redirect('/');
+//         }
+//     });
+// });
+
+//Create product
+router.post('/', (req, res, next) => {
+  Product.create(req.body, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      console.log(data)
+      res.json(data)
     }
-    Product.create(newProduct, (err, item) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            res.redirect('/');
-        }
-    });
+  })
 });
 
 
@@ -62,7 +74,7 @@ router.get('/:id', (req, res, next) => {
 
 
 // Update product
-router.put('/:id', upload.single("productImage"), (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   Product.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
