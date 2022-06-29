@@ -122,7 +122,7 @@ export default class SubmitProduct extends Component {
                         <Col sm="8">
                             <Form.Select required type="text" value={this.state.productCharacter} onChange={this.onChangeProductCharacter}>
                                 {this.state.listOfCharacters.map(opt => (
-                                    <option value={opt.email}>{opt.email}</option>
+                                    <option key={opt.email} value={opt.email}>{opt.email}</option>
                                 ))}
                             </Form.Select>
                         </Col>
@@ -144,7 +144,7 @@ export default class SubmitProduct extends Component {
                             <Form.Label>
                                 Inventory Amount
                             </Form.Label>
-                            <Form.Control required type="text"
+                            <Form.Control required type="number"
                                 placeholder="In Stock"
                                 onChange={this.onChangeProductInventoryAmount} />
 
