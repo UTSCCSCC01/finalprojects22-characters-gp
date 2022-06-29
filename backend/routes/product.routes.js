@@ -10,29 +10,32 @@ const Product = require('../models/Product');
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "/../../frontend/public/uploads");
+        // callback(null, "../../frontend/public/uploads");
+        callback(null, '~/../../frontend/public/uploads');
     },
     filename: (req, file, callback) => {
-        callback(null, file.originalname)
+        callback(null, file.originalname);
     }
 })
 
 const upload = multer({storage: storage});
 
 router.post('/', upload.single('productImage'), (req, res, next) => {
-  
-    const prod = {
-        productPrice: req.body.productPrice,
-        productName: req.body.productName,
-        productDescription: req.body.productDescription,
-        productImage: req.file.originalname
-    }
+    const newProduct = {
+          productPrice: req.body.productPrice,
+          productName: req.body.productName,
+          productDescription: req.body.productDescription,
+          productImage: req.file.originalname,
+         
+      }
+
     Product.create(newProduct, (err, item) => {
         if (err) {
             console.log(err);
         }
         else {
-            res.redirect('/');
+          console.log(item);
+          res.json(item);
         }
     });
 });

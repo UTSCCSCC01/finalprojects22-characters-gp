@@ -12,6 +12,7 @@ import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
+import SumbitProduct from './components/SubmitProduct'
 
 class App extends React.Component {
   constructor(props) {
@@ -56,6 +57,11 @@ class App extends React.Component {
                 <Nav>
                   <Link to={'/StoriesList'} className="nav-link">
                     Story Statuses
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/SubmitProduct'} className="nav-link">
+                    Add New Product
                   </Link>
                 </Nav>
                 {this.state.user === null ?
@@ -113,6 +119,11 @@ class App extends React.Component {
                       exact
                       path="/stories/:id"
                       render={(props) => <StoryDetails {...props} />}
+                      />
+                    <Route
+                      exact
+                      path="/SubmitProduct"
+                      render={(props) => <SumbitProduct {...props} />}
                       />
                   </Switch>
                 </div>
