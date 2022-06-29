@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import { NavDropdown, Toast, ToastContainer } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
@@ -13,13 +14,21 @@ import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
 import SubmitProduct from './components/SubmitProduct'
+import ProfileInfo from './components/ProfileInfo'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.signOut = this.signOut.bind(this);
     this.signIn = this.signIn.bind(this);
-    this.state = { user: null };
+    this.setToast = this.setToast.bind(this);
+    this.state = {
+      user: null,
+      toast: {
+        show: false,
+        msg: ''
+      }
+    };
   }
   //componentDidMount() method runs after the component output has been rendered to the DOM.
   componentDidMount() {
@@ -34,12 +43,18 @@ class App extends React.Component {
   signIn(data) {
     this.setState({ user: data })
     localStorage.setItem('user', JSON.stringify(data))
-    console.log("Signed In!", data)
+    this.setToast("Signed in!")
+    console.log(this.state.user)
   }
 
   signOut() {
     localStorage.removeItem('user')
     this.setState({ user: null })
+    this.setToast("Signed out.")
+  }
+
+  setToast(message) {
+    this.setState({ toast: { show: true, msg: message } })
   }
 
   render() {
@@ -53,43 +68,47 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
+              
               <Nav className="justify-content-end">
-                <Nav>
-                  <Link to={'/StoriesList'} className="nav-link">
-                    Story Statuses
-                  </Link>
-                </Nav>
-                {this.state.user !== null && this.state.user[0]['type'] === '3' &&
-                <Nav>
-                  <Link to={'/SubmitProduct'} className="nav-link">
-                    Add Product
-                  </Link>
-                </Nav>}
-                {this.state.user === null ?
                   <Nav>
-                    <Link to={'/signup'} className="nav-link">
-                      Sign Up
+                    <Link to={'/StoriesList'} className="nav-link">
+                      Story Statuses
                     </Link>
                   </Nav>
-                  :
+                  {this.state.user !== null && this.state.user['type'] === '3' &&
                   <Nav>
-                    <Link to={'/'} onClick={this.signOut} className="nav-link">
-                      Sign Out
+                    <Link to={'/SubmitProduct'} className="nav-link">
+                      Add Product
                     </Link>
-
                   </Nav>
-                }
-                {this.state.user === null &&
-                <Nav>
-                  <Link to={'/login'} className="nav-link">
-                    Login
-                  </Link>
-                </Nav>}
-                <Nav>
-                  <Link to={'/submitStory'} className="nav-link">
-                    Submit a story
-                  </Link>
-                </Nav>
+                  }
+                  <Nav>
+                    <Link to={'/submitStory'} className="nav-link">
+                      Submit a story
+                    </Link>
+                  </Nav>
+                  {this.state.user === null &&
+                    <Nav>
+                      <Link to={'/signup'} className="nav-link">
+                        Sign Up
+                      </Link>
+                    </Nav>
+                  }
+                  {this.state.user === null &&
+                    <Nav>
+                      <Link to={'/login'} className="nav-link">
+                        Login
+                      </Link>
+                    </Nav>}
+                  {this.state.user !== null &&
+                    <NavDropdown title="Profile">
+                        <NavDropdown.Item href={'/profile/' + this.state.user._id}>
+                          Settings
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href={'/'} onClick={this.signOut}>
+                          Sign Out
+                        </NavDropdown.Item>
+                    </NavDropdown>}
               </Nav>
             </Container>
           </Navbar>
@@ -106,7 +125,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/Login"
-                      component={(props) => <Login {... props} signIn={this.signIn} />}
+                      component={(props) => <Login {...props} signIn={this.signIn} />}
                     />
                     <Route
                       exact
@@ -115,23 +134,32 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/submitStory"
-                      component={(props) => <SubmitStory {... props} />} />
+                      component={(props) => <SubmitStory {...props} />} />
                     <Route
                       exact
                       path="/stories/:id"
                       render={(props) => <StoryDetails {...props} />}
-                      />
+                    />
                     <Route
                       exact
                       path="/SubmitProduct"
                       render={(props) => <SubmitProduct {...props}  user={this.state.user} />}
                       />
+                    <Route
+                      path="/profile/:id"
+                      render={(props) => <ProfileInfo {...props} setToast={this.setToast}/>}
+                    />
                   </Switch>
                 </div>
               </Col>
             </Row>
           </Container>
         </Router>
+        <ToastContainer position="bottom-end" className="p-3">
+          <Toast onClose={() => this.setState({ toast: { show: false } })} show={this.state.toast.show} delay={2000} autohide>
+            <Toast.Body>{this.state.toast.msg}</Toast.Body>
+          </Toast>
+        </ToastContainer>
       </div>
     )
   }

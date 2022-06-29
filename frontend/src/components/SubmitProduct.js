@@ -107,7 +107,7 @@ export default class SubmitProduct extends Component {
     }
 
     render(){
-        if (this.props.user == null || this.props.user[0]['type'] !== '3'){
+        if (this.props.user == null || this.props.user['type'] !== '3'){
             return (<h1>Invalid Permissions</h1>);
         }
         else {
