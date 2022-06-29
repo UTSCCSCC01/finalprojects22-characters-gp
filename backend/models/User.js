@@ -7,9 +7,9 @@ let userSchema = new Schema({
   password: {
     type: String
   },
-  isEmployer: {
-    type: Boolean,
-    default: false
+  type: {
+    type: String,
+    default: '1',
   }
 })
 module.exports = mongoose.model('User', userSchema)
