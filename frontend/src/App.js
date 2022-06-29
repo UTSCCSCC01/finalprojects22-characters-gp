@@ -10,10 +10,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
-import ProductAdd from './components/ProductAdd'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
-import SumbitProduct from './components/SubmitProduct'
+import SubmitProduct from './components/SubmitProduct'
 
 class App extends React.Component {
   constructor(props) {
@@ -60,11 +59,12 @@ class App extends React.Component {
                     Story Statuses
                   </Link>
                 </Nav>
+                {this.state.user !== null && this.state.user[0]['type'] === '3' &&
                 <Nav>
                   <Link to={'/SubmitProduct'} className="nav-link">
-                    Add New Product
+                    Add Product
                   </Link>
-                </Nav>
+                </Nav>}
                 {this.state.user === null ?
                   <Nav>
                     <Link to={'/signup'} className="nav-link">
@@ -83,12 +83,6 @@ class App extends React.Component {
                 <Nav>
                   <Link to={'/login'} className="nav-link">
                     Login
-                  </Link>
-                </Nav>}
-                {this.state.user !== null && this.state.user[0]['isEmployer'] &&
-                <Nav>
-                  <Link to={'/productAdd'} className="nav-link">
-                    Add Product
                   </Link>
                 </Nav>}
                 <Nav>
@@ -116,11 +110,6 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/ProductAdd"
-                      component={(props) => <ProductAdd {... props} />}
-                    />
-                    <Route
-                      exact
                       path="/StoriesList"
                       render={(props) => <StoriesList {...props} />} />
                     <Route
@@ -135,7 +124,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/SubmitProduct"
-                      render={(props) => <SumbitProduct {...props} />}
+                      render={(props) => <SubmitProduct {...props}  user={this.state.user} />}
                       />
                   </Switch>
                 </div>

@@ -25,7 +25,12 @@ const productSchema = new Schema({
     productInventoryAmount: {
         type: String,
         required: true
-    }
+    },
+
+    productCharacter: {
+        type: String,
+        required: true
+    },
 
 });
 

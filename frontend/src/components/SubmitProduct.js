@@ -7,31 +7,52 @@ import axios from 'axios';
 import config from '../config'
 
 
-export default class SumbitProduct extends Component {
+export default class SubmitProduct extends Component {
     constructor(props) {
         super(props)
 
         //State
         this.state = {
             productName: '',
+            productCharacter: '',
+            productInventoryAmount: '',
             productPrice: '',
             productDescription: '',
             productImage: '',
             submissionSuccess: false,
+            listOfCharacters: [],
         }
 
 
         //binding methods
         this.onChangeProductDescription = this.onChangeProductDescription.bind(this);
         this.onChangeProductName = this.onChangeProductName.bind(this);
+        this.onChangeProductCharacter = this.onChangeProductCharacter.bind(this);
+        this.onChangeProductInventoryAmount = this.onChangeProductInventoryAmount.bind(this);
         this.onChangeProductPrice = this.onChangeProductPrice.bind(this);
         this.onUploadImage = this.onUploadImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
+        axios.get(config.backend+"/users/?type=2")
+        .then(res => {
+            this.setState({
+                listOfCharacters: res.data,
+                productCharacter: res.data[0].email
+            });
+        }).catch((error) => {
+            console.log(error);  
+        });
 
     }
 
     onChangeProductName(e){
         this.setState({ productName: e.target.value });
+    }
+    onChangeProductCharacter(e){
+        this.setState({ productCharacter: e.target.value });
+    }
+    onChangeProductInventoryAmount(e){
+        this.setState({ productInventoryAmount: e.target.value });
     }
     onChangeProductDescription(e){
         this.setState({ productDescription: e.target.value });
@@ -51,6 +72,8 @@ export default class SumbitProduct extends Component {
 
         const formData = new FormData();
         formData.append("productName", this.state.productName);
+        formData.append("productCharacter", this.state.productCharacter);
+        formData.append("productInventoryAmount", this.state.productInventoryAmount);
         formData.append("productPrice", this.state.productPrice);
         formData.append("productDescription", this.state.productDescription);
         formData.append("productImage", this.state.productImage);
@@ -72,9 +95,11 @@ export default class SumbitProduct extends Component {
         //reset SubmitForm state
         this.setState({
             productName: '',
+            productInventoryAmount: '',
             productPrice: '',
             productDescription: '',
-            productImage: ''
+            productImage: '',
+            productCharacter: '',
         })
         //change submissionSuccess state to show
         //successful submission message to user:
@@ -82,71 +107,99 @@ export default class SumbitProduct extends Component {
     }
 
     render(){
-        return(
-            <form onSubmit={this.onSubmit} encType="multipart/form-data">
-
-                <br></br>
-                <Form.Group as={Row} controlId="productName">
-                    <Form.Label column sm="4">
-                        What is the name of the product?
-                    </Form.Label>
-                    <Col sm="8">
-                        <Form.Control required type="text"
-                            placeholder="Enter product name here ..."
-                            onChange={this.onChangeProductName} />
-                    </Col>
-                </Form.Group>
-                <br></br>
-                <Form.Group as={Row} controlId="productDescription">
-                    <center>
-                        <Form.Label column sm="10">
-                            <h5>Insert product description</h5>
+        if (this.props.user == null || this.props.user[0]['type'] !== '3'){
+            return (<h1>Invalid Permissions</h1>);
+        }
+        else {
+            return(
+                <form onSubmit={this.onSubmit} encType="multipart/form-data">
+                    <br/>
+                    <br/>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm="4">
+                            Select Character Email
                         </Form.Label>
-                    </center>
-                    <Col sm="12">
-                        <Form.Control as="textarea"
-                            placeholder="Product Description"
+                        <Col sm="8">
+                            <Form.Select required type="text" value={this.state.productCharacter} onChange={this.onChangeProductCharacter}>
+                                {this.state.listOfCharacters.map(opt => (
+                                    <option value={opt.email}>{opt.email}</option>
+                                ))}
+                            </Form.Select>
+                        </Col>
+                    </Form.Group>
+                    <br/>
+                    <Form.Group as={Row} controlId="productName">
+                        <Form.Label column sm="4">
+                            Product Name
+                        </Form.Label>
+                        <Col sm="8">
+                        <Form.Control required type="text"
+                            placeholder="Name"
+                            onChange={this.onChangeProductName} />
+                        </Col>
+                    </Form.Group>
+                    <br/>
+                    <Row className="mb-3">
+                        <Form.Group as={Col} controlId="productInventoryAmount">
+                            <Form.Label>
+                                Inventory Amount
+                            </Form.Label>
+                            <Form.Control required type="text"
+                                placeholder="In Stock"
+                                onChange={this.onChangeProductInventoryAmount} />
+
+                        </Form.Group>
+                            <Form.Group as={Col} controlId="productPrice">
+                            <Form.Label>
+                                Price
+                            </Form.Label>
+                            <Form.Control required type="number"
+                                min="0.00" step="0.05"
+                                placeholder="$"
+                                onChange={this.onChangeProductPrice}>
+                            </Form.Control>
+                        </Form.Group>
+                    </Row>
+                    <br/>
+                    <Form.Group as={Row} controlId="productDescription">
+                        <center>
+                            <Form.Label column sm="10">
+                                <h5>Insert Product Description</h5>
+                            </Form.Label>
+                        </center>
+                        <Col sm="12">
+                            <Form.Control as="textarea"
+                                placeholder="Product Description"
+                                required
+                                rows={8}
+                                onChange={this.onChangeProductDescription} />
+                        </Col>
+                    </Form.Group>
+                    <br/>
+                    <div className='from-group'>
+                        <label htmlFor='file' style={{padding:20}}>Select Product Image:</label>
+
+                        <input type="file"
+                            filename="productImage"
+                            // name="productImage"
+                            className="form-control-file"
                             required
-                            rows={8}
-                            onChange={this.onChangeProductDescription} />
-                    </Col>
-                </Form.Group>
-                <br></br>
-                <Form.Group as={Row} controlId="productPrice">
-                    <Form.Label column sm="4">
-                        What is the price of the product?
-                    </Form.Label>
-                    <Col sm="8">
-                        <Form.Control required type="number"
-                            min="0.01" step="0.01"
-                            placeholder="Enter product price here ..."
-                            onChange={this.onChangeProductPrice} />
-                    </Col>
-                </Form.Group>
-                <br></br>
-                <div className='from-group'>
-                    <label htmlFor='file' style={{padding:20}}>Choose product image:</label>
+                            onChange={this.onUploadImage}>
+                        </input>
+                    </div>
+                    <br/>
+                    <Button size="md" block="block" type="submit">
+                        Submit
+                    </Button>
 
-                    <input type="file"
-                        filename="productImage"
-                        // name="productImage"
-                        className="form-control-file"
-                        required
-                        onChange={this.onUploadImage}>    
-                    </input>
-                </div>
-                <br></br>
-                <Button size="md" block="block" type="submit">
-                    Submit
-                </Button>
-
-                {this.state.submissionSuccess == 'true' && 
-                    <Alert variant="success"  onClose={() => this.setState({ submissionSuccess: false})} dismissible>
-                        <Alert.Heading>The product has been successfully submitted.</Alert.Heading>
-                    </Alert>
-                }
-            </form>
-        )
+                    {this.state.submissionSuccess == 'true' && 
+                        <Alert variant="success"  onClose={() => this.setState({ submissionSuccess: false})} dismissible>
+                            <Alert.Heading>The product has been successfully submitted.</Alert.Heading>
+                        </Alert>
+                    }
+                </form>
+            )
+        }
     }
 
 }
