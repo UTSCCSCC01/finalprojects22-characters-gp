@@ -1,8 +1,5 @@
 import React, {Component, NumericInput, useState}  from 'react';
-import Form from 'react-bootstrap/Form';
-import { Row, Col} from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert'
+import { Alert, Button, Col, Card, Form, Row} from 'react-bootstrap';
 import axios from 'axios';
 import config from '../config'
 
@@ -112,92 +109,96 @@ export default class SubmitProduct extends Component {
         }
         else {
             return(
-                <form onSubmit={this.onSubmit} encType="multipart/form-data">
-                    <br/>
-                    <br/>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="4">
-                            Select Character Email
-                        </Form.Label>
-                        <Col sm="8">
-                            <Form.Select required type="text" value={this.state.productCharacter} onChange={this.onChangeProductCharacter}>
-                                {this.state.listOfCharacters.map(opt => (
-                                    <option key={opt.email} value={opt.email}>{opt.email}</option>
-                                ))}
-                            </Form.Select>
-                        </Col>
-                    </Form.Group>
-                    <br/>
-                    <Form.Group as={Row} controlId="productName">
-                        <Form.Label column sm="4">
-                            Product Name
-                        </Form.Label>
-                        <Col sm="8">
-                        <Form.Control required type="text"
-                            placeholder="Name"
-                            onChange={this.onChangeProductName} />
-                        </Col>
-                    </Form.Group>
-                    <br/>
-                    <Row className="mb-3">
-                        <Form.Group as={Col} controlId="productInventoryAmount">
-                            <Form.Label>
-                                Inventory Amount
+                <Row className="justify-content-md-center mt-4">
+                <Col md="8">
+                <Card className="p-5">
+                    <form onSubmit={this.onSubmit} encType="multipart/form-data">
+                        <Form.Label><h2>Add Character Product</h2></Form.Label>
+                        <br/><br/>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                                Select Character Email
                             </Form.Label>
-                            <Form.Control required type="number"
-                                placeholder="In Stock"
-                                onChange={this.onChangeProductInventoryAmount} />
+                            <Col sm="8">
+                                <Form.Select required type="text" value={this.state.productCharacter} onChange={this.onChangeProductCharacter}>
+                                    {this.state.listOfCharacters.map(opt => (
+                                        <option key={opt.email} value={opt.email}>{opt.email}</option>
+                                    ))}
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+                        <br/>
+                        <Form.Group as={Row} controlId="productName" className="justify-content-end">
+                            <Form.Label column sm="4">
+                                Product Name
+                            </Form.Label>
+                            <Col sm="8" >
+                            <Form.Control required type="text"
+                                placeholder="Name"
+                                onChange={this.onChangeProductName} />
+                            </Col>
+                        </Form.Group>
+                        <br/>
+                        <Row className="mb-1">
+                            <Form.Group as={Col} controlId="productInventoryAmount">
+                                <Form.Label>
+                                    Inventory Amount
+                                </Form.Label>
+                                <Form.Control required type="number"
+                                    placeholder="In Stock"
+                                    onChange={this.onChangeProductInventoryAmount} />
 
-                        </Form.Group>
-                            <Form.Group as={Col} controlId="productPrice">
+                            </Form.Group>
+                                <Form.Group as={Col} controlId="productPrice">
+                                <Form.Label>
+                                    Price
+                                </Form.Label>
+                                <Form.Control required type="number"
+                                    min="0.00" step="0.05"
+                                    placeholder="$"
+                                    onChange={this.onChangeProductPrice}>
+                                </Form.Control>
+                            </Form.Group>
+                        </Row>
+                        <br/>
+                        <Form.Group as={Row} controlId="productDescription">
                             <Form.Label>
-                                Price
+                                <h6>Product Description</h6>
                             </Form.Label>
-                            <Form.Control required type="number"
-                                min="0.00" step="0.05"
-                                placeholder="$"
-                                onChange={this.onChangeProductPrice}>
-                            </Form.Control>
+                            <Col sm="12">
+                                <Form.Control as="textarea"
+                                    placeholder="Enter Description"
+                                    required
+                                    rows={8}
+                                    onChange={this.onChangeProductDescription} />
+                            </Col>
                         </Form.Group>
-                    </Row>
-                    <br/>
-                    <Form.Group as={Row} controlId="productDescription">
-                        <center>
-                            <Form.Label column sm="10">
-                                <h5>Insert Product Description</h5>
-                            </Form.Label>
-                        </center>
-                        <Col sm="12">
-                            <Form.Control as="textarea"
-                                placeholder="Product Description"
+                        <br/>
+                        <div className='from-group'>
+                            <label htmlFor='file' style={{padding:20}}>Select Product Image:</label>
+
+                            <input type="file"
+                                filename="productImage"
+                                // name="productImage"
+                                className="form-control-file"
                                 required
-                                rows={8}
-                                onChange={this.onChangeProductDescription} />
-                        </Col>
-                    </Form.Group>
-                    <br/>
-                    <div className='from-group'>
-                        <label htmlFor='file' style={{padding:20}}>Select Product Image:</label>
+                                onChange={this.onUploadImage}>
+                            </input>
+                        </div>
+                        <br/>
+                        <Button size="md" block="block" type="submit">
+                            Submit
+                        </Button>
+                        {this.state.submissionSuccess == 'true' && 
+                            <Alert variant="success"  onClose={() => this.setState({ submissionSuccess: false})} dismissible>
+                                <Alert.Heading>The product has been successfully submitted.</Alert.Heading>
+                            </Alert>
+                        }
+                    </form>
+                </Card>
+                </Col>
+                </Row>
 
-                        <input type="file"
-                            filename="productImage"
-                            // name="productImage"
-                            className="form-control-file"
-                            required
-                            onChange={this.onUploadImage}>
-                        </input>
-                    </div>
-                    <br/>
-                    <Button size="md" block="block" type="submit">
-                        Submit
-                    </Button>
-
-                    {this.state.submissionSuccess == 'true' && 
-                        <Alert variant="success"  onClose={() => this.setState({ submissionSuccess: false})} dismissible>
-                            <Alert.Heading>The product has been successfully submitted.</Alert.Heading>
-                        </Alert>
-                    }
-                </form>
             )
         }
     }
