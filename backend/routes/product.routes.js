@@ -18,6 +18,8 @@ const storage = multer.diskStorage({
     }
 })
 
+
+
 const upload = multer({storage: storage});
 
 router.post('/', upload.single('productImage'), (req, res, next) => {
@@ -65,7 +67,7 @@ router.get('/:id', (req, res, next) => {
 
 
 // Update product
-router.put('/:id', upload.single("productImage"), (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   Product.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
