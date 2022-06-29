@@ -13,6 +13,7 @@ import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
+import SubmitProduct from './components/SubmitProduct'
 import ProfileInfo from './components/ProfileInfo'
 
 class App extends React.Component {
@@ -67,39 +68,47 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
+              
               <Nav className="justify-content-end">
-                <Nav>
-                  <Link to={'/StoriesList'} className="nav-link">
-                    Story Statuses
-                  </Link>
-                </Nav>
-                <Nav>
-                  <Link to={'/submitStory'} className="nav-link">
-                    Submit a story
-                  </Link>
-                </Nav>
-                {this.state.user === null &&
                   <Nav>
-                    <Link to={'/signup'} className="nav-link">
-                      Sign Up
+                    <Link to={'/StoriesList'} className="nav-link">
+                      Story Statuses
                     </Link>
                   </Nav>
-                }
-                {this.state.user === null &&
+                  {this.state.user !== null && this.state.user['type'] === '3' &&
                   <Nav>
-                    <Link to={'/login'} className="nav-link">
-                      Login
+                    <Link to={'/SubmitProduct'} className="nav-link">
+                      Add Product
                     </Link>
-                  </Nav>}
-                {this.state.user !== null &&
-                  <NavDropdown title="Profile">
-                      <NavDropdown.Item href={'/profile/' + this.state.user._id}>
-                        Settings
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={'/'} onClick={this.signOut}>
-                        Sign Out
-                      </NavDropdown.Item>
-                  </NavDropdown>}
+                  </Nav>
+                  }
+                  <Nav>
+                    <Link to={'/submitStory'} className="nav-link">
+                      Submit a story
+                    </Link>
+                  </Nav>
+                  {this.state.user === null &&
+                    <Nav>
+                      <Link to={'/signup'} className="nav-link">
+                        Sign Up
+                      </Link>
+                    </Nav>
+                  }
+                  {this.state.user === null &&
+                    <Nav>
+                      <Link to={'/login'} className="nav-link">
+                        Login
+                      </Link>
+                    </Nav>}
+                  {this.state.user !== null &&
+                    <NavDropdown title="Profile">
+                        <NavDropdown.Item href={'/profile/' + this.state.user._id}>
+                          Settings
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href={'/'} onClick={this.signOut}>
+                          Sign Out
+                        </NavDropdown.Item>
+                    </NavDropdown>}
               </Nav>
             </Container>
           </Navbar>
@@ -133,6 +142,10 @@ class App extends React.Component {
                     />
                     <Route
                       exact
+                      path="/SubmitProduct"
+                      render={(props) => <SubmitProduct {...props}  user={this.state.user} />}
+                      />
+                    <Route
                       path="/profile/:id"
                       render={(props) => <ProfileInfo {...props} setToast={this.setToast}/>}
                     />
