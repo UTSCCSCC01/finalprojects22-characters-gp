@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-    // productImage: {
-    //     data: Buffer,
-    //     contentType: String,
-    // },
+    productImage: {
+        type: String,
+        required: true
+    },
 
     productName: {
         type: String,
@@ -18,6 +18,11 @@ const productSchema = new Schema({
     },
     
     productDescription: {
+        type: String,
+        required: true
+    },
+
+    productInventoryAmount: {
         type: String,
         required: true
     }
