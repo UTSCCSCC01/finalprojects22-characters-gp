@@ -40,7 +40,12 @@ class SubmitForm extends Component {
     onSubmit(e) {
         e.preventDefault();
         //If use is not logged-in, then render an alert that tells them to do so,
-
+        if (!this.props.user) {
+            sessionStorage.setItem('submitStoryForm', JSON.stringify(this.state))
+            console.log("saved form", sessionStorage.getItem('submitStoryForm'))
+            this.props.history.push('/signup')
+            return;
+        }
         //otherwise create new Story submission object and send it to database
 
         //assume all other state fields are filled (by required attributes)
