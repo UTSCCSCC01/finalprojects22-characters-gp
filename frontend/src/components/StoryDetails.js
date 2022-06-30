@@ -15,23 +15,24 @@ export default class StoryDetails extends Component {
         title: '',
         text: '',
         status: '',
-        type: '',  //storyType == "customApparel" OR "characterCandidate" 
+        type: '',  //storyType == "customApparel" OR "characterCandidate"
         date: null,
       }
-      
+
       this.updateStatus = this.updateStatus.bind(this);
     }
 
-    //access the db to fetch the data to display    
+    //access the db to fetch the data to display
 
     componentDidMount() {
         axios.get(config.backend+'/stories/' + this.props.match.params.id)
           .then(res => {
             this.setState({
-              title: res.data.storyTitle, 
+              title: res.data.storyTitle,
               text: res.data.storyText,
               status: res.data.storyStatus,
               type: res.data.storyType,
+              author: res.data.author,
               date: new Date(res.data.storyDate).toString()
             });
           })
@@ -65,10 +66,10 @@ export default class StoryDetails extends Component {
                     <Card.Text>{this.state.text}</Card.Text>
                     {/* <Card.Body>
                         <video  controls>
-                            <source src=""></source> 
+                            <source src=""></source>
                         </video>
                     </Card.Body> */}
-                    
+
                     <Card.Text>
                         Status: {this.state.status}
                     <Card.Text>
@@ -77,7 +78,7 @@ export default class StoryDetails extends Component {
                           <Dropdown.Item onClick={() => this.updateStatus("new")}>new</Dropdown.Item>
                           <Dropdown.Item onClick={() => this.updateStatus("interviewing")}>interviewing</Dropdown.Item>
                           <Dropdown.Item onClick={() => this.updateStatus("validated")}>validated</Dropdown.Item>
-                       
+
                         </DropdownButton>
                     </Card.Text>
                 </Card.Body>

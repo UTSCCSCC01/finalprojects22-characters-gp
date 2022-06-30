@@ -17,23 +17,27 @@ router.post('/', (req, res, next) => {
   })
 });
 // Get all stories
-router.get('/', (req, res) => {
-  Story.find({ deleted: false }, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
+router.get('/', (req, res, next) => {
+  Story.find({ deleted: false }).
+    populate('author', 'firstName lastName emaiil').
+    exec((error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        res.json(data)
+      }
+    })
 });
 // Get single story
 router.get('/:id', (req, res, next) => {
-  Story.findById(req.params.id, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
+  Story.findById(req.params.id).
+    populate('author', 'firstName lastName emaiil').
+    exec((error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        res.json(data)
+      }
   })
 });
 // Update story
@@ -54,8 +58,8 @@ router.delete('/:id', (req, res, next) => {
     if (error) {
       return next(error);
     } else {
-      res.status(200).json({ 
-        msg: data 
+      res.status(200).json({
+        msg: data
       })
     }
   })
