@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
 // Get all stories
 router.get('/', (req, res, next) => {
   Story.find({ deleted: false }).
-    populate('author', 'firstName lastName emaiil').
+    populate('author', 'firstName lastName email').
     exec((error, data) => {
       if (error) {
         return next(error)
@@ -31,7 +31,7 @@ router.get('/', (req, res, next) => {
 // Get single story
 router.get('/:id', (req, res, next) => {
   Story.findById(req.params.id).
-    populate('author', 'firstName lastName emaiil').
+    populate('author', 'firstName lastName email').
     exec((error, data) => {
       if (error) {
         return next(error)

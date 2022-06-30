@@ -136,7 +136,7 @@ class SubmitForm extends Component {
                             label="Yes"
                             required
                             onClick={this.onCheckYes}
-                            defaultChecked={this.state.storyType === "customApparel"}
+                            checked={this.state.storyType === "customApparel"}
                         />
                         <Form.Check inline
                             name="checkStoryType"
@@ -145,7 +145,7 @@ class SubmitForm extends Component {
                             label="No"
                             required
                             onClick={this.onCheckNo}
-                            defaultChecked={this.state.storyType === "characterCandidate"}
+                            checked={this.state.storyType === "characterCandidate"}
                         />
                     </Col>
                 </Form.Group>

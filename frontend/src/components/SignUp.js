@@ -63,7 +63,7 @@ class CreateItem extends Component {
         axios.post(config.backend + '/users', data)
             .then(res => {
                 console.log(res)
-                this.props.signIn(res.data[0])
+                this.props.signIn(res.data)
                 this.props.history.goBack()
             });
         this.setState({
@@ -122,7 +122,7 @@ class CreateItem extends Component {
                             {/* You can disable the default UI by adding the HTML noValidate attribute to your <Form> or <form> element. */}
                             <Form.Group controlId="FirstName">
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control type="text" value={this.state.email} onChange={(e) => { this.setState({ firstName: e.target.value }) }} isInvalid={!!this.state.warnings.firstName}
+                                <Form.Control type="text" value={this.state.firstName} onChange={(e) => { this.setState({ firstName: e.target.value }) }} isInvalid={!!this.state.warnings.firstName}
                                 />
                                 <Form.Control.Feedback type='invalid'>
                                     {this.state.warnings.firstName}

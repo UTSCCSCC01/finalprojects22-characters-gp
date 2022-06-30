@@ -94,12 +94,6 @@ class App extends React.Component {
                       </Link>
                     </Nav>
                   }
-                  {this.state.user === null &&
-                    <Nav>
-                      <Link to={'/login'} className="nav-link">
-                        Login
-                      </Link>
-                    </Nav>}
                   {this.state.user !== null &&
                     <NavDropdown title="Profile">
                         <NavDropdown.Item href={'/profile/' + this.state.user._id}>
