@@ -14,6 +14,7 @@ import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
 import ProfileInfo from './components/ProfileInfo'
+import ProductDetails from './components/ProductDetails'
 
 class App extends React.Component {
   constructor(props) {
@@ -130,6 +131,11 @@ class App extends React.Component {
                       exact
                       path="/stories/:id"
                       render={(props) => <StoryDetails {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/products/:id"
+                      render={(props) => <ProductDetails {...props} />}
                     />
                     <Route
                       exact

@@ -25,7 +25,14 @@ const productSchema = new Schema({
     productInventoryAmount: {
         type: String,
         required: true
-    }
+    },
+
+    ////////////////////// for testing purposes only
+    productStory: {
+        body: String,
+        type: mongoose.Schema.Types.ObjectId
+    },
+    //////////////////////
 
 });
 
