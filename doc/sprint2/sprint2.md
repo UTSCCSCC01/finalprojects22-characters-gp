@@ -6,6 +6,7 @@ Complete the following user stories:
 - CHAR-14: As a consumer I want to be able to view and manage items that I have added to my shopping cart so that I can review my order before processing my payment
 - CHAR-18: As a logged-in character/consumer/employee I want to be able to view and modify my personal information so that my personal information is correct and up to date
 - CHAR-38: As a consumer I want to be able to view item details by clicking on the item in the shopping page so that I can get a better idea of the item before adding it to my shopping cart.
+- CHAR-57: As an employee, I want to see the user details of the story submissions so that I can contact him/her when the story reaches the interview stage
 
 ## Tasks Breakdown
 Story CHAR-5: As a consumer I want to be able to browse available products so that I can choose products that I may be interested in buying
@@ -21,7 +22,7 @@ Story CHAR-12: As an employee I want to add/remove apparels by title and apparel
 
 Story CHAR-14: As a consumer I want to be able to view and manage items that I have added to my shopping cart so that I can review my order before processing my payment
 - Create basic UI for shopping cart page
-- Ensure that all items added to the user's shopping cart are displayed on shopping cart page 
+- Ensure that all items added to the user's shopping cart are displayed on shopping cart page
 - Add functionality to increment item quantity to be purchased
 
 Story CHAR-18: As a logged-in character/consumer/employee I want to be able to view and modify my personal information so that my personal information is correct and up to date
@@ -33,9 +34,15 @@ Story CHAR-18: As a logged-in character/consumer/employee I want to be able to v
 Story CHAR-38: As a consumer I want to be able to view item details by clicking on the item in the shopping page so that I can get a better idea of the item before adding it to my shopping cart.
 - The product details page should provide details like price, clothing sizes, etc that correspond to the item that
   the user clicked-on
-- Allow users to add the item to their shopping cart 
+- Allow users to add the item to their shopping cart
 - Add shoppingList field to User schema model
 (in db for users, shopping cart lists key:value pair -> productID:quantity)
+
+Story CHAR-57: As an employee, I want to see the user details of the story submissions so that I can contact him/her when the story reaches the interview stage
+- Add first name and last name field to user model
+- Add the user account reference to the story model
+- Show the user fields in the story details page
+- Prompt user to sign in before submitting a story
 
 
 
