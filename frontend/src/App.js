@@ -78,48 +78,47 @@ class App extends React.Component {
                     Store
                   </Link>
                 </Nav>
-                  {this.state.user !== null && this.state.user['type'] === 3 &&
-          (<><Nav>
-            <Link to={'/SubmitProduct'} className="nav-link">
-              Add Product
-            </Link>
-          </Nav>
-            <Nav>
-              <Link to={'/StoriesList'} className="nav-link">
-                Story Statuses
-              </Link>
-            </Nav></>)}
-        {this.state.user === null &&
-          <Nav>
-            <Link to={'/signup'} className="nav-link">
-              Sign Up
-            </Link>
-          </Nav>
-        }
-        {this.state.user !== null &&
-          <NavDropdown title="Profile">
-            <NavDropdown.Item href={'/profile/' + this.state.user._id}>
-              Settings
-            </NavDropdown.Item>
-            <NavDropdown.Item href={'/'} onClick={this.signOut}>
-              Sign Out
-            </NavDropdown.Item>
-          </NavDropdown>}
-        <Nav>
-          <Link to={'/submitStory'} className="nav-link">
-            Submit a story
-          </Link>
-        </Nav>
-        <Nav>
-          <Link to={'/shoppingCart'} className="nav-link">
-            My Cart
-          </Link>
-        </Nav>
-      </Nav>
-      </Container>
+                {this.state.user !== null && this.state.user['type'] === 3 &&
+                  (<><Nav>
+                    <Link to={'/SubmitProduct'} className="nav-link">
+                      Add Product
+                    </Link>
+                  </Nav>
+                    <Nav>
+                      <Link to={'/StoriesList'} className="nav-link">
+                        Story Statuses
+                      </Link>
+                    </Nav></>)}
+                <Nav>
+                  <Link to={'/submitStory'} className="nav-link">
+                    Submit a story
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/shoppingCart'} className="nav-link">
+                    My Cart
+                  </Link>
+                </Nav>
+                {this.state.user === null ?
+                  <Nav>
+                    <Link to={'/signup'} className="nav-link">
+                      Sign Up
+                    </Link>
+                  </Nav> :
+                  <NavDropdown title="Profile">
+                    <NavDropdown.Item href={'/profile/' + this.state.user._id}>
+                      Settings
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href={'/'} onClick={this.signOut}>
+                      Sign Out
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                }
+              </Nav>
+            </Container>
           </Navbar >
-        <Container>
-          <Row>
+          <Container>
+            <Row>
             <Col md={12}>
               <div className="wrapper">
                 <Switch>

@@ -32,7 +32,7 @@ class ShoppingCartItem extends Component {
         console.log(this.state.subtotal);
     }
 
-    //update the quantity field in the JSON obj stored in localStorage, as well as the props 
+    //update the quantity field in the JSON obj stored in localStorage, as well as the props
     updateQuantity(newQuantity) {
         this.props.updateCart(this.state.pid, newQuantity, this.updateSubtotal)
     }
@@ -97,7 +97,7 @@ class ShoppingCartItem extends Component {
                                 <div className='d-flex align-items-center justify-content-center' style={{ gap: '.5rem' }}>
                                     <Button variant='secondary' size='sm' onClick={this.onDecrement}>-</Button>
                                     <div className='fs-3'>
-                                        <p style={{ fontSize: 'large' }}> {this.props.quantity}</p>
+                                        <p className = "mb-0" style={{ fontSize: 'large' }}> {this.props.quantity}</p>
                                     </div>
                                     <Button variant='secondary' size='sm' onClick={this.onIncrement}>+</Button>
                                 </div>

@@ -41,7 +41,7 @@ class ProfileInfo extends Component {
                         </nav>
                     </nav>
                 </Col> */}
-                <Col>
+                <Col className="mx-auto col-md-8">
                     <ProfileEdit _id={this.props.match.params.id} setToast={this.props.setToast} />
                     <PasswordEdit _id={this.props.match.params.id} setToast={this.props.setToast} />
 
