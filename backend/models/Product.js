@@ -32,10 +32,6 @@ const productSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'stories'
     },
-    productCharacter: {
-        type: String,
-        required: true
-    },
 
 });
 

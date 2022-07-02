@@ -16,6 +16,7 @@ import SubmitStory from './components/SubmitStory'
 import SubmitProduct from './components/SubmitProduct'
 import ProfileInfo from './components/ProfileInfo'
 import ShoppingCart from './components/ShoppingCart'
+import ProductStore from './components/ProductStore'
 import ProductDetails from './components/ProductDetails'
 
 class App extends React.Component {
@@ -66,18 +67,23 @@ class App extends React.Component {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/'} className="nav-link">
+                <Link to={'/ProductStore'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
 
               <Nav className="justify-content-end">
-                  <Nav>
-                    <Link to={'/StoriesList'} className="nav-link">
-                      Story Statuses
-                    </Link>
-                  </Nav>
-                  {this.state.user !== null && this.state.user['type'] === 3 &&
+                <Nav>
+                  <Link to={'/ProductStore'} className="nav-link">
+                    Store
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/StoriesList'} className="nav-link">
+                    Story Statuses
+                  </Link>
+                </Nav>
+                  {this.state.user !== null && this.state.user['type'] === '3' &&
                   <Nav>
                     <Link to={'/SubmitProduct'} className="nav-link">
                       Add Product
@@ -158,6 +164,11 @@ class App extends React.Component {
                       exact
                       path="/shoppingCart"
                       render={(props) => <ShoppingCart {...props} />}
+                      />
+                    <Route
+                      exact
+                      path="/ProductStore"
+                      render={(props) => <ProductStore {...props} />}
                       />
                   </Switch>
                 </div>

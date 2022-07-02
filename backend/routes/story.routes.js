@@ -18,13 +18,15 @@ router.post('/', (req, res, next) => {
 });
 // Get all stories
 router.get('/', (req, res, next) => {
-  Story.find({ deleted: false }).
+  const query = req.query;
+  query.deleted = false;
+  Story.find(query).
     populate('author', 'firstName lastName email').
     exec((error, data) => {
       if (error) {
-        return next(error)
+        return next(error);
       } else {
-        res.json(data)
+        res.json(data);
       }
     })
 });

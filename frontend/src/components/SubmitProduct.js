@@ -11,30 +11,30 @@ export default class SubmitProduct extends Component {
         //State
         this.state = {
             productName: '',
-            productCharacter: '',
+            storyCharacter: '',
             productInventoryAmount: '',
             productPrice: '',
             productDescription: '',
             productImage: '',
             submissionSuccess: false,
-            listOfCharacters: [],
+            approvedStories: [],
         }
 
 
         //binding methods
         this.onChangeProductDescription = this.onChangeProductDescription.bind(this);
         this.onChangeProductName = this.onChangeProductName.bind(this);
-        this.onChangeProductCharacter = this.onChangeProductCharacter.bind(this);
+        this.onChangeStoryCharacter = this.onChangeStoryCharacter.bind(this);
         this.onChangeProductInventoryAmount = this.onChangeProductInventoryAmount.bind(this);
         this.onChangeProductPrice = this.onChangeProductPrice.bind(this);
         this.onUploadImage = this.onUploadImage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
-        axios.get(config.backend+"/users/?type=2")
+        axios.get(config.backend+"/stories/?storyStatus=validated")
         .then(res => {
             this.setState({
-                listOfCharacters: res.data,
-                productCharacter: res.data[0]._id
+                approvedStories: res.data,
+                storyCharacter: res.data[0]._id
             });
         }).catch((error) => {
             console.log(error);  
@@ -45,8 +45,8 @@ export default class SubmitProduct extends Component {
     onChangeProductName(e){
         this.setState({ productName: e.target.value });
     }
-    onChangeProductCharacter(e){
-        this.setState({ productCharacter: e.target.value });
+    onChangeStoryCharacter(e){
+        this.setState({ storyCharacter: e.target.value });
     }
     onChangeProductInventoryAmount(e){
         this.setState({ productInventoryAmount: e.target.value });
@@ -69,7 +69,7 @@ export default class SubmitProduct extends Component {
 
         const formData = new FormData();
         formData.append("productName", this.state.productName);
-        formData.append("productCharacter", this.state.productCharacter);
+        formData.append("storyCharacter", this.state.storyCharacter);
         formData.append("productInventoryAmount", this.state.productInventoryAmount);
         formData.append("productPrice", this.state.productPrice);
         formData.append("productDescription", this.state.productDescription);
@@ -96,7 +96,7 @@ export default class SubmitProduct extends Component {
             productPrice: '',
             productDescription: '',
             productImage: '',
-            productCharacter: '',
+            storyCharacter: '',
         })
         //change submissionSuccess state to show
         //successful submission message to user:
@@ -120,9 +120,9 @@ export default class SubmitProduct extends Component {
                                 Select Character
                             </Form.Label>
                             <Col sm="8">
-                                <Form.Select required type="text" value={this.state.productCharacter} onChange={this.onChangeProductCharacter}>
-                                    {this.state.listOfCharacters.map(opt => (
-                                        <option key={opt._id} value={opt._id}>{opt.firstName + " " + opt.lastName}</option>
+                                <Form.Select required type="text" value={this.state.storyCharacter} onChange={this.onChangeStoryCharacter}>
+                                    {this.state.approvedStories.map(opt => (
+                                        <option key={opt._id} value={opt._id}>{opt.storyTitle+" by "+opt.author.firstName+" "+ opt.author.lastName}</option>
                                     ))}
                                 </Form.Select>
                             </Col>
