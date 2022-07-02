@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+
 // import Product Model
 const Product = require('../models/Product');
 
@@ -27,7 +28,11 @@ router.post('/', upload.single('productImage'), (req, res, next) => {
           productDescription: req.body.productDescription,
           productImage: req.file.originalname,
           productInventoryAmount: req.body.productInventoryAmount,
+
+          productStory: req.body.productStory,
+
           productCharacter: req.body.productCharacter
+
       }
 
     Product.create(newProduct, (err, item) => {

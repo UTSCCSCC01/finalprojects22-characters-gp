@@ -34,7 +34,7 @@ export default class SubmitProduct extends Component {
         .then(res => {
             this.setState({
                 listOfCharacters: res.data,
-                productCharacter: res.data[0].email
+                productCharacter: res.data[0]._id
             });
         }).catch((error) => {
             console.log(error);  
@@ -104,7 +104,7 @@ export default class SubmitProduct extends Component {
     }
 
     render(){
-        if (this.props.user == null || this.props.user['type'] !== '3'){
+        if (this.props.user == null || this.props.user['type'] !== 3){
             return (<h1>Invalid Permissions</h1>);
         }
         else {
@@ -117,12 +117,12 @@ export default class SubmitProduct extends Component {
                         <br/><br/>
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
-                                Select Character Email
+                                Select Character
                             </Form.Label>
                             <Col sm="8">
                                 <Form.Select required type="text" value={this.state.productCharacter} onChange={this.onChangeProductCharacter}>
                                     {this.state.listOfCharacters.map(opt => (
-                                        <option key={opt.email} value={opt.email}>{opt.email}</option>
+                                        <option key={opt._id} value={opt._id}>{opt.firstName + " " + opt.lastName}</option>
                                     ))}
                                 </Form.Select>
                             </Col>
@@ -181,6 +181,7 @@ export default class SubmitProduct extends Component {
                                 filename="productImage"
                                 // name="productImage"
                                 className="form-control-file"
+                                accept="image/*"
                                 required
                                 onChange={this.onUploadImage}>
                             </input>

@@ -16,6 +16,7 @@ import SubmitStory from './components/SubmitStory'
 import SubmitProduct from './components/SubmitProduct'
 import ProfileInfo from './components/ProfileInfo'
 import ProductStore from './components/ProductStore'
+import ProductDetails from './components/ProductDetails'
 
 class App extends React.Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class App extends React.Component {
                   Characters
                 </Link>
               </Navbar.Brand>
-              
+
               <Nav className="justify-content-end">
                 <Nav>
                   <Link to={'/ProductStore'} className="nav-link">
@@ -100,12 +101,6 @@ class App extends React.Component {
                       </Link>
                     </Nav>
                   }
-                  {this.state.user === null &&
-                    <Nav>
-                      <Link to={'/login'} className="nav-link">
-                        Login
-                      </Link>
-                    </Nav>}
                   {this.state.user !== null &&
                     <NavDropdown title="Profile">
                         <NavDropdown.Item href={'/profile/' + this.state.user._id}>
@@ -140,11 +135,16 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/submitStory"
-                      component={(props) => <SubmitStory {...props} />} />
+                      component={(props) => <SubmitStory {...props} user={this.state.user} />} />
                     <Route
                       exact
                       path="/stories/:id"
                       render={(props) => <StoryDetails {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/products/:id"
+                      render={(props) => <ProductDetails {...props} user={this.state.user} setToast={this.setToast}/>}
                     />
                     <Route
                       exact
@@ -167,8 +167,8 @@ class App extends React.Component {
           </Container>
         </Router>
         <ToastContainer position="bottom-end" className="p-3">
-          <Toast onClose={() => this.setState({ toast: { show: false } })} show={this.state.toast.show} delay={2000} autohide>
-            <Toast.Body>{this.state.toast.msg}</Toast.Body>
+          <Toast bg='primary' onClose={() => this.setState({ toast: { show: false } })} show={this.state.toast.show} delay={2000} autohide>
+            <Toast.Body className='text-white'>{this.state.toast.msg}</Toast.Body>
           </Toast>
         </ToastContainer>
       </div>
