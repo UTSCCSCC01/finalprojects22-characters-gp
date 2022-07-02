@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Container, Card, Row, Col } from 'react-bootstrap';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import config from '../config'
-import StoryDetails from './StoryDetails'
   
 
 export default class StoriesRow extends Component {
@@ -15,8 +11,6 @@ export default class StoriesRow extends Component {
     
 
     goToDetails() {    
-        //let story = this.state.filter(res => this.state._id === this.props.obj._id)[0];
-        //let story = this.state.stories.filter(res => this.state.stories._id === this.props.obj._id);
         this.props.history.push('/stories/'+this.props.obj._id);
     }
 

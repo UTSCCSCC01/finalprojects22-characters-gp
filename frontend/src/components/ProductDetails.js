@@ -12,7 +12,7 @@ export default class ProductDetails extends Component {
       super(props)
 
       // State
-      this.state = {
+      this.state = { 
         productName: '',
         productDescription: '',
         price: 0,
@@ -62,7 +62,7 @@ export default class ProductDetails extends Component {
 
     }
 
-    getText = () => {
+    displayStoryDescription = () => {
       // For Text that is shorter than desired length
       if (this.state.storyDescription.length <= 258) return this.state.storyDescription;
       // If text is longer than desired length & isOpen is true
@@ -140,21 +140,20 @@ export default class ProductDetails extends Component {
         image: this.state.image,
         quantity: this.state.quantity
       };
+      let pid = this.props.match.params.id;
       // add to the local storage if it already exists
       let cart = JSON.parse(localStorage.getItem("cartProducts"));
 
       // localStorage.removeItem("cartProducts");
       if(cart == null){
-        cart = [];
-        cart.push(addToCart);
-        localStorage.setItem("cartProducts", JSON.stringify(cart));
+        localStorage.setItem("cartProducts", JSON.stringify({[pid]: addToCart}));
       }else {
         //var exists = false;
         console.log("cart: " + cart);
-        let cartItem = cart.find(ci => ci.pid === addToCart.pid);
+        let cartItem = cart[pid];
         console.log(cartItem);
         if (!cartItem) {
-          cart.push(addToCart)
+          cart[pid] = addToCart;
         } else {
           cartItem.quantity += addToCart.quantity
         }
@@ -169,15 +168,15 @@ export default class ProductDetails extends Component {
     // UI
     render() {
         return (
-            <div className='product-details'>
+            <div className='product-details col-md-8'>
                 <Card >
                     <Card.Header>
                         <Card.Title>Story behind this Product</Card.Title>
-                        <Card.Text>{this.getText()}</Card.Text>
+                        <Card.Text>{this.displayStoryDescription()}</Card.Text>
                     </Card.Header>
                     <Card.Body className='productDetails'>
-                        <img className='productImage' src={`~/../../uploads/${this.state.image}`} alt={`Picture of ${this.state.productName}`}/>
-                        <div className='productDesc'>
+                        <Card.Img className='productImage' variant='top' src={`~/../../uploads/${this.state.image}`} alt={`Picture of ${this.state.productName}`}/>
+                        <div className='productDesc mx-auto'>
                           <Card.Title>{this.state.productName}</Card.Title>
                           <Card.Text>{this.state.productDescription}</Card.Text>
                           <Card.Text className='inventory'>{this.state.inventory} left in stock</Card.Text>
@@ -202,5 +201,4 @@ export default class ProductDetails extends Component {
             </div>
         );
     }
-    //
 }
