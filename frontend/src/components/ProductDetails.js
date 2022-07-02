@@ -93,14 +93,29 @@ export default class ProductDetails extends Component {
       }
     };
 
+    checkValue(e) {
+      let value = parseInt(e.target.value);
+      if (value > e.target.max) {
+          e.target.value = e.target.max;
+      } else if (value < e.target.min) {
+          e.target.value = e.target.min;
+      }
+    }
+
     onQuantityChange(e){
+      this.checkValue(e)
       this.setState({
         quantity: Number(e.target.value)
       });
     }
 
+    
+
     onSubmit(e){
       e.preventDefault();
+      if (this.state.quantity == 0) {
+        return;
+      }
       // create a dict of the items needed
       let addToCart = {
         pid: this.props.match.params.id,
@@ -110,7 +125,6 @@ export default class ProductDetails extends Component {
         image: this.state.image,
         quantity: this.state.quantity
       };
-      
       // add to the local storage if it already exists
       let cart = JSON.parse(localStorage.getItem("cartProducts"));
 
@@ -132,7 +146,7 @@ export default class ProductDetails extends Component {
         localStorage.setItem("cartProducts", JSON.stringify(cart));
       }
 
-      alert("Product Added to Cart");
+      this.props.setToast('Product added to cart.')
 
 
     }
@@ -158,7 +172,7 @@ export default class ProductDetails extends Component {
                             <input 
                               type={"number"} 
                               value={this.state.quantity}
-                              min='1'
+                              min={0}
                               max={this.state.inventory}
                               onChange={(value) => this.onQuantityChange(value)}
                             />

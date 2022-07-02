@@ -135,7 +135,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/products/:id"
-                      render={(props) => <ProductDetails {...props} />}
+                      render={(props) => <ProductDetails {...props} setToast={this.setToast}/>}
                     />
                     <Route
                       exact
