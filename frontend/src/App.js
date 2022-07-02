@@ -82,7 +82,7 @@ class App extends React.Component {
                     Story Statuses
                   </Link>
                 </Nav>
-                  {this.state.user !== null && this.state.user['type'] === '3' &&
+                  {this.state.user !== null && this.state.user['type'] === 3 &&
                   <Nav>
                     <Link to={'/SubmitProduct'} className="nav-link">
                       Add Product
