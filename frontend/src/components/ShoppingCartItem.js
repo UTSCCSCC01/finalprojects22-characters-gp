@@ -4,13 +4,13 @@ import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 
-
-
 class ShoppingCartItem extends Component {
     constructor(props) {
         super(props)
         this.updateSubtotal = this.updateSubtotal.bind(this);
         this.updateQuantity = this.updateQuantity.bind(this);
+        this.onIncrement = this.onIncrement.bind(this);
+        this.onDecrement = this.onDecrement.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.state = {
             //initialize whatever the passed values are
@@ -37,7 +37,19 @@ class ShoppingCartItem extends Component {
         this.props.updateCart(this.state.pid, newQuantity, this.updateSubtotal)
     }
 
-    
+    onIncrement(e) {
+        console.log("iterate start")
+        this.props.updatePriceSummary(this.state.price);
+        this.updateQuantity(this.props.quantity + 1);
+        console.log("iterate end")
+    }
+
+    onDecrement(e) {
+        console.log("iterate start")
+        this.props.updatePriceSummary(-(this.state.price));
+        this.updateQuantity(this.props.quantity - 1);
+        console.log("iterate end")
+    }
 
     removeItem(e) {
         this.props.updatePriceSummary(-this.state.subtotal);

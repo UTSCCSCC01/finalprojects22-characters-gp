@@ -6,7 +6,6 @@ import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Stack } from 'react-bootstrap';
-
 import mockProducts from "./mockProducts.json";
 
 class ShoppingCart extends Component {
