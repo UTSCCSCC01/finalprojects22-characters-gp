@@ -12,11 +12,13 @@ import mockProducts from "./mockProducts.json";
 class ShoppingCart extends Component {
     constructor() {
         super()
-        this.handleCheckout = this.handleCheckout.bind(this);
         this.updateTotal = this.updateTotal.bind(this);
         this.updateCart = this.updateCart.bind(this);
         this.updatePriceSummary = this.updatePriceSummary.bind(this);
-        localStorage.setItem("cartProducts", JSON.stringify(mockProducts));
+        this.getInitialValues = this.getInitialValues.bind(this);
+
+        //localStorage.setItem("cartProducts", JSON.stringify(mockProducts));
+
         this.state = {
             subtotal: 0.00,
             tax: 0.00,
@@ -26,22 +28,53 @@ class ShoppingCart extends Component {
         }
     }
 
-    getItemCount(){
-
-    }
-
-    handleCheckout() {
-        //if the cart is empty, then checkout should create a popup message 
-    }
-    updateCart(pid, increment, callback) {
-        this.setState({
-            cartProducts: { ...this.state.cartProducts, [pid]: { ...this.state.cartProducts[pid], quantity: this.state.cartProducts[pid].quantity + (increment ? 1 : -1) } }
-        }, callback)
-        localStorage.setItem("cartProducts", JSON.stringify(this.state.cartProducts));
-        //if item doesn't exist in the 
+    componentDidMount() {
+        let [count, subtotal] = this.getInitialValues()
+        console.log('c, sub:', count, subtotal)
         this.setState((state) => {
-            return { itemCount: state.itemCount + (increment ? 1 : -1) }
+            return {
+                itemCount: count,
+                subtotal: subtotal,
+                tax: subtotal * 0.13,
+                total: subtotal * 1.13
+            }
+        })
+    }
+
+    //initialize state values
+    getInitialValues() {
+        if (this.state.cartProducts === null) { return [0, 0] }
+
+        let count = 0;
+        let subtotal = 0;
+        Object.values(this.state.cartProducts).forEach((item) => {
+            count += item.quantity
+            subtotal += item.price * item.quantity
         });
+        return [count, subtotal];
+    }
+
+    updateCart(pid, newQuantity, callback) {
+        let newCartItem = this.state.cartProducts[pid]
+        let oldQuantity = newCartItem.quantity
+        newCartItem.quantity = newQuantity
+        newCartItem = newCartItem.quantity === 0 ? null : newCartItem
+        this.setState(state => {
+            {
+                const copy = { ...state }
+                if (newCartItem === null)
+                    delete copy.cartProducts[pid]
+                else
+                    copy.cartProducts[pid] = newCartItem
+                return copy
+            }
+        }, () => {
+            callback()
+            localStorage.setItem("cartProducts", JSON.stringify(this.state.cartProducts));
+            this.setState((state) => {
+                return { itemCount: state.itemCount + (newQuantity - oldQuantity) }
+            });
+        })
     }
 
     //this function is being called by ShoppingCartItem child component
@@ -69,7 +102,7 @@ class ShoppingCart extends Component {
                             <h1>My Cart: </h1>
                             <h4 className='text-muted'>{this.state.itemCount} items</h4>
                         </Stack>
-                        <hr style={{border:'10px solid SlateGray'}}></hr>
+                        <hr style={{ border: '10px solid SlateGray' }}></hr>
                         <Row >
                             <Col md={6}>Item <hr></hr></Col>
                             <Col>Price <hr></hr> </Col>
@@ -78,14 +111,17 @@ class ShoppingCart extends Component {
                         </Row>
                         <Stack direction='vertical' gap={2}>
                             {//create a card for every Item in the json object
-                                Object.values(this.state.cartProducts).map((item) =>
-                                    <ShoppingCartItem
-                                        key={item.pid}
-                                        {...item}
-                                        updateCart={this.updateCart}
-                                        updatePriceSummary={this.updatePriceSummary}
-                                    />
-                                )
+                                this.state.cartProducts !== null && Object.keys(this.state.cartProducts).length !== 0 ?
+                                    Object.values(this.state.cartProducts).map((item) =>
+                                        <ShoppingCartItem
+                                            key={item.pid}
+                                            {...item}
+                                            updateCart={this.updateCart}
+                                            updatePriceSummary={this.updatePriceSummary}
+                                        />
+                                    )
+                                    :
+                                    <h4 className='text-muted'>Your cart is empty ...</h4>
                             }
                         </Stack>
                     </Col>
@@ -100,16 +136,17 @@ class ShoppingCart extends Component {
                                     }}>
                                     <h3>Summary</h3>
                                     <hr></hr>
-                                    <h6 className='text-muted'>Subtotal: ${this.state.subtotal.toFixed(2)} </h6>
-                                    <h6 className='text-muted'>Est. Tax: ${this.state.tax.toFixed(2)}</h6>
+                                    <h6 className='text-muted'>Subtotal: ${(Math.abs(this.state.subtotal)).toFixed(2)} </h6>
+                                    <h6 className='text-muted'>Est. Tax: ${(Math.abs(this.state.tax)).toFixed(2)}</h6>
                                     <hr></hr>
-                                    <h5>Total: ${this.state.total.toFixed(2)}</h5>
+                                    <h5>Total: ${(Math.abs(this.state.total)).toFixed(2)}</h5>
                                 </div>
                                 <Button id="checkout" className='w-100' variant="primary" size="lg"
-                                    onClick={e => { this.state.itemCount === 0 ?
+                                    onClick={e => {
+                                        this.state.itemCount === 0 ?
                                             alert("Add items to your cart before proceeding to checkout.")
                                             :
-                                            this.handleCheckout()
+                                            alert("You have been redirected to the checkoutPage.")
                                     }}>
                                     Checkout
                                 </Button>

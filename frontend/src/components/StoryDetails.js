@@ -86,10 +86,10 @@ export default class StoryDetails extends Component {
                 {this.state.author &&
                     <Card.Footer className="text-muted">
                         <Card.Text>
-                            Firstname: {this.state.author.firstName}
+                            First Name: {this.state.author.firstName}
                         </Card.Text>
                         <Card.Text>
-                            Lastname: {this.state.author.lastName}
+                            Last Name: {this.state.author.lastName}
                         </Card.Text>
                         <Card.Text>
                             Email: {this.state.author.email}

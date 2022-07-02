@@ -11,8 +11,6 @@ class ShoppingCartItem extends Component {
         super(props)
         this.updateSubtotal = this.updateSubtotal.bind(this);
         this.updateQuantity = this.updateQuantity.bind(this);
-        this.onIncrement = this.onIncrement.bind(this);
-        this.onDecrement = this.onDecrement.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.state = {
             //initialize whatever the passed values are
@@ -24,6 +22,10 @@ class ShoppingCartItem extends Component {
         }
     }
 
+    componentDidMount() {
+        this.updateSubtotal()
+    }
+
     updateSubtotal() {
         this.setState({ subtotal: this.props.quantity * this.state.price });
         console.log(this.state.price);
@@ -31,36 +33,24 @@ class ShoppingCartItem extends Component {
     }
 
     //update the quantity field in the JSON obj stored in localStorage, as well as the props 
-    updateQuantity(incrementQuantity) {
-        this.props.updateCart(this.state.pid, incrementQuantity, this.updateSubtotal)
+    updateQuantity(newQuantity) {
+        this.props.updateCart(this.state.pid, newQuantity, this.updateSubtotal)
     }
 
-    onIncrement(e) {
-        e.preventDefault();
-        console.log("iterate start")
-        this.updateQuantity(true);
-        this.props.updatePriceSummary(this.state.price);
-        console.log("iterate end")
-    }
-
-    onDecrement(e) {
-        e.preventDefault();
-        console.log("iterate start")
-        this.updateQuantity(false);
-        this.props.updatePriceSummary(-(this.state.price));
-        console.log("iterate end")
-    }
+    
 
     removeItem(e) {
-        e.preventDefault();
+        this.props.updatePriceSummary(-this.state.subtotal);
+        this.updateQuantity(0);
     }
 
     render() {
-        const infoDiv= {
-            display:'flex',
+        const infoDiv = {
+            display: 'flex',
             flexFlow: 'column',
             height: '100%',
-            justifyContent: 'center'}
+            justifyContent: 'center'
+        }
 
         return (
             <Card bg='light' className='h-100'>
@@ -69,10 +59,10 @@ class ShoppingCartItem extends Component {
                     <Col id='item' md={6}>
                         <div className='m-1'>
                             <Row>
-                                <Col md={6}> 
-                                    <Card.Img height='200px'  
-                                    src={`~/../../uploads/${this.props.image}`}
-                                    style={{backgroundColor:'red'}}>
+                                <Col md={6}>
+                                    <Card.Img height='200px'
+                                        src={`~/../../uploads/${this.props.image}`}
+                                        style={{ backgroundColor: 'red' }}>
                                     </Card.Img>
                                 </Col>
                                 <Col md={6}>
@@ -81,7 +71,7 @@ class ShoppingCartItem extends Component {
                                         <p>{this.state.description}</p>
                                     </div>
                                 </Col>
-                            </Row>          
+                            </Row>
                         </div>
                     </Col>
 
@@ -89,18 +79,18 @@ class ShoppingCartItem extends Component {
                         <div className='m-1' style={infoDiv}> ${this.state.price.toFixed(2)} </div>
                     </Col>
 
-                    <Col id='quantity' md={2}> 
+                    <Col id='quantity' md={2}>
                         <div className='m-1' style={infoDiv}>
-                        <div className='d-flex align-items-center flex-column' style={{ gap: '.5rem'}}>
-                            <div className='d-flex align-items-center justify-content-center' style={{ gap: '.5rem'}}>
-                                <Button variant='secondary' size='sm' onClick={this.onDecrement}>-</Button>
-                                    <div className='fs-3'> 
-                                        <p style={{fontSize:'large'}}> {this.props.quantity}</p> 
+                            <div className='d-flex align-items-center flex-column' style={{ gap: '.5rem' }}>
+                                <div className='d-flex align-items-center justify-content-center' style={{ gap: '.5rem' }}>
+                                    <Button variant='secondary' size='sm' onClick={this.onDecrement}>-</Button>
+                                    <div className='fs-3'>
+                                        <p style={{ fontSize: 'large' }}> {this.props.quantity}</p>
                                     </div>
-                                <Button variant='secondary' size='sm' onClick={this.onIncrement}>+</Button>
+                                    <Button variant='secondary' size='sm' onClick={this.onIncrement}>+</Button>
+                                </div>
+                                <Button variant='danger' size='sm' onClick={this.removeItem}>remove</Button>
                             </div>
-                            <Button variant='danger' size='sm' onClick={this.removeItem}>remove</Button>
-                        </div>
                         </div>
                     </Col>
 
@@ -110,7 +100,7 @@ class ShoppingCartItem extends Component {
                 </Row>
             </Card>
         )
-    
+
     }
 }
 
