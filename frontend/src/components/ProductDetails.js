@@ -5,8 +5,9 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import axios from 'axios';
 import config from '../config'
+import { Alert } from 'react-bootstrap';
 
-export default class StoryDetails extends Component {
+export default class ProductDetails extends Component {
     constructor(props) {
       super(props)
 
@@ -14,13 +15,17 @@ export default class StoryDetails extends Component {
       this.state = {
         productName: '',
         productDescription: '',
-        price: '',
+        price: 0,
         image: '',
-        inventory: '',
+        inventory: 0,
         storyID: '',
         storyDescription: '',
         quantity: 1,
+        isOpen: false,
       }
+
+      //bind methods to pass to other components
+      this.onSubmit = this.onSubmit.bind(this);
       
     }
 
@@ -56,17 +61,80 @@ export default class StoryDetails extends Component {
 
     }
 
+    getText = () => {
+      // For Text that is shorter than desired length
+      if (this.state.storyDescription.length <= 258) return this.state.storyDescription;
+      // If text is longer than desired length & isOpen is true
+      if (this.state.storyDescription.length > 258 && this.state.isOpen) {
+        return (
+          <>
+            <Card.Text>{this.state.storyDescription}</Card.Text>
+  
+            <Button onClick={() => this.setState({isOpen: false})} variant="outline-success">
+              Show Less
+            </Button>
+          </>
+        );
+      }
+       // If text is longer than desired length & isOpen is false
+      if (this.state.storyDescription.length > 258) {
+        return (
+          <>
+            <Card.Text>{this.state.storyDescription.slice(0, 258)}...</Card.Text>
+  
+            <Button 
+            onClick={() => this.setState({isOpen: true})}
+            variant="outline-success"
+            >
+              Show Full Story
+            </Button>
+          </>
+        );
+      }
+    };
+
     onQuantityChange(e){
       this.setState({
-        quantity: e.target.value
+        quantity: Number(e.target.value)
       });
     }
 
     onSubmit(e){
       e.preventDefault();
+      // create a dict of the items needed
+      let addToCart = {
+        pid: this.props.match.params.id,
+        name: this.state.productName,
+        price: this.state.price,
+        description: this.state.productDescription,
+        image: this.state.image,
+        quantity: this.state.quantity
+      };
       
-      // add to the local storage if it exists
-      
+      // add to the local storage if it already exists
+      let cart = JSON.parse(localStorage.getItem("cartProducts"));
+
+      // localStorage.removeItem("cartProducts");
+      if(cart == null){
+        cart = [];
+        cart.push(addToCart);
+        localStorage.setItem("cartProducts", JSON.stringify(cart));
+      }else {
+        //var exists = false;
+        console.log("cart: " + cart);
+        let cartItem = cart.find(ci => ci.pid === addToCart.pid);
+        console.log(cartItem);
+        if (!cartItem) {
+          cart.push(addToCart)
+        } else {
+          cartItem.quantity += addToCart.quantity
+        }
+        localStorage.setItem("cartProducts", JSON.stringify(cart));
+      }
+
+      alert("Product Added to Cart");
+
+
     }
 
     // UI
@@ -76,10 +144,10 @@ export default class StoryDetails extends Component {
                 <Card >
                     <Card.Header>
                         <Card.Title>Story behind this Product</Card.Title>
-                        <Card.Text>{this.state.storyDescription}</Card.Text>
+                        <Card.Text>{this.getText()}</Card.Text>
                     </Card.Header>
                     <Card.Body className='productDetails'>
-                        <img className='productImage' src={`~/../../uploads/${this.state.image}`}/>
+                        <img className='productImage' src={`~/../../uploads/${this.state.image}`} alt={`Picture of ${this.state.productName}`}/>
                         <div className='productDesc'>
                           <Card.Title>{this.state.productName}</Card.Title>
                           <Card.Text>{this.state.productDescription}</Card.Text>
@@ -92,12 +160,11 @@ export default class StoryDetails extends Component {
                               value={this.state.quantity}
                               min='1'
                               max={this.state.inventory}
-                              // onChange={this.onQuantityChange}
                               onChange={(value) => this.onQuantityChange(value)}
                             />
                           </Card.Text>
                         
-                          <Button size="md" block="block" type="submit"> Add to Cart </Button>
+                          <Button size="md" block="block" type="submit" onClick={this.onSubmit}> Add to Cart </Button>
                         </div>
                     </Card.Body>
 
