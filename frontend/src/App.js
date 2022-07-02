@@ -14,6 +14,8 @@ import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
 import ProfileInfo from './components/ProfileInfo'
+import ShoppingCart from './components/ShoppingCart'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -100,6 +102,11 @@ class App extends React.Component {
                         Sign Out
                       </NavDropdown.Item>
                   </NavDropdown>}
+                <Nav>
+                  <Link to={'/shoppingCart'} className="nav-link">
+                    My Cart
+                  </Link>
+                </Nav>
               </Nav>
             </Container>
           </Navbar>
@@ -125,17 +132,23 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/submitStory"
-                      component={(props) => <SubmitStory {...props} />} />
+                      component={(props) => <SubmitStory {...props} />} 
+                      />
                     <Route
                       exact
                       path="/stories/:id"
-                      render={(props) => <StoryDetails {...props} />}
-                    />
+                      render={(props) => <StoryDetails {...props} />} 
+                      />
                     <Route
                       exact
                       path="/profile/:id"
-                      render={(props) => <ProfileInfo {...props} setToast={this.setToast}/>}
-                    />
+                      render={(props) => <ProfileInfo {...props} setToast={this.setToast}/>} 
+                      />
+                    <Route
+                      exact
+                      path="/shoppingCart"
+                      render={(props) => <ShoppingCart {...props} />}
+                      />
                   </Switch>
                 </div>
               </Col>
