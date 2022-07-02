@@ -44,6 +44,8 @@
 
 .productImage{
   margin: 0rem 4rem 3rem 1rem;
+  width: 50vh;
+  height: 50vh;
 }
 
 .productDesc {
@@ -53,3 +55,4 @@
 .inventory {
   color: gray;
 }
+
