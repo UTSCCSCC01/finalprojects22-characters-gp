@@ -71,11 +71,16 @@ class App extends React.Component {
               </Navbar.Brand>
 
               <Nav className="justify-content-end">
-                  <Nav>
-                    <Link to={'/StoriesList'} className="nav-link">
-                      Story Statuses
-                    </Link>
-                  </Nav>
+                <Nav>
+                  <Link to={'/ProductStore'} className="nav-link">
+                    Store
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/StoriesList'} className="nav-link">
+                    Story Statuses
+                  </Link>
+                </Nav>
                   {this.state.user !== null && this.state.user['type'] === 3 &&
                   <Nav>
                     <Link to={'/SubmitProduct'} className="nav-link">

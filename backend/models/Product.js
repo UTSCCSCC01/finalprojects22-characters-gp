@@ -29,7 +29,7 @@ const productSchema = new Schema({
 
     productStory: {
         body: String,
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'stories'
     },
 

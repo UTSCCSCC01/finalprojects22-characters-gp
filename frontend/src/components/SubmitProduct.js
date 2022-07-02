@@ -69,7 +69,7 @@ export default class SubmitProduct extends Component {
 
         const formData = new FormData();
         formData.append("productName", this.state.productName);
-        formData.append("storyCharacter", this.state.storyCharacter);
+        formData.append("productStory", this.state.storyCharacter);
         formData.append("productInventoryAmount", this.state.productInventoryAmount);
         formData.append("productPrice", this.state.productPrice);
         formData.append("productDescription", this.state.productDescription);
@@ -154,7 +154,7 @@ export default class SubmitProduct extends Component {
                                     Price
                                 </Form.Label>
                                 <Form.Control required type="number"
-                                    min="0.00" step="0.05"
+                                    min="0.00" step="0.01"
                                     placeholder="$"
                                     onChange={this.onChangeProductPrice}>
                                 </Form.Control>
