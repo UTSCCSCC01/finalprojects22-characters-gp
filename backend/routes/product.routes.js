@@ -28,7 +28,11 @@ router.post('/', upload.single('productImage'), (req, res, next) => {
           productDescription: req.body.productDescription,
           productImage: req.file.originalname,
           productInventoryAmount: req.body.productInventoryAmount,
+
           productStory: req.body.productStory,
+
+          productCharacter: req.body.productCharacter
+
       }
 
     Product.create(newProduct, (err, item) => {
@@ -79,6 +83,7 @@ router.put('/:id', upload.single("productImage"), (req, res, next) => {
       product.productDescription = req.body.productDescription;
       product.productInventoryAmount = req.body.productInventoryAmount;
       product.productImage = req.file.originalname;
+      product.productCharacter = req.body.productCharacter;
 
       product
         .save()

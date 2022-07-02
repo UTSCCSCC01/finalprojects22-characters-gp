@@ -16,8 +16,12 @@ export default class ProfileEdit extends Component {
         //setup SubmitForm state
         this.state = {
             email: '',
+            firstName: '',
+            lastName: '',
             warnings: {
-                email: ''
+                email: '',
+                firstName: '',
+                lastName: ''
             }
         }
     }
@@ -26,7 +30,9 @@ export default class ProfileEdit extends Component {
         axios.get(config.backend + '/users/' + this.props._id)
             .then(res => {
                 this.setState({
-                    email: res.data.email
+                    email: res.data.email,
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName
                 });
             })
             .catch((error) => {
@@ -47,7 +53,7 @@ export default class ProfileEdit extends Component {
         };
         axios.put(config.backend + '/users/' + this.props._id, data)
             .then(res => {
-                this.props.setToast('Email successfully updated')
+                this.props.setToast('Profile successfully updated')
                 this.setState({
                     warnings: {
                         email: ''
@@ -64,6 +70,12 @@ export default class ProfileEdit extends Component {
 
     async verifyProfile() {
         let newWarnings = {}
+        if (!this.state.firstName) {
+            newWarnings.firstName = 'Please provide a first name.'
+        }
+        if (!this.state.lastName) {
+            newWarnings.lastName = 'Please provide a last name.'
+        }
         if (!this.state.email) {
             newWarnings.email = 'Please provide a valid email.'
         }
@@ -76,9 +88,7 @@ export default class ProfileEdit extends Component {
         } else {
             let res = await axios.get(config.backend + '/users/?email=' + this.state.email, this.state);
             console.log(res.data)
-            if (res.data.length > 0 && res.data[0]._id == this.props._id) {
-                newWarnings.email = 'New email cannot be same as your old email.'
-            } else if (res.data.length > 0) {
+            if (res.data.length > 0 && res.data[0]._id != this.props._id) {
                 newWarnings.email = 'An account already exists with this email.'
             }
         }
@@ -92,7 +102,29 @@ export default class ProfileEdit extends Component {
             <Card className="text-start p-4">
                 <h2 className="mb-4">Profile</h2>
                 <Form noValidate onSubmit={this.saveProfile}>
-                    <Form.Group controlId="email">
+                    <Form.Group controlId="firstName">
+                        <Form.Label>
+                            First Name
+                        </Form.Label>
+                        <Form.Control required type="text"
+                            onChange={(e) => this.setState({ firstName: e.target.value })} value={this.state.firstName} isInvalid={!!this.state.warnings.firstName}
+                        />
+                        <Form.Control.Feedback type='invalid'>
+                            {this.state.warnings.firstName}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="lastName">
+                        <Form.Label>
+                            Last Name
+                        </Form.Label>
+                        <Form.Control required type="text"
+                            onChange={(e) => this.setState({ lastName: e.target.value })} value={this.state.lastName} isInvalid={!!this.state.warnings.lastName}
+                        />
+                        <Form.Control.Feedback type='invalid'>
+                            {this.state.warnings.lastName}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group controlId="lastName">
                         <Form.Label>
                             Email
                         </Form.Label>

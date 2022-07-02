@@ -16,6 +16,8 @@ class CreateItem extends Component {
         this.onSubmit = this.onSubmit.bind(this);
         // Setting up state
         this.state = {
+            firstName: '',
+            lastName: '',
             email: '',
             password: '',
             passwordConfirm: '',
@@ -53,14 +55,16 @@ class CreateItem extends Component {
             return
         }
         const data = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
             email: this.state.email,
             password: this.state.password
         };
         axios.post(config.backend + '/users', data)
             .then(res => {
                 console.log(res)
-                this.props.signIn(res.data[0])
-                this.props.history.push('/')
+                this.props.signIn(res.data)
+                this.props.history.goBack()
             });
         this.setState({
             email: '',
@@ -71,6 +75,12 @@ class CreateItem extends Component {
     }
     async verifyForm() {
         let newWarnings = {}
+        if (!this.state.firstName) {
+            newWarnings.firstName = 'Please provide a first name.'
+        }
+        if (!this.state.lastName) {
+            newWarnings.lastName = 'Please provide a last name.'
+        }
         if (!this.state.email) {
             newWarnings.email = 'Please provide a valid email.'
         }
@@ -110,6 +120,22 @@ class CreateItem extends Component {
                         <hr className="mb-4" />
                         <Form noValidate onSubmit={this.onSubmit}>
                             {/* You can disable the default UI by adding the HTML noValidate attribute to your <Form> or <form> element. */}
+                            <Form.Group controlId="FirstName">
+                                <Form.Label>First Name</Form.Label>
+                                <Form.Control type="text" value={this.state.firstName} onChange={(e) => { this.setState({ firstName: e.target.value }) }} isInvalid={!!this.state.warnings.firstName}
+                                />
+                                <Form.Control.Feedback type='invalid'>
+                                    {this.state.warnings.firstName}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group controlId="LastName">
+                                <Form.Label>Last Name</Form.Label>
+                                <Form.Control type="text" value={this.state.lastName} onChange={(e) => { this.setState({ lastName: e.target.value }) }} isInvalid={!!this.state.warnings.lastName}
+                                />
+                                <Form.Control.Feedback type='invalid'>
+                                    {this.state.warnings.lastName}
+                                </Form.Control.Feedback>
+                            </Form.Group>
                             <Form.Group controlId="Email">
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control type="text" value={this.state.email} onChange={this.onChangeEmail} isInvalid={!!this.state.warnings.email}
@@ -139,7 +165,7 @@ class CreateItem extends Component {
                             </Button>
                         </Form>
                     </Card>
-                    Already have an account? <Link to="/Login">Sign in</Link>
+                    Already have an account? <Link to="/Login" replace>Sign in</Link>
                 </Col>
             </Row>
 

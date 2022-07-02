@@ -36,7 +36,8 @@ export default class Login extends Component {
                 //Redirect to homepage
                 console.log("Login Successful")
                 this.props.signIn(data[0])
-                this.props.history.push('/')
+                console.log(this.props.history)
+                this.props.history.goBack()
                 this.setState({ warnings: {} })
             }
         }
@@ -100,7 +101,7 @@ export default class Login extends Component {
                             <Button variant="primary" size="lg" type="submit" className="mt-4">Login</Button>
                         </Form>
                     </Card>
-                    New to Characters? <Link to="/signup">Sign up</Link>
+                    New to Characters? <Link to="/signup" replace>Sign up</Link>
                 </Col>
             </Row>
         </div>);
