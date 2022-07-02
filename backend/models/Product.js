@@ -10,13 +10,13 @@ const productSchema = new Schema({
     productName: {
         type: String,
         required: true
-    }, 
+    },
 
     productPrice: {
         type: Number,
         required: true
     },
-    
+
     productDescription: {
         type: String,
         required: true
@@ -28,7 +28,6 @@ const productSchema = new Schema({
     },
 
     productStory: {
-        body: String,
         type: Schema.Types.ObjectId,
         ref: 'stories'
     },

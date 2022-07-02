@@ -117,7 +117,7 @@ export default class SubmitProduct extends Component {
                         <br/><br/>
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
-                                Select Character
+                                Select Validated Stories
                             </Form.Label>
                             <Col sm="8">
                                 <Form.Select required type="text" value={this.state.storyCharacter} onChange={this.onChangeStoryCharacter}>

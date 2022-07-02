@@ -50,6 +50,7 @@ class CreateItem extends Component {
     async onSubmit(e) {
         e.preventDefault()
         const newWarnings = await this.verifyForm()
+        console.log(newWarnings)
         if (Object.keys(newWarnings).length > 0) {
             this.setState({ warnings: newWarnings })
             return

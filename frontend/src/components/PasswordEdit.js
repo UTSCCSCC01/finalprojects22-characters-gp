@@ -102,7 +102,7 @@ export default class PasswordEdit extends Component {
                     </Form.Group>
                     <Form.Group controlId="confirmNewPassword">
                         <Form.Label>
-                            Comfirm New Password
+                            Confirm New Password
                         </Form.Label>
                         <Form.Control required type="password"
                             onChange={(e) => this.setState({ confirmNew: e.target.value })} value={this.state.confirmNew} isInvalid={!!this.state.warnings.confirmNew}
