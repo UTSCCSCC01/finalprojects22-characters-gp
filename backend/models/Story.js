@@ -22,6 +22,7 @@ const storySchema = new Schema({
     storyStatus:{
         type: String,
         required: true,
+        enum : ['new','interviewing', 'validated'],
         default: 'new'
     },
     author: {
