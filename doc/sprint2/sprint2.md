@@ -34,9 +34,7 @@ Story CHAR-18: As a logged-in character/consumer/employee I want to be able to v
 Story CHAR-38: As a consumer I want to be able to view item details by clicking on the item in the shopping page so that I can get a better idea of the item before adding it to my shopping cart.
 - The product details page should provide details like price, clothing sizes, etc that correspond to the item that
   the user clicked-on
-- Allow users to add the item to their shopping cart
-- Add shoppingList field to User schema model
-(in db for users, shopping cart lists key:value pair -> productID:quantity)
+- Allow users to add the item to their shopping cart 
 
 Story CHAR-57: As an employee, I want to see the user details of the story submissions so that I can contact him/her when the story reaches the interview stage
 - Add first name and last name field to user model

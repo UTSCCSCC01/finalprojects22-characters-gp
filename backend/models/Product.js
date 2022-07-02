@@ -13,7 +13,7 @@ const productSchema = new Schema({
     }, 
 
     productPrice: {
-        type: String,
+        type: Number,
         required: true
     },
     
@@ -23,10 +23,15 @@ const productSchema = new Schema({
     },
 
     productInventoryAmount: {
-        type: String,
+        type: Number,
         required: true
     },
 
+    productStory: {
+        body: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'stories'
+    },
     productCharacter: {
         type: String,
         required: true
