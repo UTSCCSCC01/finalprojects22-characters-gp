@@ -181,6 +181,7 @@ export default class SubmitProduct extends Component {
                                 filename="productImage"
                                 // name="productImage"
                                 className="form-control-file"
+                                accept="image/*"
                                 required
                                 onChange={this.onUploadImage}>
                             </input>
