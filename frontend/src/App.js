@@ -15,6 +15,7 @@ import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
 import SubmitProduct from './components/SubmitProduct'
 import ProfileInfo from './components/ProfileInfo'
+import ProductStore from './components/ProductStore'
 
 class App extends React.Component {
   constructor(props) {
@@ -70,11 +71,16 @@ class App extends React.Component {
               </Navbar.Brand>
               
               <Nav className="justify-content-end">
-                  <Nav>
-                    <Link to={'/StoriesList'} className="nav-link">
-                      Story Statuses
-                    </Link>
-                  </Nav>
+                <Nav>
+                  <Link to={'/ProductStore'} className="nav-link">
+                    Store
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/StoriesList'} className="nav-link">
+                    Story Statuses
+                  </Link>
+                </Nav>
                   {this.state.user !== null && this.state.user['type'] === '3' &&
                   <Nav>
                     <Link to={'/SubmitProduct'} className="nav-link">
@@ -149,6 +155,11 @@ class App extends React.Component {
                       path="/profile/:id"
                       render={(props) => <ProfileInfo {...props} setToast={this.setToast}/>}
                     />
+                    <Route
+                      exact
+                      path="/ProductStore"
+                      render={(props) => <ProductStore {...props} />}
+                      />
                   </Switch>
                 </div>
               </Col>
