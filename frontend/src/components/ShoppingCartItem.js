@@ -1,11 +1,9 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { Container, Table } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
-import { Stack } from 'react-bootstrap';
+
 
 
 class ShoppingCartItem extends Component {
@@ -15,6 +13,7 @@ class ShoppingCartItem extends Component {
         this.updateQuantity = this.updateQuantity.bind(this);
         this.onIncrement = this.onIncrement.bind(this);
         this.onDecrement = this.onDecrement.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.state = {
             //initialize whatever the passed values are
             pid: props.pid,
@@ -54,8 +53,6 @@ class ShoppingCartItem extends Component {
 
     removeItem(e) {
         e.preventDefault();
-
-
     }
 
     render() {
@@ -73,7 +70,9 @@ class ShoppingCartItem extends Component {
                         <div className='m-1'>
                             <Row>
                                 <Col md={6}> 
-                                    <Card.Img height='200px' style={{backgroundColor:'red'}}>
+                                    <Card.Img height='200px'  
+                                    src={`~/../../uploads/${this.props.image}`}
+                                    style={{backgroundColor:'red'}}>
                                     </Card.Img>
                                 </Col>
                                 <Col md={6}>

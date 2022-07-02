@@ -1,7 +1,6 @@
 import ShoppingCartItem from './ShoppingCartItem'
-import axios from 'axios';
 import React, { Component } from 'react';
-import { Container, Table } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
@@ -20,12 +19,15 @@ class ShoppingCart extends Component {
         localStorage.setItem("cartProducts", JSON.stringify(mockProducts));
         this.state = {
             subtotal: 0.00,
-            deliveryFees: 0.00,
             tax: 0.00,
             total: 0.00,
             itemCount: 0,
             cartProducts: JSON.parse(localStorage.getItem("cartProducts"))
         }
+    }
+
+    getItemCount(){
+
     }
 
     handleCheckout() {
