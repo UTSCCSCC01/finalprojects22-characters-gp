@@ -37,7 +37,7 @@ export default class SubmitProduct extends Component {
                 storyCharacter: res.data[0]._id
             });
         }).catch((error) => {
-            console.log(error);  
+            console.log(error);
         });
 
     }
@@ -55,15 +55,15 @@ export default class SubmitProduct extends Component {
         this.setState({ productDescription: e.target.value });
     }
     onChangeProductPrice(e){
-        this.setState({ 
-            productPrice: e.target.value 
+        this.setState({
+            productPrice: e.target.value
         });
     }
 
     onUploadImage(e) {
         this.setState({ productImage: e.target.files[0] });
     }
-    
+
     onSubmit(e){
         e.preventDefault();
 
@@ -78,7 +78,7 @@ export default class SubmitProduct extends Component {
         for (var key of formData.entries()) {
             console.log(key[0] + ': ' + key[1]);
         }
-        //assume all other state fields are filled (by required attributes)   
+        //assume all other state fields are filled (by required attributes)
         // const data = {
         //     productName: this.state.productName,
         //     productPrice: this.state.productPrice,
@@ -96,8 +96,8 @@ export default class SubmitProduct extends Component {
             productPrice: '',
             productDescription: '',
             productImage: '',
-            storyCharacter: '',
         })
+        document.getElementById("productSubmitFile").value = "";
         //change submissionSuccess state to show
         //successful submission message to user:
         this.setState({ submissionSuccess: 'true' });
@@ -117,7 +117,7 @@ export default class SubmitProduct extends Component {
                         <br/><br/>
                         <Form.Group as={Row}>
                             <Form.Label column sm="4">
-                                Select Validated Stories
+                                Select Character
                             </Form.Label>
                             <Col sm="8">
                                 <Form.Select required type="text" value={this.state.storyCharacter} onChange={this.onChangeStoryCharacter}>
@@ -135,7 +135,8 @@ export default class SubmitProduct extends Component {
                             <Col sm="8" >
                             <Form.Control required type="text"
                                 placeholder="Name"
-                                onChange={this.onChangeProductName} />
+                                onChange={this.onChangeProductName}
+                                value={this.state.productName}/>
                             </Col>
                         </Form.Group>
                         <br/>
@@ -146,7 +147,8 @@ export default class SubmitProduct extends Component {
                                 </Form.Label>
                                 <Form.Control required type="number"
                                     placeholder="In Stock"
-                                    onChange={this.onChangeProductInventoryAmount} />
+                                    onChange={this.onChangeProductInventoryAmount}
+                                    value={this.state.productInventoryAmount}/>
 
                             </Form.Group>
                                 <Form.Group as={Col} controlId="productPrice">
@@ -156,7 +158,8 @@ export default class SubmitProduct extends Component {
                                 <Form.Control required type="number"
                                     min="0.00" step="0.01"
                                     placeholder="$"
-                                    onChange={this.onChangeProductPrice}>
+                                    onChange={this.onChangeProductPrice}
+                                    value={this.state.productPrice}>
                                 </Form.Control>
                             </Form.Group>
                         </Row>
@@ -170,15 +173,16 @@ export default class SubmitProduct extends Component {
                                     placeholder="Enter Description"
                                     required
                                     rows={8}
-                                    onChange={this.onChangeProductDescription} />
+                                    onChange={this.onChangeProductDescription}
+                                    value={this.state.productDescription} />
                             </Col>
                         </Form.Group>
                         <br/>
                         <div className='from-group'>
                             <label htmlFor='file' style={{padding:20}}>Select Product Image:</label>
 
-                            <input type="file"
-                                filename="productImage"
+                            <input id="productSubmitFile" type="file"
+                                // filename="productImage"
                                 // name="productImage"
                                 className="form-control-file"
                                 accept="image/*"
@@ -190,7 +194,7 @@ export default class SubmitProduct extends Component {
                         <Button size="md" block="block" type="submit">
                             Submit
                         </Button>
-                        {this.state.submissionSuccess == 'true' && 
+                        {this.state.submissionSuccess == 'true' &&
                             <Alert variant="success"  onClose={() => this.setState({ submissionSuccess: false})} dismissible>
                                 <Alert.Heading>The product has been successfully submitted.</Alert.Heading>
                             </Alert>
