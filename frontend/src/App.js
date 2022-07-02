@@ -66,7 +66,7 @@ class App extends React.Component {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/'} className="nav-link">
+                <Link to={'/ProductStore'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>

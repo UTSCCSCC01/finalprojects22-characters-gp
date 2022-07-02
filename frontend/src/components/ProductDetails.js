@@ -12,7 +12,7 @@ export default class ProductDetails extends Component {
       super(props)
 
       // State
-      this.state = {
+      this.state = { 
         productName: '',
         productDescription: '',
         price: 0,
@@ -168,7 +168,7 @@ export default class ProductDetails extends Component {
     // UI
     render() {
         return (
-            <div className='product-details'>
+            <div className='product-details col-md-8'>
                 <Card >
                     <Card.Header>
                         <Card.Title>Story behind this Product</Card.Title>
@@ -176,7 +176,7 @@ export default class ProductDetails extends Component {
                     </Card.Header>
                     <Card.Body className='productDetails'>
                         <Card.Img className='productImage' variant='top' src={`~/../../uploads/${this.state.image}`} alt={`Picture of ${this.state.productName}`}/>
-                        <div className='productDesc'>
+                        <div className='productDesc mx-auto'>
                           <Card.Title>{this.state.productName}</Card.Title>
                           <Card.Text>{this.state.productDescription}</Card.Text>
                           <Card.Text className='inventory'>{this.state.inventory} left in stock</Card.Text>
