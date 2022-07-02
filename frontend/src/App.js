@@ -76,7 +76,7 @@ class App extends React.Component {
                       Story Statuses
                     </Link>
                   </Nav>
-                  {this.state.user !== null && this.state.user['type'] === '3' &&
+                  {this.state.user !== null && this.state.user['type'] === 3 &&
                   <Nav>
                     <Link to={'/SubmitProduct'} className="nav-link">
                       Add Product
@@ -138,7 +138,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/products/:id"
-                      render={(props) => <ProductDetails {...props} setToast={this.setToast}/>}
+                      render={(props) => <ProductDetails {...props} user={this.state.user} setToast={this.setToast}/>}
                     />
                     <Route
                       exact

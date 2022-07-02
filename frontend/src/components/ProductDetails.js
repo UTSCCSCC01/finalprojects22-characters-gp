@@ -26,6 +26,7 @@ export default class ProductDetails extends Component {
 
       //bind methods to pass to other components
       this.onSubmit = this.onSubmit.bind(this);
+      this.onDelete = this.onDelete.bind(this);
       
     }
 
@@ -109,6 +110,20 @@ export default class ProductDetails extends Component {
       });
     }
 
+    onDelete(e){
+      axios.delete(config.backend + "/products/" + this.props.match.params.id).then(res => {
+        if (res.status == 200){
+          this.props.history.goBack();
+          this.props.setToast('Deleted product from Inventory')
+          console.log("Successfully deleted product");
+        }
+        else{
+          console.log("Fail to delete product");
+        }
+      });
+
+    }
+
     
 
     onSubmit(e){
@@ -178,9 +193,10 @@ export default class ProductDetails extends Component {
                           </Card.Text>
                         
                           <Button size="md" block="block" type="submit" onClick={this.onSubmit}> Add to Cart </Button>
+                          {this.props.user && this.props.user.type === 3 &&
+                          <Button size="md" block="block" variant="danger" onClick={this.onDelete}> Delete Product </Button>}
                         </div>
                     </Card.Body>
-
                 </Card>
             </div>
         );
