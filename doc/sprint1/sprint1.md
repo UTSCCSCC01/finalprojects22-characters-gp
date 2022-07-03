@@ -59,7 +59,7 @@ Sung Ha Hwang
 
 Jacob Matias
 
-Aya Bauyrzhanky
+Aya Bauyrzhankyzy
 
 Maria Gotcheva
 

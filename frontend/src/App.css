@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.product-details{
+  margin: auto;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.productImage{
+  width: 50vh;
+  height: 50vh;
+}
+
+.productDesc {
+  align-items: center;
+}
+.inventory {
+  color: gray;
+}
+

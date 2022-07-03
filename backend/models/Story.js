@@ -9,8 +9,8 @@ const storySchema = new Schema({
     storyText: {
         type: String,
         required: true
-    }, 
-    //storyType == "customApparel" OR "characterCandidate" 
+    },
+    //storyType == "customApparel" OR "characterCandidate"
     storyType: {
         type: String,
         required: true
@@ -22,8 +22,13 @@ const storySchema = new Schema({
     storyStatus:{
         type: String,
         required: true,
+        enum : ['new','interviewing', 'validated'],
         default: 'new'
-    }
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
 });
 
 module.exports = mongoose.model('stories', storySchema);

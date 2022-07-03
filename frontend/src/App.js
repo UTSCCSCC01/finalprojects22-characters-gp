@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import { NavDropdown, Toast, ToastContainer } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
@@ -12,13 +13,25 @@ import StoryDetails from './components/StoryDetails'
 import Login from './components/Login'
 import StoriesList from './components/StoriesList'
 import SubmitStory from './components/SubmitStory'
+import SubmitProduct from './components/SubmitProduct'
+import ProfileInfo from './components/ProfileInfo'
+import ShoppingCart from './components/ShoppingCart'
+import ProductStore from './components/ProductStore'
+import ProductDetails from './components/ProductDetails'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.signOut = this.signOut.bind(this);
     this.signIn = this.signIn.bind(this);
-    this.state = { user: null };
+    this.setToast = this.setToast.bind(this);
+    this.state = {
+      user: null,
+      toast: {
+        show: false,
+        msg: ''
+      }
+    };
   }
   //componentDidMount() method runs after the component output has been rendered to the DOM.
   componentDidMount() {
@@ -33,12 +46,18 @@ class App extends React.Component {
   signIn(data) {
     this.setState({ user: data })
     localStorage.setItem('user', JSON.stringify(data))
-    console.log("Signed In!", data)
+    this.setToast("Signed in!")
+    console.log(this.state.user)
   }
 
   signOut() {
     localStorage.removeItem('user')
     this.setState({ user: null })
+    this.setToast("Signed out.")
+  }
+
+  setToast(message) {
+    this.setState({ toast: { show: true, msg: message } })
   }
 
   render() {
@@ -48,14 +67,36 @@ class App extends React.Component {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/'} className="nav-link">
+                <Link to={'/ProductStore'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
+
               <Nav className="justify-content-end">
                 <Nav>
-                  <Link to={'/StoriesList'} className="nav-link">
-                    Story Statuses
+                  <Link to={'/ProductStore'} className="nav-link">
+                    Store
+                  </Link>
+                </Nav>
+                {this.state.user !== null && this.state.user['type'] === 3 &&
+                  (<><Nav>
+                    <Link to={'/SubmitProduct'} className="nav-link">
+                      Add Product
+                    </Link>
+                  </Nav>
+                    <Nav>
+                      <Link to={'/StoriesList'} className="nav-link">
+                        Story Statuses
+                      </Link>
+                    </Nav></>)}
+                <Nav>
+                  <Link to={'/submitStory'} className="nav-link">
+                    Submit a story
+                  </Link>
+                </Nav>
+                <Nav>
+                  <Link to={'/shoppingCart'} className="nav-link">
+                    My Cart
                   </Link>
                 </Nav>
                 {this.state.user === null ?
@@ -63,65 +104,84 @@ class App extends React.Component {
                     <Link to={'/signup'} className="nav-link">
                       Sign Up
                     </Link>
-                  </Nav>
-                  :
-                  <Nav>
-                    <Link to={'/'} onClick={this.signOut} className="nav-link">
+                  </Nav> :
+                  <NavDropdown title="Profile">
+                    <NavDropdown.Item href={'/profile/' + this.state.user._id}>
+                      Settings
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href={'/'} onClick={this.signOut}>
                       Sign Out
-                    </Link>
-
-                  </Nav>
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 }
-                {this.state.user === null &&
-                <Nav>
-                  <Link to={'/login'} className="nav-link">
-                    Login
-                  </Link>
-                </Nav>}
-                <Nav>
-                  <Link to={'/submitStory'} className="nav-link">
-                    Submit a story
-                  </Link>
-                </Nav>
               </Nav>
             </Container>
-          </Navbar>
+          </Navbar >
           <Container>
             <Row>
-              <Col md={12}>
-                <div className="wrapper">
-                  <Switch>
-                    <Route
-                      exact
-                      path="/signup"
-                      render={(props) => <SignUp {...props} signIn={this.signIn} />} />
+            <Col md={12}>
+              <div className="wrapper">
+                <Switch>
+                  <Route
+                    exact
+                    path="/signup"
+                    render={(props) => <SignUp {...props} signIn={this.signIn} />} />
 
-                    <Route
-                      exact
-                      path="/Login"
-                      component={(props) => <Login {... props} signIn={this.signIn} />}
-                    />
-                    <Route
-                      exact
-                      path="/StoriesList"
-                      render={(props) => <StoriesList {...props} />} />
-                    <Route
-                      exact
-                      path="/submitStory"
-                      component={(props) => <SubmitStory {... props} />} />
-                    <Route
-                      exact
-                      path="/stories/:id"
-                      render={(props) => <StoryDetails {...props} />}
-                      />
-                  </Switch>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </Router>
-      </div>
+                  <Route
+                    exact
+                    path="/Login"
+                    component={(props) => <Login {...props} signIn={this.signIn} />}
+                  />
+                  <Route
+                    exact
+                    path="/StoriesList"
+                    render={(props) => <StoriesList {...props} />} />
+                  <Route
+                    exact
+                    path="/submitStory"
+                    component={(props) => <SubmitStory {...props} user={this.state.user} />} />
+                  <Route
+                    exact
+                    path="/stories/:id"
+                    render={(props) => <StoryDetails {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/products/:id"
+                    render={(props) => <ProductDetails {...props} user={this.state.user} setToast={this.setToast} />}
+                  />
+                  <Route
+                    exact
+                    path="/SubmitProduct"
+                    render={(props) => <SubmitProduct {...props} user={this.state.user} />}
+                  />
+                  <Route
+                    path="/profile/:id"
+                    render={(props) => <ProfileInfo {...props} setToast={this.setToast} />}
+                  />
+                  <Route
+                    exact
+                    path="/shoppingCart"
+                    render={(props) => <ShoppingCart {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/ProductStore"
+                    render={(props) => <ProductStore {...props} />}
+                  />
+                </Switch>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+        </Router >
+        <ToastContainer position="bottom-end" className="p-3">
+          <Toast bg='primary' onClose={() => this.setState({ toast: { show: false } })} show={this.state.toast.show} delay={2000} autohide>
+            <Toast.Body className='text-white'>{this.state.toast.msg}</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      </div >
     )
+    }
   }
-}
 export default App
