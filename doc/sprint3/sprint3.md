@@ -28,7 +28,7 @@ As an employee I want to be able to see a queue of orders backlog so that I can 
 4. As a consumer I want to be able to access a list of products that I bought with the price of each item so that I can track the history of my orders
    - Provide list of orders that have been previously checked-out by the consumer and include basic information about the order (date of payment, number of items included)
    - Each order should display details about each item that was included in the order
-   - Create Order Schema. Fields include: date of payment, order count, orderID, user, include count of each pid in the order and their quantities
+   - Create Order Schema. Fields include: date of payment, order count, orderID, user, orderPIDs (include count of each pid in the order and their quantities), shippingInfo and billingInfo
    - Create mock checkoutPage that stores shipping and billing information for a user's order(s) 
 
 7. As an employee I want to be able to filter between story submissions based off different criteria, so that I can conduct the next steps accordingly
@@ -50,7 +50,7 @@ Eric Zhou 2hr/day
 
 Jacob Matias 2hr/day
 
-In sprint3, we plan to do  points of work.
+In sprint3, we plan to do 22 points of work.
 
 ## Participants
 
