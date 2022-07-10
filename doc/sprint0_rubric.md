@@ -19,6 +19,8 @@
     - 0 marks = not at all
 
     Your mark: 1 Feedback: Nurse example does not fit well here
+    Remark Feedback: I meant that you should consider users from different roles, like admin, developer, e.t.c. You already had professional artist. In this way,
+    you could have considered any profession. But you want to describe different users. No update in the mark here.
 
   - Scenarios have been described clearly (max 2 marks)    
     - 2 marks = clearly
@@ -122,10 +124,9 @@
     - 1 mark  = Contribution process is well-explained, allowing contributors to easily get on board
     - 0 marks = Contribution is missing or has grammar errors/typos
 
-    Your mark: 0 
-    Feedback: This part needs to be clearly communicated. Do you use pull requests? e.t.c
-   
-  README.md Total Mark: 2 / 3
+    Your mark: 1 
+    
+  README.md Total Mark: 3 / 3
 
 ---
 ## Definition of done: done.md (max 2 marks)
@@ -177,7 +178,9 @@
     - 0 marks = Not completed
 
     Your mark: 1 
-    Feedback: How did each member contribute for Sprint 0? Need to mention that. Like Member x did Readme file e.t.c 
+    Feedback: How did each member contribute for Sprint 0? Need to mention that. Like Member x did Readme file e.t.c
+    Remark: Just mentioning that everyone will contribute to (some degree) in all the departments do not convey the clear picture. You need to make
+    clear decisions about the work split.
 
   - Decision making (max 2 marks)
     - 2 marks = decision making is described clearly
@@ -230,5 +233,5 @@
    
 ---
 ## Total Mark  
-Sprint 0 Total Mark : 42 / 48
+Sprint 0 Total Mark : 43 / 48
 	
