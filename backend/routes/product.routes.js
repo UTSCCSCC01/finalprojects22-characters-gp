@@ -28,16 +28,8 @@ router.post('/', upload.single('productImage'), (req, res, next) => {
           productDescription: req.body.productDescription,
           productImage: req.file.originalname,
           productInventoryAmount: req.body.productInventoryAmount,
-<<<<<<< Updated upstream
-
-          productStory: req.body.productStory,
-
-          productCharacter: req.body.productCharacter
-
-=======
           productStory: req.body.productStory,
           productCharacter: req.body.productCharacter
->>>>>>> Stashed changes
       }
 
     Product.create(newProduct, (err, item) => {

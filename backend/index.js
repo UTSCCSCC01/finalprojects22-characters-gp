@@ -9,15 +9,8 @@ const multer = require('multer');
 //import Routers
 const userRoute = require('./routes/user.routes');
 const storyRoute = require('./routes/story.routes');
-<<<<<<< Updated upstream
-const productRoute = require('./routes/product.routes')
-=======
-<<<<<<< Updated upstream
-=======
-const productRoute = require('./routes/product.routes')
+const productRoute = require('./routes/product.routes');
 const orderRoute = require('./routes/order.routes')
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 mongoose
   .connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/mydatabase')
@@ -39,15 +32,8 @@ app.use(cors());
 //Using app.use() means that this middleware will be called for every call to the application.
 app.use('/stories', storyRoute);
 app.use('/users', userRoute);
-<<<<<<< Updated upstream
-app.use('/products', productRoute);
-=======
-<<<<<<< Updated upstream
-=======
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
