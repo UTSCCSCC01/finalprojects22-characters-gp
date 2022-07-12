@@ -4,8 +4,9 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { NavDropdown, Toast, ToastContainer } from 'react-bootstrap'
+import { NavbarBrand, NavDropdown, Toast, ToastContainer } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
@@ -64,16 +65,17 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <Navbar bg="dark" variant="dark">
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
                 <Link to={'/ProductStore'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
-
+              <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
               <Nav className="justify-content-end">
                 <Nav>
+                  <Nav>
                   <Link to={'/ProductStore'} className="nav-link">
                     Store
                   </Link>
@@ -105,15 +107,16 @@ class App extends React.Component {
                       Sign Up
                     </Link>
                   </Nav> :
-                  <NavDropdown title="Profile">
+                  <NavDropdown title="Profile" id="navbarScrollingDropdown">
                     <NavDropdown.Item href={'/profile/' + this.state.user._id}>
                       Settings
                     </NavDropdown.Item>
-                    <NavDropdown.Item href={'/'} onClick={this.signOut}>
+                    <NavDropdown.Item href={'/ProductStore'} onClick={this.signOut}>
                       Sign Out
                     </NavDropdown.Item>
                   </NavDropdown>
                 }
+                </Nav>
               </Nav>
             </Container>
           </Navbar >
