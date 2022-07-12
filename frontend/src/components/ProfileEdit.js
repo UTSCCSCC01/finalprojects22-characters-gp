@@ -102,7 +102,7 @@ export default class ProfileEdit extends Component {
             <Card className="text-start p-4">
                 <h2 className="mb-4">Profile</h2>
                 <Form noValidate onSubmit={this.saveProfile}>
-                    <Form.Group controlId="firstName">
+                    <Form.Group controlId="firstName" className="mb-3">
                         <Form.Label>
                             First Name
                         </Form.Label>
@@ -113,7 +113,7 @@ export default class ProfileEdit extends Component {
                             {this.state.warnings.firstName}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group controlId="lastName">
+                    <Form.Group controlId="lastName" className="mb-3">
                         <Form.Label>
                             Last Name
                         </Form.Label>
@@ -124,7 +124,7 @@ export default class ProfileEdit extends Component {
                             {this.state.warnings.lastName}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group controlId="lastName">
+                    <Form.Group controlId="email">
                         <Form.Label>
                             Email
                         </Form.Label>

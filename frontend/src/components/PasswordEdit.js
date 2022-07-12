@@ -78,7 +78,7 @@ export default class PasswordEdit extends Component {
             <Card className="text-start p-4">
                 <Form noValidate onSubmit={this.savePassword}>
                     <h3 className="mb-4">Change Password</h3>
-                    <Form.Group controlId="oldPassword" >
+                    <Form.Group controlId="oldPassword" className="mb-3">
                         <Form.Label>
                             Old Password
                         </Form.Label>
@@ -89,7 +89,7 @@ export default class PasswordEdit extends Component {
                             {this.state.warnings.old}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group controlId="newPassword">
+                    <Form.Group controlId="newPassword" className="mb-3">
                         <Form.Label>
                             New Password
                         </Form.Label>
