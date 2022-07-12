@@ -59,3 +59,11 @@
   color: gray;
 }
 
+.storyFilters {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-button {
+  display: inline;
+}
