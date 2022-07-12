@@ -73,7 +73,7 @@ class App extends React.Component {
                 </Link>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-              <Nav className="justify-content-end">
+              <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                 <Nav>
                   <Nav>
                   <Link to={'/ProductStore'} className="nav-link">
@@ -117,7 +117,7 @@ class App extends React.Component {
                   </NavDropdown>
                 }
                 </Nav>
-              </Nav>
+              </Navbar.Collapse>
             </Container>
           </Navbar >
           <Container>
