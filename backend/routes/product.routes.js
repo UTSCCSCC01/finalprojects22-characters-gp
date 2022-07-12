@@ -25,6 +25,7 @@ router.post('/', upload.single('productImage'), (req, res, next) => {
     const newProduct = {
           productPrice: req.body.productPrice,
           productName: req.body.productName,
+          productType: req.body.productType,
           productDescription: req.body.productDescription,
           productImage: req.file.originalname,
           productInventoryAmount: req.body.productInventoryAmount,
@@ -76,6 +77,7 @@ router.put('/:id', upload.single("productImage"), (req, res, next) => {
         console.log('File deleted!');
       });
       product.productName = req.body.productName;
+      product.productType = req.body.productType;
       product.productPrice = req.body.productPrice;
       product.productDescription = req.body.productDescription;
       product.productInventoryAmount = req.body.productInventoryAmount;
