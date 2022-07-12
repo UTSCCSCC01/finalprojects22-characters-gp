@@ -20,6 +20,7 @@ export default class StoriesList extends Component {
     this.onCheckCharacter = this.onCheckCharacter.bind(this);
     this.clearFilters = this.clearFilters.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
+    this.getTitles = this.getTitles.bind(this);
 
     this.state = {
       stories: [],
@@ -74,10 +75,6 @@ export default class StoriesList extends Component {
     this.setState({ characterCandidate: !(this.state.characterCandidate) });
   }
 
-  onGetStories(recommended) {
-    this.setState({ searchStories: recommended })
-  }
-
   clearFilters() {
     this.setState({
       statusNew: false,
@@ -117,6 +114,13 @@ export default class StoriesList extends Component {
     });
   }
 
+  //returns a list of only the titles of the filtered stories
+  getTitles() { 
+    return this.applyFilters().map((res) => { 
+      return res.storyTitle; 
+    }); 
+  } 
+
   //map a list of product cards that match the filters
   getStories() {
     return this.applyFilters().filter((res) => {
@@ -135,8 +139,16 @@ export default class StoriesList extends Component {
       <div>
         <h3 style={{ padding: '2rem' }}>Submitted Stories</h3>
 
-        {/* <Col>
-        </Col> */}
+        <Col>
+          <div>
+            <Typeahead style={{ float: 'right' }} placeholder="Search..." onChange={selected => {
+              console.log(selected)
+              this.setState({ searchTerm: (selected && selected.length !== 0) ? selected[0] : '' })
+            }}
+              options={this.getTitles()}
+            />
+          </div>
+        </Col>
 
         <Col>
           <div style={{ textAlign: 'left' }}>
