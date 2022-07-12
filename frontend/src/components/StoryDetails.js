@@ -79,6 +79,7 @@ export default class StoryDetails extends Component {
                             <Dropdown.Item onClick={() => this.updateStatus("new")}>new</Dropdown.Item>
                             <Dropdown.Item onClick={() => this.updateStatus("interviewing")}>interviewing</Dropdown.Item>
                             <Dropdown.Item onClick={() => this.updateStatus("validated")}>validated</Dropdown.Item>
+                            <Dropdown.Item onClick={() => this.updateStatus("rejected")}>rejected</Dropdown.Item>
 
                         </DropdownButton>
                     </Card.Text>
