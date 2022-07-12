@@ -11,6 +11,8 @@ export default class SubmitProduct extends Component {
         //State
         this.state = {
             productName: '',
+            productTypes: ['','Hat', 'Coat', 'T-Shirt', 'Hoodie', 'Jeans', 'Trousers', 'Dress'],
+            productType: '',
             storyCharacter: '',
             productInventoryAmount: '',
             productPrice: '',
@@ -24,6 +26,7 @@ export default class SubmitProduct extends Component {
         //binding methods
         this.onChangeProductDescription = this.onChangeProductDescription.bind(this);
         this.onChangeProductName = this.onChangeProductName.bind(this);
+        this.onChangeProductType = this.onChangeProductType.bind(this);
         this.onChangeStoryCharacter = this.onChangeStoryCharacter.bind(this);
         this.onChangeProductInventoryAmount = this.onChangeProductInventoryAmount.bind(this);
         this.onChangeProductPrice = this.onChangeProductPrice.bind(this);
@@ -44,6 +47,9 @@ export default class SubmitProduct extends Component {
 
     onChangeProductName(e){
         this.setState({ productName: e.target.value });
+    }
+    onChangeProductType(e){
+        this.setState({ productType: e.target.value });
     }
     onChangeStoryCharacter(e){
         this.setState({ storyCharacter: e.target.value });
@@ -69,6 +75,7 @@ export default class SubmitProduct extends Component {
 
         const formData = new FormData();
         formData.append("productName", this.state.productName);
+        formData.append("productType", this.state.productType);
         formData.append("productStory", this.state.storyCharacter);
         formData.append("productInventoryAmount", this.state.productInventoryAmount);
         formData.append("productPrice", this.state.productPrice);
@@ -92,6 +99,7 @@ export default class SubmitProduct extends Component {
         //reset SubmitForm state
         this.setState({
             productName: '',
+            productType: '',
             productInventoryAmount: '',
             productPrice: '',
             productDescription: '',
@@ -137,6 +145,19 @@ export default class SubmitProduct extends Component {
                                 placeholder="Name"
                                 onChange={this.onChangeProductName}
                                 value={this.state.productName}/>
+                            </Col>
+                        </Form.Group>
+                        <br/>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="4">
+                                Select Type
+                            </Form.Label>
+                            <Col sm="8">
+                                <Form.Select required type="text" value={this.state.productType} onChange={this.onChangeProductType}>
+                                    {this.state.productTypes.map(type => (
+                                        <option key={type} value={type}>{type}</option>
+                                    ))}
+                                </Form.Select>
                             </Col>
                         </Form.Group>
                         <br/>

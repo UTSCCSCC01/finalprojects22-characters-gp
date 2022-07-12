@@ -24,6 +24,9 @@ export default class ProductCard extends Component {
                       <Card.Body onClick={this.viewProduct}>
                           <Card.Title style={{ textAlign: 'left' }}>{this.props.obj.productName}</Card.Title>
                           <Card.Text style={{ textAlign: 'left' }}>
+                              {this.props.obj.productType}
+                          </Card.Text>
+                          <Card.Text style={{ textAlign: 'left' }}>
                               ${this.props.obj.productPrice.toFixed(2)}
                           </Card.Text>
                       </Card.Body>
