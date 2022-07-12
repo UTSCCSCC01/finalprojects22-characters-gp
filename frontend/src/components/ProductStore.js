@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Row, Form, Col, Button} from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import config from '../config'
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export default class ProductStore extends Component {
     constructor(props) {
@@ -89,7 +90,7 @@ export default class ProductStore extends Component {
         h3: {
           textAlign: 'left'
         },
-  
+
         input: {
           display: 'flex',
           justifyContent: 'end',
@@ -130,10 +131,19 @@ export default class ProductStore extends Component {
               </Form.Group>
             </form>
             <div style={this.styles.input}>
+<<<<<<< HEAD
               <input type="text" placeholder="Search..." onChange={event => {
                 this.setState({ searchTerm: event.target.value })
               }} />
               
+=======
+              <Typeahead placeholder="Search..." onChange={selected => {
+                console.log(selected)
+                  this.setState({ searchTerm: (selected && selected.length !== 0) ? selected[0]: ''})
+                }}
+                options={this.state.products && this.state.products.map(elem => elem.productName)}
+              />
+>>>>>>> develop
             </div>
             <h3 style={this.styles.h3}>SHOP CLOTHING</h3>
             <Row>
