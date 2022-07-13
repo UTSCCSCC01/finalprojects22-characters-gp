@@ -6,6 +6,9 @@ import { Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Stack } from 'react-bootstrap';
+import axios from 'axios';
+
+
 
 class ShoppingCart extends Component {
     constructor() {
@@ -14,6 +17,7 @@ class ShoppingCart extends Component {
         this.updateCart = this.updateCart.bind(this);
         this.updatePriceSummary = this.updatePriceSummary.bind(this);
         this.getInitialValues = this.getInitialValues.bind(this);
+        this.onCheckout = this.onCheckout.bind(this);
 
         //localStorage.setItem("cartProducts", JSON.stringify(mockProducts));
 
@@ -90,6 +94,22 @@ class ShoppingCart extends Component {
         });
     }
 
+    onCheckout(e){
+
+        if(this.state.itemCount === 0){
+            alert("Add items to your cart before proceeding to checkout.")
+        } else {
+            if(localStorage.getItem("user") === null){
+                // redirect to sign-in page
+                this.props.history.push('/login')
+            }else{
+                // redirect to checkout page
+                alert("You have been redirected to Checkout")
+            } 
+        }
+
+    }
+
     render() {
         return (
             <Container fluid>
@@ -140,12 +160,7 @@ class ShoppingCart extends Component {
                                     <h5>Total: ${(Math.abs(this.state.total)).toFixed(2)}</h5>
                                 </div>
                                 <Button id="checkout" className='w-100' variant="primary" size="lg"
-                                    onClick={e => {
-                                        this.state.itemCount === 0 ?
-                                            alert("Add items to your cart before proceeding to checkout.")
-                                            :
-                                            alert("You have been redirected to the checkoutPage.")
-                                    }}>
+                                    onClick={this.onCheckout}>
                                     Checkout
                                 </Button>
                             </div>
