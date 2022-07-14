@@ -14,8 +14,7 @@ class ShoppingCart extends Component {
         this.updateCart = this.updateCart.bind(this);
         this.updatePriceSummary = this.updatePriceSummary.bind(this);
         this.getInitialValues = this.getInitialValues.bind(this);
-
-        //localStorage.setItem("cartProducts", JSON.stringify(mockProducts));
+        this.onCheckout = this.onCheckout.bind(this);
 
         this.state = {
             subtotal: 0.00,
@@ -90,6 +89,15 @@ class ShoppingCart extends Component {
         });
     }
 
+    onCheckout(){
+        if (this.state.itemCount === 0){
+            alert("Add items to your cart before proceeding to checkout.")
+            return;
+        }
+        this.props.history.push({ pathname: '/Checkout'});
+    }
+    
+
     render() {
         return (
             <Container fluid>
@@ -139,14 +147,8 @@ class ShoppingCart extends Component {
                                     <hr></hr>
                                     <h5>Total: ${(Math.abs(this.state.total)).toFixed(2)}</h5>
                                 </div>
-                                <Button id="checkout" className='w-100' variant="primary" size="lg"
-                                    onClick={e => {
-                                        this.state.itemCount === 0 ?
-                                            alert("Add items to your cart before proceeding to checkout.")
-                                            :
-                                            alert("You have been redirected to the checkoutPage.")
-                                    }}>
-                                    Checkout
+                                <Button id="checkout" className='w-100' variant="primary" size="lg" onClick={this.onCheckout}>
+                                    Proceed to Checkout
                                 </Button>
                             </div>
                         </Card>
