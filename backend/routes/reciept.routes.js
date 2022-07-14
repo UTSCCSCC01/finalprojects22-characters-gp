@@ -16,7 +16,8 @@ auth.setCredentials({
 });
 
 router.post('/', async (req, res) => {
-    sendReciept(req.body);
+    await sendReciept(req.body);
+    res.sendStatus(200);
   });
 
 
@@ -46,6 +47,7 @@ async function sendReciept(data) {
             to: email,
             subject: "Characters Order Verification",
             //body of the email we want to send
+            
             html: "<div>Order Confirmation<p>Order #"+orderNumber+" </p></div><div><span>Hello "+name+",</span><div><span>Thank you for shopping with Characters, your support matters! We will notiy you when your order is processed and shipped. Your order details are indicated below:</span><div style='border:1px solid #000;margin:1rems 5vw 1rem 5vw;padding:1rems 5vw 1rem 5vw'>Your order will be sent to:<br>"+address+"<br><br>Order total: $"+orderTotal+" </div><span>We hope to see you again!</span></div></div>", 
         }
         await stmp.sendMail(mailOptions, (err, res)=>{
