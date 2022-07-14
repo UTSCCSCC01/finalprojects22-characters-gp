@@ -131,19 +131,12 @@ export default class ProductStore extends Component {
               </Form.Group>
             </form>
             <div style={this.styles.input}>
-<<<<<<< HEAD
-              <input type="text" placeholder="Search..." onChange={event => {
-                this.setState({ searchTerm: event.target.value })
-              }} />
-              
-=======
               <Typeahead placeholder="Search..." onChange={selected => {
                 console.log(selected)
                   this.setState({ searchTerm: (selected && selected.length !== 0) ? selected[0]: ''})
                 }}
                 options={this.state.products && this.state.products.map(elem => elem.productName)}
               />
->>>>>>> develop
             </div>
             <h3 style={this.styles.h3}>SHOP CLOTHING</h3>
             <Row>
