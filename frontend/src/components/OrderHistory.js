@@ -18,8 +18,8 @@ class OrderHistory extends Component {
 
     componentDidMount() {
         //find all orders purchased by User
-        console.log(config.backend + '/orders/?purchasedBy=' + this.props.user._id)
-        axios.get(config.backend + '/orders/?purchasedBy=' + this.props.user._id)
+        console.log(config.backend + '/orders/?purchasedBy=' + this.props.match.params.id)
+        axios.get(config.backend + '/orders/?purchasedBy=' + this.props.match.params.id)
             .then(res => {
                 //const orders = res.data;
                 console.log("retrieved all users orders: " + JSON.stringify(res.data))
@@ -78,7 +78,7 @@ class OrderHistory extends Component {
                                                 <td>{date.toString()}</td>
                                                 <td>$ {(this.computeTotal(order)).toFixed(2)}</td>
                                                 <td>
-                                                    <Link to={{ pathname: './OrderDetails/' + order._id }}>
+                                                    <Link to={{ pathname: '/OrderDetails/' + order._id }}>
                                                         View Details
                                                     </Link>
                                                 </td>

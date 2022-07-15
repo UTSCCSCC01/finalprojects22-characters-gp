@@ -7,6 +7,8 @@ import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Stack } from 'react-bootstrap';
 
+
+
 class ShoppingCart extends Component {
     constructor() {
         super()
@@ -89,14 +91,21 @@ class ShoppingCart extends Component {
         });
     }
 
-    onCheckout(){
-        if (this.state.itemCount === 0){
+    onCheckout(e){
+
+        if(this.state.itemCount === 0){
             alert("Add items to your cart before proceeding to checkout.")
-            return;
+        } else {
+            if(localStorage.getItem("user") === null){
+                // redirect to sign-in page
+                this.props.history.push('/login')
+            }else{
+                // redirect to checkout page
+                this.props.history.push({ pathname: '/Checkout', state: this.state});
+            } 
         }
-        this.props.history.push({ pathname: '/Checkout'});
+
     }
-    
 
     render() {
         return (

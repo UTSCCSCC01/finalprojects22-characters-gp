@@ -37,7 +37,7 @@ As an employee I want to be able to see a queue of orders backlog so that I can 
   - Allow employees to search for a specific story based off story title or author
 
 ## Spikes
-
+- Learn how to send emails to customers using nodemailer and googleapis
 
 ## Team capacity
 

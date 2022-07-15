@@ -11,7 +11,7 @@ router.post('/', (req, res, next) => {
     if (error) {
       return next(error)
     } else {
-      console.log(data)
+      // console.log(data)
       res.json(data)
     }
   })

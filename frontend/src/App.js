@@ -104,11 +104,6 @@ class App extends React.Component {
                       My Cart
                     </Link>
                   </Nav>
-                  <Nav>
-                    <Link to={'/OrderHistory'} className="nav-link">
-                      Order History
-                    </Link>
-                  </Nav>
                   {this.state.user === null ?
                     <Nav>
                       <Link to={'/signup'} className="nav-link">
@@ -121,6 +116,9 @@ class App extends React.Component {
                       </NavDropdown.Item>
                       <NavDropdown.Item href={'/ProductStore'} onClick={this.signOut}>
                         Sign Out
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
+                      Order History
                       </NavDropdown.Item>
                     </NavDropdown>
                   }
@@ -187,8 +185,8 @@ class App extends React.Component {
                     />
                     <Route
                       exact
-                      path="/OrderHistory"
-                      render={(props) => <OrderHistory {...props} user={this.state.user} />}
+                      path="/OrderHistory/:id"
+                      render={(props) => <OrderHistory {...props} />}
                     />
                     <Route
                       exact
