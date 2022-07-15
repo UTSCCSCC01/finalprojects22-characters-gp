@@ -11,7 +11,8 @@ As an employee I want to be able to see a queue of orders backlog so that I can 
 
 ## Tasks Breakdown
 3. As a consumer I want to be able to search for apparel by story titles and apparel types, so that I can quickly access/purchase items I'm interested in (Eric Zhou)
-  - Provide a filter apparel in store page by story titles so consumers can see apparels by certain characters.
+  - Provide a filter apparel in store page by story titles so consumers can see apparels by certain characters
+  - Provide a filter apparel in store page by apparel types so consumers can see apparels of their desired type
   - Add product type field: hat, shirt, pants, etc. for a radio/select filter.
   - Update add submitProduct page for employees to include apparel type field.
 

@@ -18,8 +18,6 @@ class ShoppingCart extends Component {
         this.getInitialValues = this.getInitialValues.bind(this);
         this.onCheckout = this.onCheckout.bind(this);
 
-        //localStorage.setItem("cartProducts", JSON.stringify(mockProducts));
-
         this.state = {
             subtotal: 0.00,
             tax: 0.00,
@@ -104,6 +102,7 @@ class ShoppingCart extends Component {
             }else{
                 // redirect to checkout page
                 alert("You have been redirected to Checkout")
+                this.props.history.push({ pathname: '/Checkout'});
             } 
         }
 
@@ -158,9 +157,8 @@ class ShoppingCart extends Component {
                                     <hr></hr>
                                     <h5>Total: ${(Math.abs(this.state.total)).toFixed(2)}</h5>
                                 </div>
-                                <Button id="checkout" className='w-100' variant="primary" size="lg"
-                                    onClick={this.onCheckout}>
-                                    Checkout
+                                <Button id="checkout" className='w-100' variant="primary" size="lg" onClick={this.onCheckout}>
+                                    Proceed to Checkout
                                 </Button>
                             </div>
                         </Card>

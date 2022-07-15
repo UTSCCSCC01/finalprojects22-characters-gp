@@ -4,8 +4,9 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { NavDropdown, Toast, ToastContainer } from 'react-bootstrap'
+import { NavbarBrand, NavDropdown, Toast, ToastContainer } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
@@ -18,6 +19,9 @@ import ProfileInfo from './components/ProfileInfo'
 import ShoppingCart from './components/ShoppingCart'
 import ProductStore from './components/ProductStore'
 import ProductDetails from './components/ProductDetails'
+import Checkout from './components/Checkout'
+import OrderHistory from './components/OrderHistory'
+import OrderDetails from './components/OrderDetails'
 
 class App extends React.Component {
   constructor(props) {
@@ -64,116 +68,138 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <Navbar bg="dark" variant="dark">
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
                 <Link to={'/ProductStore'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
-
-              <Nav className="justify-content-end">
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                 <Nav>
-                  <Link to={'/ProductStore'} className="nav-link">
-                    Store
-                  </Link>
-                </Nav>
-                {this.state.user !== null && this.state.user['type'] === 3 &&
-                  (<><Nav>
-                    <Link to={'/SubmitProduct'} className="nav-link">
-                      Add Product
+                  <Nav>
+                    <Link to={'/ProductStore'} className="nav-link">
+                      Store
                     </Link>
                   </Nav>
-                    <Nav>
-                      <Link to={'/StoriesList'} className="nav-link">
-                        Story Statuses
+                  {this.state.user !== null && this.state.user['type'] === 3 &&
+                    (<><Nav>
+                      <Link to={'/SubmitProduct'} className="nav-link">
+                        Add Product
                       </Link>
-                    </Nav></>)}
-                <Nav>
-                  <Link to={'/submitStory'} className="nav-link">
-                    Submit a story
-                  </Link>
-                </Nav>
-                <Nav>
-                  <Link to={'/shoppingCart'} className="nav-link">
-                    My Cart
-                  </Link>
-                </Nav>
-                {this.state.user === null ?
+                    </Nav>
+                      <Nav>
+                        <Link to={'/StoriesList'} className="nav-link">
+                          Story Statuses
+                        </Link>
+                      </Nav></>)}
                   <Nav>
-                    <Link to={'/signup'} className="nav-link">
-                      Sign Up
+                    <Link to={'/submitStory'} className="nav-link">
+                      Submit a story
                     </Link>
-                  </Nav> :
-                  <NavDropdown title="Profile">
-                    <NavDropdown.Item href={'/profile/' + this.state.user._id}>
-                      Settings
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href={'/'} onClick={this.signOut}>
-                      Sign Out
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                }
-              </Nav>
+                  </Nav>
+                  <Nav>
+                    <Link to={'/shoppingCart'} className="nav-link">
+                      My Cart
+                    </Link>
+                  </Nav>
+                  <Nav>
+                    <Link to={'/OrderHistory'} className="nav-link">
+                      Order History
+                    </Link>
+                  </Nav>
+                  {this.state.user === null ?
+                    <Nav>
+                      <Link to={'/signup'} className="nav-link">
+                        Sign Up
+                      </Link>
+                    </Nav> :
+                    <NavDropdown title="Profile" id="navbarScrollingDropdown">
+                      <NavDropdown.Item href={'/profile/' + this.state.user._id}>
+                        Settings
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href={'/ProductStore'} onClick={this.signOut}>
+                        Sign Out
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  }
+                </Nav>
+              </Navbar.Collapse>
             </Container>
           </Navbar >
           <Container>
             <Row>
-            <Col md={12}>
-              <div className="wrapper">
-                <Switch>
-                  <Route
-                    exact
-                    path="/signup"
-                    render={(props) => <SignUp {...props} signIn={this.signIn} />} />
+              <Col md={12}>
+                <div className="wrapper">
+                  <Switch>
+                    <Route
+                      exact
+                      path="/signup"
+                      render={(props) => <SignUp {...props} signIn={this.signIn} />} />
 
-                  <Route
-                    exact
-                    path="/Login"
-                    component={(props) => <Login {...props} signIn={this.signIn} />}
-                  />
-                  <Route
-                    exact
-                    path="/StoriesList"
-                    render={(props) => <StoriesList {...props} />} />
-                  <Route
-                    exact
-                    path="/submitStory"
-                    component={(props) => <SubmitStory {...props} user={this.state.user} />} />
-                  <Route
-                    exact
-                    path="/stories/:id"
-                    render={(props) => <StoryDetails {...props} />}
-                  />
-                  <Route
-                    exact
-                    path="/products/:id"
-                    render={(props) => <ProductDetails {...props} user={this.state.user} setToast={this.setToast} />}
-                  />
-                  <Route
-                    exact
-                    path="/SubmitProduct"
-                    render={(props) => <SubmitProduct {...props} user={this.state.user} />}
-                  />
-                  <Route
-                    path="/profile/:id"
-                    render={(props) => <ProfileInfo {...props} setToast={this.setToast} />}
-                  />
-                  <Route
-                    exact
-                    path="/shoppingCart"
-                    render={(props) => <ShoppingCart {...props} />}
-                  />
-                  <Route
-                    exact
-                    path="/ProductStore"
-                    render={(props) => <ProductStore {...props} />}
-                  />
-                </Switch>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+                    <Route
+                      exact
+                      path="/Login"
+                      component={(props) => <Login {...props} signIn={this.signIn} />}
+                    />
+                    <Route
+                      exact
+                      path="/StoriesList"
+                      render={(props) => <StoriesList {...props} />} />
+                    <Route
+                      exact
+                      path="/submitStory"
+                      component={(props) => <SubmitStory {...props} user={this.state.user} />} />
+                    <Route
+                      exact
+                      path="/stories/:id"
+                      render={(props) => <StoryDetails {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/products/:id"
+                      render={(props) => <ProductDetails {...props} user={this.state.user} setToast={this.setToast} />}
+                    />
+                    <Route
+                      exact
+                      path="/SubmitProduct"
+                      render={(props) => <SubmitProduct {...props} user={this.state.user} />}
+                    />
+                    <Route
+                      path="/profile/:id"
+                      render={(props) => <ProfileInfo {...props} setToast={this.setToast} />}
+                    />
+                    <Route
+                      exact
+                      path="/shoppingCart"
+                      render={(props) => <ShoppingCart {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/ProductStore"
+                      render={(props) => <ProductStore {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/Checkout"
+                      render={(props) => <Checkout {...props} user={this.state.user} />}
+                    />
+                    <Route
+                      exact
+                      path="/OrderHistory"
+                      render={(props) => <OrderHistory {...props} user={this.state.user} />}
+                    />
+                    <Route
+                      exact
+                      path="/OrderDetails/:id"
+                      render={(props) => <OrderDetails {...props} />}
+                    />
+                  </Switch>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </Router >
         <ToastContainer position="bottom-end" className="p-3">
           <Toast bg='primary' onClose={() => this.setState({ toast: { show: false } })} show={this.state.toast.show} delay={2000} autohide>
@@ -182,6 +208,6 @@ class App extends React.Component {
         </ToastContainer>
       </div >
     )
-    }
   }
+}
 export default App
