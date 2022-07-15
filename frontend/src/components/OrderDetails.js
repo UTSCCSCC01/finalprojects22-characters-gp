@@ -30,13 +30,16 @@ class OrderDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get(config.backend + '/orders/' + this.props.match.params.id)
-            .then(res => {
-                this.setState({ ...res.data, transactionDate: new Date(res.data.transactionDate).toString() })
-                console.log(res.data)
-                console.log(this.state.shippingInfo.firstName)
+        if(localStorage.getItem("user") === null){
+            this.props.history.push({ pathname: '/login'})
+        }else{
+            axios.get(config.backend + '/orders/' + this.props.match.params.id)
+                .then(res => {
+                    this.setState({ ...res.data, transactionDate: new Date(res.data.transactionDate).toString() })
+                    console.log(res.data)
+                    console.log(this.state.shippingInfo.firstName)
             })
-            
+        }
             
     }
 

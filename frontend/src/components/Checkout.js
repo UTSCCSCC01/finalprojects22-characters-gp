@@ -17,7 +17,9 @@ class Checkout extends Component {
         this.updateBillingLastName = this.updateBillingLastName.bind(this);
         this.updateBillingAddress = this.updateBillingAddress.bind(this);
         this.updatePaymentMethod = this.updatePaymentMethod.bind(this);
+        this.sendEmail = this.sendEmail.bind(this);
         this.state = {
+            orderTotal: 0,
             checkoutSuccess: false,
             shippingFirstName: '',
             shippingLastName: '',
@@ -55,9 +57,44 @@ class Checkout extends Component {
         this.props.history.push({ pathname: '/ShoppingCart' });
     }
 
+    sendEmail(orderid){
+        // console.log(this.localStorage.user)
+        // const user = JSON.parse(localStorage.getItem("user"))
+        console.log(this.state)
+        const userDetails = {
+            orderNumber: orderid,
+            orderTotal: this.props.location.state.total.toFixed(2),
+            address: this.state.shippingAddress,
+            user: {
+                userId: this.props.user._id,
+                firstName: this.state.billingFirstName,
+                email: this.props.user.email,
+            }
+        }
+
+        axios.post(config.backend + '/reciepts', userDetails)
+            .then(res => {
+                console.log(res)
+                this.setState((state) => {
+                    return{
+                        shippingFirstName: '',
+                        shippingLastName: '',
+                        shippingAddress: '',
+                        billingFirstName: '',
+                        billingLastName: '',
+                        billingAddress: '',
+                        paymentMethod: ''
+                    }
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    }
+
     onSubmit(e) {
         e.preventDefault();
-
+        
         //reformat products to be added to Order document
         const products = JSON.parse(localStorage.getItem("cartProducts")); 
         let orderProducts = [];
@@ -68,7 +105,7 @@ class Checkout extends Component {
                 //console.log(pid + " -> " + products[pid]);
             }
         }
-        console.log(orderProducts);
+        // console.log(orderProducts);
  
         const data = {
             transactionDate: Date.now(),
@@ -90,27 +127,21 @@ class Checkout extends Component {
         //store new object in database and print to console
         axios.post(config.backend + "/orders", data)
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
+                this.sendEmail(res.data._id)
             })
             .catch(err => {
                 console.log(err.data)
                 console.log(data)
             });
 
+        // send email with reciept
+        // sendEmail(orderId);
+        
         //reset Form state
-        this.setState((state) => {
-            return{
-                shippingFirstName: '',
-                shipppingLastName: '',
-                shippingAddress: '',
-                billingFirstName: '',
-                billingLastName: '',
-                billingAddress: '',
-                paymentMethod: ''
-            }
-        })
+        
 
-        console.log(this.state.shippingFirstName)
+        // console.log(this.state.shippingFirstName)
         //change submissionSuccess state to show
         //successful submission message to user:
         this.setState((state) => {return {checkoutSuccess: true}});
