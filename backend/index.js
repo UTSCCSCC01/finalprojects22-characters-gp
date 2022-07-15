@@ -11,7 +11,7 @@ const userRoute = require('./routes/user.routes');
 const storyRoute = require('./routes/story.routes');
 const productRoute = require('./routes/product.routes');
 const orderRoute = require('./routes/order.routes');
-const recieptRoute = require('./routes/reciept.routes');
+const receiptRoute = require('./routes/receipt.routes');
 
 mongoose
   .connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/mydatabase')
@@ -36,7 +36,7 @@ app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);
 
-app.use('/reciepts', recieptRoute);
+app.use('/reciepts', receiptRoute);
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {

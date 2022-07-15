@@ -101,8 +101,7 @@ class ShoppingCart extends Component {
                 this.props.history.push('/login')
             }else{
                 // redirect to checkout page
-                alert("You have been redirected to Checkout")
-                this.props.history.push({ pathname: '/Checkout'});
+                this.props.history.push({ pathname: '/Checkout', state: this.state});
             } 
         }
 

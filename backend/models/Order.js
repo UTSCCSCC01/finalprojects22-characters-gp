@@ -29,7 +29,12 @@ const orderSchema = new Schema({
     products: [{
         pid: {type: Schema.Types.ObjectId, ref: 'products', required: true},
         itemCount: {type: Number, required: true}
-    }]
+    }],
+
+    // orderTotal: {
+    //     type: Number,
+    //     required: true
+    // }
 });
 
 module.exports = mongoose.model('orders', orderSchema);
