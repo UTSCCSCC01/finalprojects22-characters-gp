@@ -9,20 +9,13 @@ import axios from 'axios';
 class OrderDetailsItem extends Component {
     constructor(props) {
         super(props)
-        this.updateTotals = this.updateTotals.bind(this)
-
         this.state = {
             subtotal: 0
         }
     }
 
-    async updateTotals(callback){
-        await this.setState({ subtotal: this.props.productPrice * this.props.itemCount })
-        callback(this.state.subtotal);
-    }
-    
     componentDidMount() {
-        this.updateTotals(this.props.updateTotals)
+        this.setState({ subtotal: this.props.productPrice * this.props.itemCount })
     }
 
 

@@ -22,7 +22,6 @@ router.get('/', (req, res, next) => {
   console.log(query)
   Order.find(query).
     populate('purchasedBy', 'firstName lastName email').
-    populate('products.pid', 'productPrice').
     exec((error, data) => {
       if (error) {
         return next(error);
@@ -35,7 +34,6 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   Order.findById(req.params.id).
     populate('purchasedBy', 'firstName lastName email').
-    populate('products.pid').
     exec((error, data) => {
       if (error) {
         return next(error)

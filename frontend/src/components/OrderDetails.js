@@ -8,7 +8,7 @@ import config from '../config'
 /*
 const getOrderId = () => {
   const location = useLocation()
-  const { orderId } = location.state 
+  const { orderId } = location.state
 }
 */
 
@@ -17,7 +17,6 @@ class OrderDetails extends Component {
         super(props)
 
         this.onBack = this.onBack.bind(this);
-        this.updateTotals = this.updateTotals.bind(this);
         this.state = {
             transactionDate: '',
             products: [],
@@ -31,31 +30,24 @@ class OrderDetails extends Component {
 
     componentDidMount() {
         if(localStorage.getItem("user") === null){
-            this.props.history.push({ pathname: '/login'})
-        }else{
+            this.props.history.push({ pathname: '/login' })
+        } else {
             axios.get(config.backend + '/orders/' + this.props.match.params.id)
                 .then(res => {
-                    this.setState({ ...res.data, transactionDate: new Date(res.data.transactionDate).toString() })
+                    this.setState({
+                        ...res.data, transactionDate: new Date(res.data.transactionDate).toString(),
+                        tax: res.data.subtotal * 0.13,
+                        total: res.data.subtotal * 1.13
+                    })
                     console.log(res.data)
                     console.log(this.state.shippingInfo.firstName)
-            })
+                })
         }
-            
+
     }
 
     onBack() {
         this.props.history.goBack();
-    }
-
-    updateTotals(itemSubtotal) {
-        console.log("itemSubtotal:" + itemSubtotal)
-        this.setState((state) => {
-            return {
-                subtotal: state.subtotal + itemSubtotal,
-                tax: (state.subtotal + itemSubtotal) * 0.13,
-                total: (state.subtotal + itemSubtotal) * 1.13,
-            }
-        });
     }
 
     render() {
@@ -70,11 +62,11 @@ class OrderDetails extends Component {
                     <Col md={12} className="d-flex justify-content-center">
                         <div className="d-flex flex-column p-3">
                             <div className="d-inline-flex justify-content-center">
-                                <h3 className="d-flex">Order #: </h3> 
+                                <h3 className="d-flex">Order #: </h3>
                                 <h5 className="text-muted m-2">{this.props.match.params.id}</h5>
                             </div>
                             <div className="d-inline-flex">
-                                <h3>Your order was placed on:</h3> 
+                                <h3>Your order was placed on:</h3>
                                 <h5 className="text-muted m-2">{this.state.transactionDate}</h5>
                             </div>
                         </div>
@@ -123,10 +115,9 @@ class OrderDetails extends Component {
                 <Row>
                     {Object.values(this.state.products).map((item) =>
                             <OrderDetailsItem
-                                key={item.pid._id}
-                                {...item.pid}
+                                key={item.pid}
+                                {...item}
                                 itemCount={item.itemCount}
-                                updateTotals={this.updateTotals}
                             />
                     )}
                 </Row>
