@@ -110,12 +110,6 @@ export default class ProductDetails extends Component {
 
   onDelete(e) {
     axios.get(config.backend + "/stories?_id=" + this.state.storyID).then(res =>{
-      var isDeleted = true;
-      for (let i = 0; i < res.data.length && isDeleted == true; i++){
-        if (res.data[i].isDeleted == false){
-          isDeleted = false;
-        }
-      }
       if (res.data.length == 0 || res.data[0].isDeleted == true){
         axios.delete(config.backend + "/products/" + this.props.match.params.id).then(res => {
           if (res.status == 200) {
