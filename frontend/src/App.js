@@ -22,6 +22,7 @@ import ProductDetails from './components/ProductDetails'
 import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
 import OrderDetails from './components/OrderDetails'
+import CustomerOrders from './components/CustomerOrders'
 
 class App extends React.Component {
   constructor(props) {
@@ -111,14 +112,20 @@ class App extends React.Component {
                       </Link>
                     </Nav> :
                     <NavDropdown title="Profile" id="navbarScrollingDropdown">
+                      {this.state.user['type'] === 3 ?
+                      <NavDropdown.Item href={'/CustomerOrders'}>
+                      Customer Orders
+                      </NavDropdown.Item>
+                      :
+                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
+                      Order History
+                      </NavDropdown.Item>
+                      }
                       <NavDropdown.Item href={'/profile/' + this.state.user._id}>
                         Settings
                       </NavDropdown.Item>
                       <NavDropdown.Item href={'/ProductStore'} onClick={this.signOut}>
                         Sign Out
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
-                      Order History
                       </NavDropdown.Item>
                     </NavDropdown>
                   }
@@ -192,6 +199,11 @@ class App extends React.Component {
                       exact
                       path="/OrderDetails/:id"
                       render={(props) => <OrderDetails {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/CustomerOrders"
+                      render={(props) => <CustomerOrders {...props} />}
                     />
                   </Switch>
                 </div>
