@@ -46,7 +46,9 @@ router.post('/', upload.single('productImage'), (req, res, next) => {
 
 // Get all products
 router.get('/', (req, res) => {
-  Product.find({ deleted: false }, (error, data) => {
+  const query = req.query;
+  query.deleted = false;
+  Product.find(query, (error, data) => {
     if (error) {
       return next(error)
     } else {
