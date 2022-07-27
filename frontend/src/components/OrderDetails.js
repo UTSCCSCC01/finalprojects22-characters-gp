@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 import config from '../config'
 
-
 /*
 const getOrderId = () => {
   const location = useLocation()
@@ -51,6 +50,8 @@ class OrderDetails extends Component {
     }
 
     render() {
+        const userType = JSON.parse(localStorage.getItem("user")).type
+        //console.log("userType: " + userType);
         return (
             <Container fluid>
                 <Row>
@@ -66,7 +67,11 @@ class OrderDetails extends Component {
                                 <h5 className="text-muted m-2">{this.props.match.params.id}</h5>
                             </div>
                             <div className="d-inline-flex">
-                                <h3>Your order was placed on:</h3>
+                                {userType !== 3 ?
+                                    <h3>Your order was placed on:</h3>
+                                    :
+                                    <h3>The order was placed on:</h3>
+                                }
                                 <h5 className="text-muted m-2">{this.state.transactionDate}</h5>
                             </div>
                         </div>
