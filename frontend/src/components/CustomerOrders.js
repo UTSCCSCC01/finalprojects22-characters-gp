@@ -17,9 +17,10 @@ class CustomerOrders extends Component {
         this.onCheckFulfilled = this.onCheckFulfilled.bind(this);
         this.onCheckUnfulfilled = this.onCheckUnfulfilled.bind(this);
         this.getFilteredOrders = this.getFilteredOrders.bind(this);
-        //this.getPurchasedBy = this.getPurchasedBy.bind(this);
+        this.displayFilteredOrders = this.displayFilteredOrders.bind(this);
         this.state = {
             orders: [],
+            filteredOrders: [],
             filterByFulfilled: false,
             filterByUnfulfilled: false,
             isOpen: false
@@ -93,17 +94,35 @@ class CustomerOrders extends Component {
           filterByUnfulfilled: false
         });
     }
-
-    //return orders that match the filter
+    
     getFilteredOrders(){
         return this.state.orders.filter((order) => {
-            console.log("reaches here")
+            console.log("filterOrder: " + order)
             if(this.state.filterByFulfilled && order.isFulfilled === true){
                 return order
             }
-            else if (this.state.filterByUnfulfilled && order.isUnfulfilled === true){
+            else if (this.state.filterByUnfulfilled && order.isFulfilled === false){
                 return order
             }
+        })
+    }
+
+    displayFilteredOrders(){
+        return this.getFilteredOrders().map((order, i) => {
+            let date = new Date(order.transactionDate);
+            return (
+                <tr key={i}>
+                    <td>{order._id}</td>
+                    <td>{order.purchasedBy._id}</td>
+                    <td>{date.toString()}</td>
+                    <td>$ {(this.computeTotal(order)).toFixed(2)}</td>
+                    <td>
+                        <Link to={{ pathname: '/OrderDetails/' + order._id }}>
+                            View Details
+                        </Link>
+                    </td>
+                </tr>
+            )
         })
     }
 
@@ -173,8 +192,7 @@ class CustomerOrders extends Component {
                             </thead>
                             <tbody>
                                 {/* we want to display a row of order information for every order*/}
-                                {console.log("this is orders:" + this.state.orders)}
-                                {this.state.orders !== [] && this.state.filterByFulfilled === false && this.state.filterByUnfulfilled === false ?
+                                {this.state.orders.length !== 0 && this.state.filterByFulfilled === false && this.state.filterByUnfulfilled === false ?
                                     Object.values(this.state.orders).map((order) => {
                                         const date = new Date(order.transactionDate);
                                         return (
@@ -193,27 +211,22 @@ class CustomerOrders extends Component {
                                     })
                                     :
                                     <>
-                                        { this.state.filterByFulfilled === true || this.state.filterByUnfulfilled === true ?
-                                            Object.values(this.getFilteredOrders).map((order) => {
-                                                const date = new Date(order.transactionDate);
-                                                return (
-                                                    <tr key={order._id}>
-                                                        <td>{order._id}</td>
-                                                        <td>{order.purchasedBy._id}</td>
-                                                        <td>{date.toString()}</td>
-                                                        <td>$ {(this.computeTotal(order)).toFixed(2)}</td>
-                                                        <td>
-                                                            <Link to={{ pathname: '/OrderDetails/' + order._id }}>
-                                                                View Details
-                                                            </Link>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            })
+                                        {(this.state.filterByFulfilled === true || this.state.filterByUnfulfilled === true) && (this.getFilteredOrders()).length !== 0 ? 
+                                            <> 
+                                            {this.displayFilteredOrders()} 
+                                            </>
                                             :
-                                            <td colSpan={4} className='p-3'>
-                                                <h4 className='text-muted'>There are no previous customer orders ...</h4>
-                                            </td>
+                                            <>
+                                            {this.state.orders.length === 0 ?
+                                                <td colSpan={4} className='p-3'>
+                                                <h4 className='text-muted m-3'>There are no previous customer orders ...</h4>
+                                                </td>
+                                                :
+                                                <td colSpan={4} className='p-3'>
+                                                <h4 className='text-muted m-3'>There are no matching customer orders ...</h4>
+                                                </td>
+                                            }
+                                            </>
                                         }
                                     </>
                                 }

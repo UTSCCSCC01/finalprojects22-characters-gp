@@ -16,6 +16,7 @@ class OrderDetails extends Component {
         super(props)
 
         this.onBack = this.onBack.bind(this);
+        this.updateIsFulfilled = this.updateIsFulfilled.bind(this);
         this.state = {
             transactionDate: '',
             products: [],
@@ -49,6 +50,24 @@ class OrderDetails extends Component {
         this.props.history.goBack();
     }
 
+    updateIsFulfilled(){
+        console.log("Reaches here")
+        axios.get(config.backend + '/orders/' + this.props.match.params.id)
+            .then(res => {
+                console.log("before: " + res.data);
+                if (res.data.isFulfilled === true){
+                    alert("This order has already been fulfilled")
+                }
+                else{
+                    let updatedOrder = res.data
+                    console.log("after: " + updatedOrder);
+                    updatedOrder.isFulfilled = true 
+                    axios.put(config.backend + '/orders/' + this.props.match.params.id, updatedOrder);
+                    this.props.setToast("The order has been successfully fulfilled")
+                }
+            })
+    }
+
     render() {
         const userType = JSON.parse(localStorage.getItem("user")).type
         //console.log("userType: " + userType);
@@ -77,6 +96,13 @@ class OrderDetails extends Component {
                         </div>
                     </Col>
                 </Row>
+                
+                {userType === 3 &&
+                <Row className="justify-content-center">
+                    <Button style={{width:'20%'}} onClick={this.updateIsFulfilled} size="md" variant="warning">Fulfill Order</Button>
+                </Row>
+                }
+
                 <hr></hr>
                 <Row className="mb-4">
                     <Col md={12} className="d-flex-column">

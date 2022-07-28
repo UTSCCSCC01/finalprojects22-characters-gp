@@ -183,12 +183,12 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/ProductStore"
-                      render={(props) => <ProductStore {...props} />}
+                      render={(props) => <ProductStore {...props}/>}
                     />
                     <Route
                       exact
                       path="/Checkout"
-                      render={(props) => <Checkout {...props} user={this.state.user} />}
+                      render={(props) => <Checkout {...props} user={this.state.user} setToast={this.setToast} />}
                     />
                     <Route
                       exact
@@ -198,12 +198,12 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/OrderDetails/:id"
-                      render={(props) => <OrderDetails {...props} />}
+                      render={(props) => <OrderDetails {...props} setToast={this.setToast} />}
                     />
                     <Route
                       exact
                       path="/CustomerOrders"
-                      render={(props) => <CustomerOrders {...props} />}
+                      render={(props) => <CustomerOrders {...props} user={this.state.user} />}
                     />
                   </Switch>
                 </div>
