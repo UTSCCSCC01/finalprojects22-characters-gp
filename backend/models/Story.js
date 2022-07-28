@@ -29,6 +29,10 @@ const storySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model('stories', storySchema);
