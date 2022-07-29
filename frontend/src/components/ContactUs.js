@@ -33,19 +33,30 @@ class ContactUs extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        if(this.props.user){
-            //get their userID for employee to reference if needed
-            // if not logged the field is ''
-            // let the employee know they were not logged in 
-            
-        }
         // create a json with the data
         const data = {
             name: this.state.name,
             email: this.state.email,
             message: this.state.message,
         }
-        // 
+        // axios post request to send email to employee email
+        axios.post(config.backend + '/contactus', data)
+            .then(res => {
+                console.log(res)
+                this.setState((state) => {
+                    return{
+                        name: '',
+                        email: '',
+                        message: ''
+                    }
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            });
+        
+        // submitted is true
+        this.setState({ submitted: true });
     }
     
     render() {
@@ -93,7 +104,11 @@ class ContactUs extends Component {
                             Submit
                         </Button>
 
-                        {this.state.submitted == 'true'}
+                        {this.state.submitted == 'true' &&
+                            <Alert variant="success" onClose={() => this.setState({ submitted: false })} dismissible>
+                                <Alert.Heading>Your message has been successfully received.</Alert.Heading>
+                            </Alert>
+                        }
                     </Form>
 
                 </Card>

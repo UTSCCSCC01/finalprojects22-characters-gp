@@ -146,14 +146,7 @@ class Checkout extends Component {
                 console.log(err.data)
                 console.log(data)
             });
-
-        // send email with reciept
-        // sendEmail(orderId);
-
-        //reset Form state
-
-
-        // console.log(this.state.shippingFirstName)
+            
         //change submissionSuccess state to show
         //successful submission message to user:
         this.setState((state) => {return {checkoutSuccess: true}});
