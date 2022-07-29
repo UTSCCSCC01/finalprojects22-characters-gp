@@ -47,7 +47,7 @@ export default class ProductStore extends Component {
 
   clearFilters() {
     this.setState({
-      filterStory: '',
+      searchTerm: '',
       filterType: ''
     });
 
@@ -114,67 +114,63 @@ export default class ProductStore extends Component {
     return (
 
       <div className="container-fluid">
-
+        
         <br />
         <h3 className="mb-3" style={this.styles.h3}>SHOP CLOTHING</h3>
-        <Row >
-          <Col xs>
-            <div style={{ textAlign: 'left' }}>
-              <Button
-                size="sm"
-                className="filter-button"
-                variant="outline-dark"
-                onClick={() => this.setState({ isOpen: !(this.state.isOpen) })}
-                aria-controls="collapse-text"
-                aria-expanded={this.state.isOpen}
-              >
-                Filter Product
-              </Button>
-            </div>
-          </Col>
-          <Col xs={3}>
-            <Typeahead placeholder="Search..." onChange={selected => {
-              console.log(selected)
-              this.setState({ searchTerm: (selected && selected.length !== 0) ? selected[0] : '' })
-            }}
-              options={this.state.products && this.state.products.map(elem => elem.productName)}
-            />
-          </Col>
-        </Row>
+        <Col>
+          <Typeahead style={{ float: 'right' }} placeholder="Search..." onChange={selected => {
+            console.log(selected)
+            this.setState({ searchTerm: (selected && selected.length !== 0) ? selected[0] : '' })
+          }}
+            options={this.state.products && this.state.products.map(elem => elem.productName)}
+          />
+        </Col>
+        <Col>
+          <div style={{ textAlign: 'left' }}>
+            <Button
+              size="sm"
+              className="filter-button"
+              variant="outline-dark"
+              onClick={() => this.setState({ isOpen: !(this.state.isOpen) })}
+              aria-controls="collapse-text"
+              aria-expanded={this.state.isOpen}
+            >
+              Filter Product
+            </Button>
+          </div>
+        </Col>
+        
         <Collapse in={this.state.isOpen}>
-          <div id="collapse-text" style={{ textAlign: 'left' }}>
+          <div id="collapse-text" >
             <Form>
-            <div className="productFilters m-2">
               <Form.Group as={Row}>
-                <Form.Label column md={2}>Filter by Type:</Form.Label>
-                <Col md={3}>
-                  <Form.Select required type="text" value={this.state.filterType} onChange={this.onChangeFilterType}>
-                    {this.state.filterTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
-                  </Form.Select>
-                </Col>
+
+                <Form.Label column sm="2">
+                  Filter by Type:
+                </Form.Label>
+                <Form.Select className="w-25" required type="text" value={this.state.filterType} onChange={this.onChangeFilterType}>
+                  {this.state.filterTypes.map(type => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </Form.Select>
               </Form.Group>
               <br />
               <Form.Group as={Row}>
-                <Form.Label column md={2}>
+                <Form.Label column sm="2">
                   Filter by Story Title:
                 </Form.Label>
-                <Col md={3}>
-                <Form.Select required type="text" value={this.state.filterStory} onChange={this.onChangeFilterStory}>
+                <Form.Select className="w-25" required type="text" value={this.state.filterStory} onChange={this.onChangeFilterStory}>
                   {this.state.approvedStories.map(opt => (
                     <option key={opt._id} value={opt._id}>{opt.storyTitle}</option>
                   ))}
                 </Form.Select>
-                </Col>
               </Form.Group>
-              </div>
             </Form>
             <Button variant="link" onClick={() => this.clearFilters()}>Clear All Filters</Button>
           </div>
         </Collapse>
-
-
+        
+        
         <Row>
           {this.listProducts()}
         </Row>

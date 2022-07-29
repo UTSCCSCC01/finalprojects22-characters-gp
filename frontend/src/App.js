@@ -22,7 +22,6 @@ import ProductDetails from './components/ProductDetails'
 import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
 import OrderDetails from './components/OrderDetails'
-import ContactUs from './components/ContactUs'
 
 class App extends React.Component {
   constructor(props) {
@@ -69,7 +68,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
                 <Link to={'/ProductStore'} className="nav-link">
@@ -103,11 +102,6 @@ class App extends React.Component {
                   <Nav>
                     <Link to={'/shoppingCart'} className="nav-link">
                       My Cart
-                    </Link>
-                  </Nav>
-                  <Nav>
-                    <Link to={'/contactUs'} className="nav-link">
-                      Contact Us
                     </Link>
                   </Nav>
                   {this.state.user === null ?
@@ -198,11 +192,6 @@ class App extends React.Component {
                       exact
                       path="/OrderDetails/:id"
                       render={(props) => <OrderDetails {...props} />}
-                    />
-                    <Route
-                      exact
-                      path="/ContactUs"
-                      render={(props) => <ContactUs {...props} setToast={this.setToast} />}
                     />
                   </Switch>
                 </div>

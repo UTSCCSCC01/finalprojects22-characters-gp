@@ -41,7 +41,7 @@ class OrderHistory extends Component {
         let total = 0;
         const products = order.products
         for (let i = 0; i < products.length; i++) {
-            let subtotal = (products[i].itemCount * products[i].productPrice) * 1.13
+            let subtotal = (products[i].itemCount * products[i].pid.productPrice) * 1.13
             total += subtotal;
             console.log(total)
         }

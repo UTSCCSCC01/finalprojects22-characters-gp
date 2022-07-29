@@ -20,7 +20,6 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next) => {
   const query = req.query;
   query.deleted = false;
-  query.isDeleted = false;
   Story.find(query).
     populate('author', 'firstName lastName email').
     exec((error, data) => {
