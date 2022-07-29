@@ -16,7 +16,7 @@ router.post('/', (req, res, next) => {
     }
   })
 });
-// Get all stories
+// Get all orders
 router.get('/', (req, res, next) => {
   const query = req.query;
   console.log(query)
@@ -30,7 +30,7 @@ router.get('/', (req, res, next) => {
       }
     })
 });
-// Get single story
+// Get single order
 router.get('/:id', (req, res, next) => {
   Order.findById(req.params.id).
     populate('purchasedBy', 'firstName lastName email').
@@ -42,7 +42,7 @@ router.get('/:id', (req, res, next) => {
       }
     })
 });
-// Update story
+// Update order
 router.put('/:id', (req, res, next) => {
   Order.findByIdAndUpdate(req.params.id, {
     $set: req.body
@@ -54,7 +54,7 @@ router.put('/:id', (req, res, next) => {
     }
   })
 });
-// Delete story
+// Delete order
 router.delete('/:id', (req, res, next) => {
   Order.findByIdAndDelete(req.params.id, (error, data) => {
     if (error) {

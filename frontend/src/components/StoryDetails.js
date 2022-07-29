@@ -20,6 +20,7 @@ export default class StoryDetails extends Component {
         }
 
         this.updateStatus = this.updateStatus.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     //access the db to fetch the data to display
@@ -57,6 +58,18 @@ export default class StoryDetails extends Component {
         });
     }
 
+    onDelete(){
+        const data = {
+            isDeleted: true,
+        };
+        axios.put(config.backend + "/stories/" + this.props.match.params.id, data).then(res => {
+            this.props.history.replace("/StoriesList");
+            console.log("Successfully deleted story!");
+            }).catch((error) => {
+            console.log(error);
+         });
+    }
+
 
     // UI
     render() {
@@ -80,8 +93,8 @@ export default class StoryDetails extends Component {
                             <Dropdown.Item onClick={() => this.updateStatus("interviewing")}>interviewing</Dropdown.Item>
                             <Dropdown.Item onClick={() => this.updateStatus("validated")}>validated</Dropdown.Item>
                             <Dropdown.Item onClick={() => this.updateStatus("rejected")}>rejected</Dropdown.Item>
-
                         </DropdownButton>
+                        <Button onClick={() => this.onDelete()} style={{marginLeft: 10}} variant="danger">Delete Story</Button>
                     </Card.Text>
                 </Card.Body>
                 {this.state.author &&

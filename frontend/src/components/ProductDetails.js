@@ -109,17 +109,22 @@ export default class ProductDetails extends Component {
   }
 
   onDelete(e) {
-    axios.delete(config.backend + "/products/" + this.props.match.params.id).then(res => {
-      if (res.status == 200) {
-        this.props.history.replace("/ProductStore");
-        this.props.setToast('Deleted product from Inventory')
-        console.log("Successfully deleted product");
-      }
-      else {
-        console.log("Fail to delete product");
+    axios.get(config.backend + "/stories?_id=" + this.state.storyID).then(res =>{
+      if (res.data.length == 0 || res.data[0].isDeleted == true){
+        axios.delete(config.backend + "/products/" + this.props.match.params.id).then(res => {
+          if (res.status == 200) {
+            this.props.history.replace("/ProductStore");
+            this.props.setToast('Deleted product from Inventory')
+            console.log("Successfully deleted product");
+          }
+          else {
+            console.log("Fail to delete product");
+          }
+        });
+      } else {
+        this.props.setToast("Cannot delete this product! There is an assoicated story with it!");
       }
     });
-
   }
 
 
