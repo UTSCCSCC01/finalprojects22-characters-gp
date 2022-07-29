@@ -22,6 +22,7 @@ import ProductDetails from './components/ProductDetails'
 import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
 import OrderDetails from './components/OrderDetails'
+import Home from './components/Home'
 
 class App extends React.Component {
   constructor(props) {
@@ -71,13 +72,18 @@ class App extends React.Component {
           <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/ProductStore'} className="nav-link">
+                <Link to={'/'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                 <Nav>
+                  <Nav>
+                    <Link to={'/'} className="nav-link">
+                      Home
+                    </Link>
+                  </Nav>
                   <Nav>
                     <Link to={'/ProductStore'} className="nav-link">
                       Store
@@ -192,6 +198,11 @@ class App extends React.Component {
                       exact
                       path="/OrderDetails/:id"
                       render={(props) => <OrderDetails {...props} />}
+                    />
+                    <Route
+                      exact
+                      path="/"
+                      render={(props) => <Home {...props} />}
                     />
                   </Switch>
                 </div>
