@@ -1,3 +1,13 @@
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
 .App {
   text-align: center;
 }
@@ -25,7 +35,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #f8f9fa;
 }
 
 @keyframes App-logo-spin {
@@ -53,4 +63,39 @@
 
 .filter-button {
   display: inline;
+}
+
+
+.intro {
+  font-weight: bold;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  min-height: 100vh;
+  display: inline-block;
+  height: 50vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0
+  
+}
+
+.aboutUs {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  
+}
+
+.title {
+  
+  font-size: 92px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  text-shadow: 2px 4px 4px rgba(46,91,173,0.6);
+  /* text-shadow: 2px 2px 4px #3e3c3c; */
+}
+
+
+.questions {
+  font-family: "Lucinda Console", monospace;
+  font-size: 50px;
 }
