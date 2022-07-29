@@ -20,7 +20,7 @@ class Checkout extends Component {
         this.sendEmail = this.sendEmail.bind(this);
         this.state = {
             orderTotal: 0,
-            checkoutSuccess: false,
+            //checkoutSuccess: false,
             shippingFirstName: '',
             shippingLastName: '',
             shippingAddress: '',
@@ -149,7 +149,11 @@ class Checkout extends Component {
             
         //change submissionSuccess state to show
         //successful submission message to user:
-        this.setState((state) => {return {checkoutSuccess: true}});
+        //this.setState((state) => {return {checkoutSuccess: true}});
+        
+        //redirect the user to the store once successful payment notification is displayed
+        this.props.setToast("Payment successful. Your order is on the way!");
+        this.props.history.push({ pathname: '/ProductStore' })
     }
 
     render(){
@@ -237,15 +241,18 @@ class Checkout extends Component {
                     </div>
                 </Form>
 
-                {this.state.checkoutSuccess === true &&
-                    <Alert
-                        className="m-3 justify-content-center align-items-center"
-                        variant="success"
-                        onClose={() => this.setState({ checkoutSuccess: false })}
-                        dismissible
-                        style={{width:"100%"}}>
-                        <Alert.Heading>Payment successful. Your order is on the way!</Alert.Heading>
-                    </Alert>
+                {
+                /*
+                    this.state.checkoutSuccess === true &&
+                        <Alert
+                            className="m-3 justify-content-center align-items-center"
+                            variant="success"
+                            onClose={() => this.setState({ checkoutSuccess: false })}
+                            dismissible
+                            style={{width:"100%"}}>
+                            <Alert.Heading>Payment successful. Your order is on the way!</Alert.Heading>
+                        </Alert>
+                */
                 }
             </div>
         )

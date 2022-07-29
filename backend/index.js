@@ -36,7 +36,6 @@ app.use('/stories', storyRoute);
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);
-
 app.use('/reciepts', receiptRoute);
 app.use('/contactus', contactRoute);
 

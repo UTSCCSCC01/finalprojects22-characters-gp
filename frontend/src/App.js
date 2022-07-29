@@ -23,6 +23,7 @@ import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
 import OrderDetails from './components/OrderDetails'
 import ContactUs from './components/ContactUs'
+import CustomerOrders from './components/CustomerOrders'
 
 class App extends React.Component {
   constructor(props) {
@@ -117,14 +118,20 @@ class App extends React.Component {
                       </Link>
                     </Nav> :
                     <NavDropdown title="Profile" id="navbarScrollingDropdown">
+                      {this.state.user['type'] === 3 ?
+                      <NavDropdown.Item href={'/CustomerOrders'}>
+                      Customer Orders
+                      </NavDropdown.Item>
+                      :
+                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
+                      Order History
+                      </NavDropdown.Item>
+                      }
                       <NavDropdown.Item href={'/profile/' + this.state.user._id}>
                         Settings
                       </NavDropdown.Item>
                       <NavDropdown.Item href={'/ProductStore'} onClick={this.signOut}>
                         Sign Out
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
-                      Order History
                       </NavDropdown.Item>
                     </NavDropdown>
                   }
@@ -182,12 +189,12 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/ProductStore"
-                      render={(props) => <ProductStore {...props} />}
+                      render={(props) => <ProductStore {...props}/>}
                     />
                     <Route
                       exact
                       path="/Checkout"
-                      render={(props) => <Checkout {...props} user={this.state.user} />}
+                      render={(props) => <Checkout {...props} user={this.state.user} setToast={this.setToast} />}
                     />
                     <Route
                       exact
@@ -197,7 +204,12 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/OrderDetails/:id"
-                      render={(props) => <OrderDetails {...props} />}
+                      render={(props) => <OrderDetails {...props} setToast={this.setToast} />}
+                    />
+                    <Route
+                      exact
+                      path="/CustomerOrders"
+                      render={(props) => <CustomerOrders {...props} user={this.state.user} />}
                     />
                     <Route
                       exact

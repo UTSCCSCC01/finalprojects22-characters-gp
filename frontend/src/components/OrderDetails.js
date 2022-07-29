@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import axios from 'axios';
 import config from '../config'
 
-
 /*
 const getOrderId = () => {
   const location = useLocation()
@@ -17,6 +16,7 @@ class OrderDetails extends Component {
         super(props)
 
         this.onBack = this.onBack.bind(this);
+        this.updateIsFulfilled = this.updateIsFulfilled.bind(this);
         this.state = {
             transactionDate: '',
             products: [],
@@ -50,7 +50,27 @@ class OrderDetails extends Component {
         this.props.history.goBack();
     }
 
+    updateIsFulfilled(){
+        console.log("Reaches here")
+        axios.get(config.backend + '/orders/' + this.props.match.params.id)
+            .then(res => {
+                console.log("before: " + res.data);
+                if (res.data.isFulfilled === true){
+                    alert("This order has already been fulfilled")
+                }
+                else{
+                    let updatedOrder = res.data
+                    console.log("after: " + updatedOrder);
+                    updatedOrder.isFulfilled = true 
+                    axios.put(config.backend + '/orders/' + this.props.match.params.id, updatedOrder);
+                    this.props.setToast("The order has been successfully fulfilled")
+                }
+            })
+    }
+
     render() {
+        const userType = JSON.parse(localStorage.getItem("user")).type
+        //console.log("userType: " + userType);
         return (
             <Container fluid>
                 <Row>
@@ -66,12 +86,23 @@ class OrderDetails extends Component {
                                 <h5 className="text-muted m-2">{this.props.match.params.id}</h5>
                             </div>
                             <div className="d-inline-flex">
-                                <h3>Your order was placed on:</h3>
+                                {userType !== 3 ?
+                                    <h3>Your order was placed on:</h3>
+                                    :
+                                    <h3>The order was placed on:</h3>
+                                }
                                 <h5 className="text-muted m-2">{this.state.transactionDate}</h5>
                             </div>
                         </div>
                     </Col>
                 </Row>
+                
+                {userType === 3 &&
+                <Row className="justify-content-center">
+                    <Button style={{width:'20%'}} onClick={this.updateIsFulfilled} size="md" variant="warning">Fulfill Order</Button>
+                </Row>
+                }
+
                 <hr></hr>
                 <Row className="mb-4">
                     <Col md={12} className="d-flex-column">
