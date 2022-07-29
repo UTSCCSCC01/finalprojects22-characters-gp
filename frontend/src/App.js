@@ -23,6 +23,7 @@ import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
 import OrderDetails from './components/OrderDetails'
 import Home from './components/Home'
+import ContactUs from './components/ContactUs'
 import CustomerOrders from './components/CustomerOrders'
 
 class App extends React.Component {
@@ -109,6 +110,11 @@ class App extends React.Component {
                   <Nav>
                     <Link to={'/shoppingCart'} className="nav-link">
                       My Cart
+                    </Link>
+                  </Nav>
+                  <Nav>
+                    <Link to={'/contactUs'} className="nav-link">
+                      Contact Us
                     </Link>
                   </Nav>
                   {this.state.user === null ?
@@ -210,6 +216,11 @@ class App extends React.Component {
                       exact
                       path="/CustomerOrders"
                       render={(props) => <CustomerOrders {...props} user={this.state.user} />}
+                    />
+                    <Route
+                      exact
+                      path="/ContactUs"
+                      render={(props) => <ContactUs {...props} setToast={this.setToast} />}
                     />
                     <Route
                       exact
