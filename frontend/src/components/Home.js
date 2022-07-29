@@ -104,7 +104,7 @@ export default class Home extends Component {
                 <Card.Body>
                   <p style={{ fontFamily: "AppleGothic", fontSize: "50px" }}>SHOP </p>
                   <p style={{ fontFamily: 'Papyrus', fontSize: "50px" }}>APPAREL</p>
-                  <Link to="/ProductStore" replace><Button className="mt-5" size="lg" variant="secondary" onClick={this.onClickShop()}>Shop Now</Button></Link>
+                  <Link to="/ProductStore" replace><Button className="mt-5" size="lg" variant="secondary">Shop Now</Button></Link>
                 </Card.Body>
               </Card>
             </Col>
