@@ -202,7 +202,7 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/ContactUs"
-                      render={(props) => <ContactUs {...props} />}
+                      render={(props) => <ContactUs {...props} setToast={this.setToast} />}
                     />
                   </Switch>
                 </div>

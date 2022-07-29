@@ -57,6 +57,7 @@ class ContactUs extends Component {
         
         // submitted is true
         this.setState({ submitted: true });
+        this.props.setToast("Message successfully sent");
     }
     
     render() {
@@ -104,11 +105,7 @@ class ContactUs extends Component {
                             Submit
                         </Button>
 
-                        {this.state.submitted == 'true' &&
-                            <Alert variant="success" onClose={() => this.setState({ submitted: false })} dismissible>
-                                <Alert.Heading>Your message has been successfully received.</Alert.Heading>
-                            </Alert>
-                        }
+                        {this.state.submitted == 'true'}
                     </Form>
 
                 </Card>
