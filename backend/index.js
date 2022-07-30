@@ -12,6 +12,7 @@ const storyRoute = require('./routes/story.routes');
 const productRoute = require('./routes/product.routes');
 const orderRoute = require('./routes/order.routes');
 const receiptRoute = require('./routes/receipt.routes');
+const contactRoute = require('./routes/contact.routes');
 
 mongoose
   .connect(process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/mydatabase')
@@ -35,8 +36,8 @@ app.use('/stories', storyRoute);
 app.use('/users', userRoute);
 app.use('/products', productRoute);
 app.use('/orders', orderRoute);
-
 app.use('/reciepts', receiptRoute);
+app.use('/contactus', contactRoute);
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {

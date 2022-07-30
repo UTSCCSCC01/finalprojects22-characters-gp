@@ -22,6 +22,9 @@ import ProductDetails from './components/ProductDetails'
 import Checkout from './components/Checkout'
 import OrderHistory from './components/OrderHistory'
 import OrderDetails from './components/OrderDetails'
+import Home from './components/Home'
+import ContactUs from './components/ContactUs'
+import CustomerOrders from './components/CustomerOrders'
 
 class App extends React.Component {
   constructor(props) {
@@ -68,16 +71,21 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={'/ProductStore'} className="nav-link">
+                <Link to={'/'} className="nav-link">
                   Characters
                 </Link>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                 <Nav>
+                  <Nav>
+                    <Link to={'/'} className="nav-link">
+                      Home
+                    </Link>
+                  </Nav>
                   <Nav>
                     <Link to={'/ProductStore'} className="nav-link">
                       Store
@@ -104,6 +112,11 @@ class App extends React.Component {
                       My Cart
                     </Link>
                   </Nav>
+                  <Nav>
+                    <Link to={'/contactUs'} className="nav-link">
+                      Contact Us
+                    </Link>
+                  </Nav>
                   {this.state.user === null ?
                     <Nav>
                       <Link to={'/signup'} className="nav-link">
@@ -111,14 +124,20 @@ class App extends React.Component {
                       </Link>
                     </Nav> :
                     <NavDropdown title="Profile" id="navbarScrollingDropdown">
+                      {this.state.user['type'] === 3 ?
+                      <NavDropdown.Item href={'/CustomerOrders'}>
+                      Customer Orders
+                      </NavDropdown.Item>
+                      :
+                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
+                      Order History
+                      </NavDropdown.Item>
+                      }
                       <NavDropdown.Item href={'/profile/' + this.state.user._id}>
                         Settings
                       </NavDropdown.Item>
                       <NavDropdown.Item href={'/ProductStore'} onClick={this.signOut}>
                         Sign Out
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={'/OrderHistory/' + this.state.user._id}>
-                      Order History
                       </NavDropdown.Item>
                     </NavDropdown>
                   }
@@ -176,12 +195,12 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/ProductStore"
-                      render={(props) => <ProductStore {...props} />}
+                      render={(props) => <ProductStore {...props}/>}
                     />
                     <Route
                       exact
                       path="/Checkout"
-                      render={(props) => <Checkout {...props} user={this.state.user} />}
+                      render={(props) => <Checkout {...props} user={this.state.user} setToast={this.setToast} />}
                     />
                     <Route
                       exact
@@ -191,7 +210,22 @@ class App extends React.Component {
                     <Route
                       exact
                       path="/OrderDetails/:id"
-                      render={(props) => <OrderDetails {...props} />}
+                      render={(props) => <OrderDetails {...props} setToast={this.setToast} />}
+                    />
+                    <Route
+                      exact
+                      path="/CustomerOrders"
+                      render={(props) => <CustomerOrders {...props} user={this.state.user} />}
+                    />
+                    <Route
+                      exact
+                      path="/ContactUs"
+                      render={(props) => <ContactUs {...props} setToast={this.setToast} />}
+                    />
+                    <Route
+                      exact
+                      path="/"
+                      render={(props) => <Home {...props} />}
                     />
                   </Switch>
                 </div>

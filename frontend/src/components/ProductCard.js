@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import {Card } from 'react-bootstrap';
+import {Card, Ratio } from 'react-bootstrap';
 import "../css/Product.css"
 
 export default class ProductCard extends Component {
@@ -12,11 +12,11 @@ export default class ProductCard extends Component {
       viewProduct(){
         this.props.history.push('/products/'+this.props.obj._id);
       }
-      
+
 
       render(){
           return(
-              <div className="col-lg-3 col-md-6 col-6" >
+              <div className="col-lg-3 col-md-6 col-12" >
                   <Card className="productCard m-2">
                       <Card.Img variant="top" style={{ width: "100%", height: "20vw", objectFit: "contain" }}
                           src={`/uploads/${this.props.obj.productImage}`} onClick={this.viewProduct}
@@ -35,7 +35,7 @@ export default class ProductCard extends Component {
                       </Button>
                   </Card>
               </div>
-            
+
           );
 
       }

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import axios from 'axios';
 import config from '../config'
-import { Alert } from 'react-bootstrap';
+import ProductEdit from './ProductEdit';
+import { Row, Col, Button, Card, Alert } from 'react-bootstrap';
 
 export default class ProductDetails extends Component {
   constructor(props) {
@@ -22,6 +19,8 @@ export default class ProductDetails extends Component {
       storyDescription: '',
       quantity: 1,
       isOpen: false,
+      edititng: false,
+      showAlert: false
     }
 
     //bind methods to pass to other components
@@ -30,7 +29,7 @@ export default class ProductDetails extends Component {
 
   }
 
-  //access the db to fetch the data to display    
+  //access the db to fetch the data to display
 
   componentDidMount() {
     axios.get(config.backend + '/products/' + this.props.match.params.id)
@@ -111,17 +110,22 @@ export default class ProductDetails extends Component {
   }
 
   onDelete(e) {
-    axios.delete(config.backend + "/products/" + this.props.match.params.id).then(res => {
-      if (res.status == 200) {
-        this.props.history.goBack();
-        this.props.setToast('Deleted product from Inventory')
-        console.log("Successfully deleted product");
-      }
-      else {
-        console.log("Fail to delete product");
+    axios.get(config.backend + "/stories?_id=" + this.state.storyID).then(res =>{
+      if (res.data.length == 0 || res.data[0].isDeleted == true){
+        axios.delete(config.backend + "/products/" + this.props.match.params.id).then(res => {
+          if (res.status == 200) {
+            this.props.history.replace("/ProductStore");
+            this.props.setToast('Deleted product from Inventory')
+            console.log("Successfully deleted product");
+          }
+          else {
+            console.log("Fail to delete product");
+          }
+        });
+      } else {
+        this.setState({showAlert: true});
       }
     });
-
   }
 
 
@@ -168,36 +172,53 @@ export default class ProductDetails extends Component {
   // UI
   render() {
     return (
-      <div className='product-details col-md-8'>
+      <div className='mx-auto col-md-8'>
         <Card >
           <Card.Header>
             <Card.Title>Story behind this Product</Card.Title>
             <Card.Text>{this.displayStoryDescription()}</Card.Text>
           </Card.Header>
-          <Card.Body className='productDetails'>
-            <Card.Img className='productImage' variant='top' src={`~/../../uploads/${this.state.image}`} alt={`Picture of ${this.state.productName}`} />
-            <div className='productDesc mx-auto'>
-              <Card.Title>{this.state.productName}</Card.Title>
-              <Card.Text>{this.state.productDescription}</Card.Text>
-              <Card.Text className='inventory'>{this.state.inventory} left in stock</Card.Text>
-              <Card.Text className="productPrice">Price: ${this.state.price}</Card.Text>
+          <Card.Body>
+            <Row>
+              <Col>
+                <Card.Img className='productImage' variant='top' src={`~/../../uploads/${this.state.image}`} alt={`Picture of ${this.state.productName}`} />
+              </Col>
+              <Col className="d-flex flex-column">
+                {this.state.editing ?
+                  <ProductEdit onDelete={this.onDelete} productId={this.props.match.params.id} cancelEdit={() => this.setState({editing:
+                    !this.state.editing})}/> :
+                  <>
+                    <Card.Title>{this.state.productName}</Card.Title>
+                    <Card.Text>{this.state.productDescription}</Card.Text>
+                    <Card.Text className='inventory'>{this.state.inventory} left in stock</Card.Text>
+                    <Card.Text className="productPrice">Price: ${this.state.price}</Card.Text>
 
-              <Card.Text>Quantity: <span></span>
-                <input
-                  type={"number"}
-                  value={this.state.quantity}
-                  min={0}
-                  max={this.state.inventory}
-                  onChange={(value) => this.onQuantityChange(value)}
-                />
-              </Card.Text>
+                    <Card.Text>Quantity: <span></span>
+                      <input
+                        type={"number"}
+                        value={this.state.quantity}
+                        min={0}
+                        max={this.state.inventory}
+                        onChange={(value) => this.onQuantityChange(value)}
+                      />
+                    </Card.Text>
+                      <Button className="w-100" size="md" block="block" type="submit" onClick={this.onSubmit}> Add to Cart </Button>
+                      {this.props.user && this.props.user.type === 3 &&
+                        <Button className="mt-2 w-100" size="md" block="block" variant='warning' onClick={() => this.setState({editing:
+                        !this.state.editing})}> Edit Product </Button>}
+                    </>}
 
-              <Button size="md" block="block" type="submit" onClick={this.onSubmit}> Add to Cart </Button>
-              {this.props.user && this.props.user.type === 3 &&
-                <Button size="md" block="block" variant="danger" onClick={this.onDelete}> Delete Product </Button>}
-            </div>
+              </Col>
+
+            </Row>
           </Card.Body>
         </Card>
+        {this.state.showAlert &&
+        <Alert variant="danger" onClose={() => this.setState({showAlert: false})} dismissible>
+          <p>
+            Cannot delete this product! There is an assoicated story with it!
+          </p>
+        </Alert>}
       </div>
     );
   }

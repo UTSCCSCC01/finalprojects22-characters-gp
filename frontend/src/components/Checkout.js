@@ -20,7 +20,7 @@ class Checkout extends Component {
         this.sendEmail = this.sendEmail.bind(this);
         this.state = {
             orderTotal: 0,
-            checkoutSuccess: false,
+            //checkoutSuccess: false,
             shippingFirstName: '',
             shippingLastName: '',
             shippingAddress: '',
@@ -86,6 +86,7 @@ class Checkout extends Component {
                         paymentMethod: ''
                     }
                 })
+                localStorage.removeItem("cartProducts");
             })
             .catch(err => {
                 console.log(err)
@@ -94,19 +95,29 @@ class Checkout extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        
+
         //reformat products to be added to Order document
-        const products = JSON.parse(localStorage.getItem("cartProducts")); 
+        const products = JSON.parse(localStorage.getItem("cartProducts"));
         let orderProducts = [];
+        let subtotal = 0;
         for (var pid in products) {
             if (products.hasOwnProperty(pid)) {
-                let formattedProduct = {pid : pid, itemCount: products[pid].quantity};
+                let formattedProduct = {
+                    pid: pid,
+                    productImage: products[pid].image,
+                    productName: products[pid].name,
+                    productType: products[pid].type,
+                    productPrice: products[pid].price,
+                    productDescription: products[pid].description,
+                    itemCount: products[pid].quantity
+                };
+                subtotal += products[pid].quantity * products[pid].price
                 orderProducts.push(formattedProduct);
                 //console.log(pid + " -> " + products[pid]);
             }
         }
         // console.log(orderProducts);
- 
+
         const data = {
             transactionDate: Date.now(),
             purchasedBy: this.props.user._id,
@@ -121,6 +132,7 @@ class Checkout extends Component {
                 address: this.state.billingAddress,
                 paymentMethod: this.state.paymentMethod
             },
+            subtotal: subtotal,
             products: orderProducts
         }
 
@@ -135,16 +147,13 @@ class Checkout extends Component {
                 console.log(data)
             });
 
-        // send email with reciept
-        // sendEmail(orderId);
-        
-        //reset Form state
-        
-
-        // console.log(this.state.shippingFirstName)
         //change submissionSuccess state to show
         //successful submission message to user:
-        this.setState((state) => {return {checkoutSuccess: true}});
+        //this.setState((state) => {return {checkoutSuccess: true}});
+
+        //redirect the user to the store once successful payment notification is displayed
+        this.props.setToast("Payment successful. Your order is on the way!");
+        this.props.history.push({ pathname: '/ProductStore' })
     }
 
     render(){
@@ -161,8 +170,8 @@ class Checkout extends Component {
                             <Stack direction="vertical" gap={2}>
                                 <div className="d-inline-flex">
                                     <Form.Label className="text-nowrap m-2">First Name:</Form.Label>
-                                    <Form.Control 
-                                        required type="text" 
+                                    <Form.Control
+                                        required type="text"
                                         placeholder="John"
                                         onChange={this.updateShippingFirstName}
                                         value={this.state.shippingFirstName}/>
@@ -170,8 +179,8 @@ class Checkout extends Component {
                                 </div>
                                 <div className="d-inline-flex">
                                     <Form.Label className="text-nowrap m-2">Last Name:</Form.Label>
-                                    <Form.Control 
-                                    required type="text" 
+                                    <Form.Control
+                                    required type="text"
                                     placeholder="Doe"
                                     onChange={this.updateShippingLastName}
                                     value={this.state.shippingLastName}/>
@@ -179,8 +188,8 @@ class Checkout extends Component {
                                 </div>
                                 <div className="d-inline-flex">
                                     <Form.Label className="text-nowrap m-2">Shipping Address:</Form.Label>
-                                    <Form.Control 
-                                        required type="text" 
+                                    <Form.Control
+                                        required type="text"
                                         placeholder="874 WaterFord Drive, Toronto ON, AK3 4U1"
                                         onChange={this.updateShippingAddress}
                                         value={this.state.shippingAddress}/>
@@ -192,8 +201,8 @@ class Checkout extends Component {
                             <Stack direction="vertical" gap={2}>
                                 <div className="d-inline-flex">
                                     <Form.Label className="text-nowrap m-2">First Name:</Form.Label>
-                                    <Form.Control 
-                                        required type="text" 
+                                    <Form.Control
+                                        required type="text"
                                         placeholder="John"
                                         onChange={this.updateBillingFirstName}
                                         value={this.state.billingFirstName}/>
@@ -201,17 +210,17 @@ class Checkout extends Component {
                                 </div>
                                 <div className="d-inline-flex">
                                     <Form.Label className="text-nowrap m-2">Last Name:</Form.Label>
-                                    <Form.Control 
-                                        required type="text" 
+                                    <Form.Control
+                                        required type="text"
                                         placeholder="Doe"
                                         onChange={this.updateBillingLastName}
                                         value={this.state.billingLastName}/>
                                     <Form.Text className="text-muted"/>
                                 </div>
                                 <div className="d-inline-flex">
-                                    <Form.Label className="text-nowrap m-2">Shipping Address:</Form.Label>
-                                    <Form.Control 
-                                        required type="text" 
+                                    <Form.Label className="text-nowrap m-2">Billing Address:</Form.Label>
+                                    <Form.Control
+                                        required type="text"
                                         placeholder="993 Elefor Street, Richmond ON, F31 2LW"
                                         onChange={this.updateBillingAddress}
                                         value={this.state.billingAddress}/>
@@ -219,9 +228,9 @@ class Checkout extends Component {
                                 </div>
                                 <div className="d-inline-flex">
                                     <Form.Label className="text-nowrap m-2">Payment Method:</Form.Label>
-                                    <Form.Control 
-                                        required type="text" 
-                                        placeholder="temp..."
+                                    <Form.Control
+                                        required type="text"
+                                        placeholder="Visa"
                                         onChange={this.updatePaymentMethod}
                                         value={this.state.paymentMethod}/>
                                     <Form.Text className="text-muted"/>
@@ -232,16 +241,19 @@ class Checkout extends Component {
                     </div>
                 </Form>
 
-                {this.state.checkoutSuccess === true &&
-                    <Alert 
-                        className="m-3 justify-content-center align-items-center" 
-                        variant="success" 
-                        onClose={() => this.setState({ checkoutSuccess: false })} 
-                        dismissible
-                        style={{width:"100%"}}>
-                        <Alert.Heading>Payment successful. Your order is on the way!</Alert.Heading>
-                    </Alert>
-                } 
+                {
+                /*
+                    this.state.checkoutSuccess === true &&
+                        <Alert
+                            className="m-3 justify-content-center align-items-center"
+                            variant="success"
+                            onClose={() => this.setState({ checkoutSuccess: false })}
+                            dismissible
+                            style={{width:"100%"}}>
+                            <Alert.Heading>Payment successful. Your order is on the way!</Alert.Heading>
+                        </Alert>
+                */
+                }
             </div>
         )
     }
