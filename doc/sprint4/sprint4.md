@@ -2,7 +2,7 @@
 
 ## Sprint Goals
 
-In this sprint, we want to fine tune our visuals and allow employyes to better manage their orders and products.
+In this sprint, we want to fine tune our visuals and allow employees to better manage their orders and products.
 
 1. As a character/consumer I want to be able to contact the employees via forms so that any questions or concerns regarding the website or my story can be answered
 2. As an employee I want to be able to view a list of customer orders so that I can fulfill customer orders.

@@ -24,7 +24,8 @@ class OrderDetails extends Component {
             shippingInfo: {},
             subtotal: 0,
             total: 0,
-            tax: 0
+            tax: 0,
+            fulfilled: false
         }
     }
 
@@ -37,7 +38,8 @@ class OrderDetails extends Component {
                     this.setState({
                         ...res.data, transactionDate: new Date(res.data.transactionDate).toString(),
                         tax: res.data.subtotal * 0.13,
-                        total: res.data.subtotal * 1.13
+                        total: res.data.subtotal * 1.13,
+                        fulfilled: res.data.isFulfilled
                     })
                     console.log(res.data)
                     console.log(this.state.shippingInfo.firstName)
@@ -61,9 +63,10 @@ class OrderDetails extends Component {
                 else{
                     let updatedOrder = res.data
                     console.log("after: " + updatedOrder);
-                    updatedOrder.isFulfilled = true 
+                    updatedOrder.isFulfilled = true
                     axios.put(config.backend + '/orders/' + this.props.match.params.id, updatedOrder);
                     this.props.setToast("The order has been successfully fulfilled")
+                    this.setState({fulfilled: true});
                 }
             })
     }
@@ -96,10 +99,10 @@ class OrderDetails extends Component {
                         </div>
                     </Col>
                 </Row>
-                
+
                 {userType === 3 &&
                 <Row className="justify-content-center">
-                    <Button style={{width:'20%'}} onClick={this.updateIsFulfilled} size="md" variant="warning">Fulfill Order</Button>
+                    <Button style={{width:'20%'}} onClick={this.updateIsFulfilled} size="md" variant="warning" disabled={this.state.fulfilled}>{this.state.fulfilled? "Order fulfilled": "Fulfill Order"}</Button>
                 </Row>
                 }
 

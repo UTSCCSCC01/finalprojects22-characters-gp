@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import config from '../config'
 import ProductEdit from './ProductEdit';
-import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Row, Col, Button, Card, Alert } from 'react-bootstrap';
 
 export default class ProductDetails extends Component {
   constructor(props) {
@@ -19,7 +19,8 @@ export default class ProductDetails extends Component {
       storyDescription: '',
       quantity: 1,
       isOpen: false,
-      edititng: false
+      edititng: false,
+      showAlert: false
     }
 
     //bind methods to pass to other components
@@ -122,7 +123,7 @@ export default class ProductDetails extends Component {
           }
         });
       } else {
-        this.props.setToast("Cannot delete this product! There is an assoicated story with it!");
+        this.setState({showAlert: true});
       }
     });
   }
@@ -212,6 +213,12 @@ export default class ProductDetails extends Component {
             </Row>
           </Card.Body>
         </Card>
+        {this.state.showAlert &&
+        <Alert variant="danger" onClose={() => this.setState({showAlert: false})} dismissible>
+          <p>
+            Cannot delete this product! There is an assoicated story with it!
+          </p>
+        </Alert>}
       </div>
     );
   }

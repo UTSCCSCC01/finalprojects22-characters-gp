@@ -146,11 +146,11 @@ class Checkout extends Component {
                 console.log(err.data)
                 console.log(data)
             });
-            
+
         //change submissionSuccess state to show
         //successful submission message to user:
         //this.setState((state) => {return {checkoutSuccess: true}});
-        
+
         //redirect the user to the store once successful payment notification is displayed
         this.props.setToast("Payment successful. Your order is on the way!");
         this.props.history.push({ pathname: '/ProductStore' })
@@ -230,7 +230,7 @@ class Checkout extends Component {
                                     <Form.Label className="text-nowrap m-2">Payment Method:</Form.Label>
                                     <Form.Control
                                         required type="text"
-                                        placeholder="temp..."
+                                        placeholder="Visa"
                                         onChange={this.updatePaymentMethod}
                                         value={this.state.paymentMethod}/>
                                     <Form.Text className="text-muted"/>
