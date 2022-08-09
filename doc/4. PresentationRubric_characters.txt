@@ -20,7 +20,7 @@ Your mark: 1
 -Feature 2 presentation: store 
  0-3 marks [3=Excellent, 2=Adequate, 1=Inadequate, 0=No feature]
  ==========
- Your mark: 2 Feedback: Email glitch 
+ Your mark: 3
  ==========
 
 -Feature 3 presentation: order history
@@ -36,7 +36,7 @@ Process[14 marks]:
  [Each missing person, minus 1 mark]
  [Note due to this year's special situation: you may or may not show your person in video. However voice participation is a mandatory minimum]
  ==========
- Your mark: 3
+ Your mark: 4
  ==========
 -Team communication, processes, standards, and techniques:
  0-6 marks 
