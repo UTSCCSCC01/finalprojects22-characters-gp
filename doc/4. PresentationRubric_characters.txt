@@ -2,7 +2,7 @@ Final Project Presentation Marking Rubric
 =========================================
 Team Name: Characters gp
 
-Part I - Live Presentation - 30 marks
+Live Presentation - 39 marks
 -------------------------------------
 Product Demo[10 marks]:
 -Product introduction: 0-1 marks [1=Product introduced, 0=No introduction]
@@ -36,13 +36,13 @@ Process[14 marks]:
  [Each missing person, minus 1 mark]
  [Note due to this year's special situation: you may or may not show your person in video. However voice participation is a mandatory minimum]
  ==========
- Your mark: 4	
+ Your mark: 3
  ==========
 -Team communication, processes, standards, and techniques:
  0-6 marks 
  [Each element 2 marks if presented professionally, 1 mark if presented adequately, 0 otherwise]
  ==========
- Your mark: 6
+ Your mark: 5.5
  ==========
  -Documentation
  0-4 marks 
@@ -75,4 +75,6 @@ Participation[5 marks]
  ==========
  Your mark: 5
  ==========  
+ 
+ Total Marks: 35.5/39
  
